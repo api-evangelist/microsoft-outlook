@@ -1,0 +1,109 @@
+name: Microsoft Outlook
+description: Microsoft Outlook is a personal information manager and email client that is part of the Microsoft Office suite. It provides email, calendar, contact management, task management, and other productivity features.
+image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2019/11/Outlook-logo.png
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+url: https://outlook.office.com
+apis:
+- name: Microsoft Graph Mail API
+  description: API for accessing Outlook email messages, folders, and mail settings through Microsoft Graph
+  image: https://docs.microsoft.com/en-us/graph/images/microsoft-graph.png
+  humanURL: https://docs.microsoft.com/en-us/graph/api/resources/mail-api-overview
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Email
+  - Messages
+  - Mail
+  - Folders
+  properties:
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/graph/api/resources/mail-api-overview
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
+  - type: Authentication
+    url: https://docs.microsoft.com/en-us/graph/auth/
+  - type: Getting Started
+    url: https://docs.microsoft.com/en-us/graph/api/resources/mail-api-overview#get-started
+- name: Microsoft Graph Calendar API
+  description: API for accessing Outlook calendar events, calendars, and meeting scheduling through Microsoft Graph
+  image: https://docs.microsoft.com/en-us/graph/images/microsoft-graph.png
+  humanURL: https://docs.microsoft.com/en-us/graph/api/resources/calendar
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Calendar
+  - Events
+  - Meetings
+  - Scheduling
+  properties:
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/graph/api/resources/calendar
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
+  - type: Authentication
+    url: https://docs.microsoft.com/en-us/graph/auth/
+  - type: Code Samples
+    url: https://docs.microsoft.com/en-us/graph/api/resources/calendar#code-samples
+- name: Microsoft Graph Contacts API
+  description: API for accessing Outlook contacts and contact folders through Microsoft Graph
+  image: https://docs.microsoft.com/en-us/graph/images/microsoft-graph.png
+  humanURL: https://docs.microsoft.com/en-us/graph/api/resources/contact
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Contacts
+  - People
+  - Address Book
+  properties:
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/graph/api/resources/contact
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
+  - type: Authentication
+    url: https://docs.microsoft.com/en-us/graph/auth/
+- name: Microsoft Graph Tasks API
+  description: API for accessing Outlook tasks and to-do items through Microsoft Graph
+  image: https://docs.microsoft.com/en-us/graph/images/microsoft-graph.png
+  humanURL: https://docs.microsoft.com/en-us/graph/api/resources/outlooktask
+  baseURL: https://graph.microsoft.com/v1.0
+  tags:
+  - Tasks
+  - To-Do
+  - Task Management
+  properties:
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/graph/api/resources/outlooktask
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
+  - type: Authentication
+    url: https://docs.microsoft.com/en-us/graph/auth/
+common:
+- type: Portal
+  url: https://developer.microsoft.com/en-us/graph
+- type: Getting Started
+  url: https://docs.microsoft.com/en-us/graph/overview
+- type: Authentication
+  url: https://docs.microsoft.com/en-us/graph/auth/
+- type: SDKs
+  url: https://docs.microsoft.com/en-us/graph/sdks/sdks-overview
+- type: Change Log
+  url: https://docs.microsoft.com/en-us/graph/changelog
+- type: Terms of Service
+  url: https://docs.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+- type: Privacy Policy
+  url: https://privacy.microsoft.com/en-us/privacystatement
+- type: Support
+  url: https://developer.microsoft.com/en-us/graph/support
+- type: Status
+  url: https://status.dev.microsoft.com/
+maintainers:
+- FN: Microsoft
+  email: graphsdkpub@microsoft.com
+  url: https://developer.microsoft.com/en-us/graph
+tags:
+- Email
+- Calendar
+- Contacts
+- Productivity
+- Microsoft
+- Office 365
+- Enterprise
