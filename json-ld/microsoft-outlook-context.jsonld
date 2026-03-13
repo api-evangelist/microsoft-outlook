@@ -1,0 +1,244 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "graph": "https://graph.microsoft.com/v1.0/",
+    "msgraph": "https://graph.microsoft.com/v1.0/$metadata#",
+    "outlook": "https://schema.api.gov/microsoft-outlook/",
+
+    "Message": {
+      "@id": "outlook:Message",
+      "@context": {
+        "id": "@id",
+        "subject": "schema:name",
+        "body": "outlook:body",
+        "bodyPreview": "schema:description",
+        "from": "schema:sender",
+        "sender": "outlook:sender",
+        "toRecipients": "schema:recipient",
+        "ccRecipients": "outlook:ccRecipient",
+        "bccRecipients": "outlook:bccRecipient",
+        "replyTo": "outlook:replyTo",
+        "receivedDateTime": {
+          "@id": "schema:dateReceived",
+          "@type": "schema:DateTime"
+        },
+        "sentDateTime": {
+          "@id": "schema:dateSent",
+          "@type": "schema:DateTime"
+        },
+        "createdDateTime": {
+          "@id": "schema:dateCreated",
+          "@type": "schema:DateTime"
+        },
+        "lastModifiedDateTime": {
+          "@id": "schema:dateModified",
+          "@type": "schema:DateTime"
+        },
+        "hasAttachments": {
+          "@id": "outlook:hasAttachments",
+          "@type": "schema:Boolean"
+        },
+        "importance": "outlook:importance",
+        "isRead": {
+          "@id": "outlook:isRead",
+          "@type": "schema:Boolean"
+        },
+        "isDraft": {
+          "@id": "outlook:isDraft",
+          "@type": "schema:Boolean"
+        },
+        "isDeliveryReceiptRequested": {
+          "@id": "outlook:isDeliveryReceiptRequested",
+          "@type": "schema:Boolean"
+        },
+        "isReadReceiptRequested": {
+          "@id": "outlook:isReadReceiptRequested",
+          "@type": "schema:Boolean"
+        },
+        "internetMessageId": "outlook:internetMessageId",
+        "internetMessageHeaders": "outlook:internetMessageHeaders",
+        "conversationId": "outlook:conversationId",
+        "conversationIndex": "outlook:conversationIndex",
+        "parentFolderId": "outlook:parentFolderId",
+        "inferenceClassification": "outlook:inferenceClassification",
+        "flag": "outlook:flag",
+        "webLink": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "categories": "outlook:categories",
+        "changeKey": "outlook:changeKey",
+        "uniqueBody": "outlook:uniqueBody",
+        "attachments": "outlook:attachments"
+      }
+    },
+
+    "MailFolder": {
+      "@id": "outlook:MailFolder",
+      "@context": {
+        "id": "@id",
+        "displayName": "schema:name",
+        "parentFolderId": "outlook:parentFolderId",
+        "childFolderCount": {
+          "@id": "outlook:childFolderCount",
+          "@type": "schema:Integer"
+        },
+        "unreadItemCount": {
+          "@id": "outlook:unreadItemCount",
+          "@type": "schema:Integer"
+        },
+        "totalItemCount": {
+          "@id": "outlook:totalItemCount",
+          "@type": "schema:Integer"
+        },
+        "isHidden": {
+          "@id": "outlook:isHidden",
+          "@type": "schema:Boolean"
+        }
+      }
+    },
+
+    "Attachment": {
+      "@id": "outlook:Attachment",
+      "@context": {
+        "id": "@id",
+        "name": "schema:name",
+        "contentType": "schema:encodingFormat",
+        "size": {
+          "@id": "schema:contentSize",
+          "@type": "schema:Integer"
+        },
+        "isInline": {
+          "@id": "outlook:isInline",
+          "@type": "schema:Boolean"
+        },
+        "lastModifiedDateTime": {
+          "@id": "schema:dateModified",
+          "@type": "schema:DateTime"
+        },
+        "contentBytes": "outlook:contentBytes",
+        "contentId": "outlook:contentId",
+        "contentLocation": {
+          "@id": "schema:contentUrl",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "FileAttachment": {
+      "@id": "outlook:FileAttachment",
+      "@context": {
+        "@base": "outlook:Attachment"
+      }
+    },
+
+    "ItemAttachment": {
+      "@id": "outlook:ItemAttachment",
+      "@context": {
+        "@base": "outlook:Attachment"
+      }
+    },
+
+    "ReferenceAttachment": {
+      "@id": "outlook:ReferenceAttachment",
+      "@context": {
+        "@base": "outlook:Attachment"
+      }
+    },
+
+    "Recipient": {
+      "@id": "outlook:Recipient",
+      "@context": {
+        "emailAddress": "outlook:emailAddress"
+      }
+    },
+
+    "EmailAddress": {
+      "@id": "outlook:EmailAddress",
+      "@context": {
+        "name": "schema:name",
+        "address": "schema:email"
+      }
+    },
+
+    "ItemBody": {
+      "@id": "outlook:ItemBody",
+      "@context": {
+        "contentType": "schema:encodingFormat",
+        "content": "schema:text"
+      }
+    },
+
+    "FollowupFlag": {
+      "@id": "outlook:FollowupFlag",
+      "@context": {
+        "flagStatus": "outlook:flagStatus",
+        "startDateTime": {
+          "@id": "outlook:startDateTime",
+          "@type": "schema:DateTime"
+        },
+        "dueDateTime": {
+          "@id": "outlook:dueDateTime",
+          "@type": "schema:DateTime"
+        },
+        "completedDateTime": {
+          "@id": "outlook:completedDateTime",
+          "@type": "schema:DateTime"
+        }
+      }
+    },
+
+    "InternetMessageHeader": {
+      "@id": "outlook:InternetMessageHeader",
+      "@context": {
+        "name": "schema:name",
+        "value": "schema:value"
+      }
+    },
+
+    "Subscription": {
+      "@id": "outlook:Subscription",
+      "@context": {
+        "id": "@id",
+        "resource": "outlook:resource",
+        "changeType": "outlook:changeType",
+        "notificationUrl": {
+          "@id": "outlook:notificationUrl",
+          "@type": "@id"
+        },
+        "expirationDateTime": {
+          "@id": "outlook:expirationDateTime",
+          "@type": "schema:DateTime"
+        },
+        "clientState": "outlook:clientState",
+        "lifecycleNotificationUrl": {
+          "@id": "outlook:lifecycleNotificationUrl",
+          "@type": "@id"
+        },
+        "includeResourceData": {
+          "@id": "outlook:includeResourceData",
+          "@type": "schema:Boolean"
+        }
+      }
+    },
+
+    "ChangeNotification": {
+      "@id": "outlook:ChangeNotification",
+      "@context": {
+        "id": "@id",
+        "subscriptionId": "outlook:subscriptionId",
+        "changeType": "outlook:changeType",
+        "resource": "outlook:resource",
+        "clientState": "outlook:clientState",
+        "tenantId": "outlook:tenantId",
+        "subscriptionExpirationDateTime": {
+          "@id": "outlook:subscriptionExpirationDateTime",
+          "@type": "schema:DateTime"
+        },
+        "resourceData": "outlook:resourceData",
+        "encryptedContent": "outlook:encryptedContent"
+      }
+    }
+  }
+}

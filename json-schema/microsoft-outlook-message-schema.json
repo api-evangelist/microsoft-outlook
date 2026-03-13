@@ -1,0 +1,372 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.api.gov/microsoft-outlook/message",
+  "title": "Microsoft Outlook Message",
+  "description": "JSON Schema for a Microsoft Graph message resource representing an email message in a user's mailbox. Based on the microsoft.graph.message resource type from the Microsoft Graph v1.0 API.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the message. By default, this value changes when the item is moved from one container to another. Use the Prefer: IdType=\"ImmutableId\" header for immutable identifiers.",
+      "readOnly": true
+    },
+    "createdDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the message was created. Uses ISO 8601 format in UTC time (e.g., 2014-01-01T00:00:00Z).",
+      "readOnly": true
+    },
+    "lastModifiedDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the message was last changed. Uses ISO 8601 format in UTC time.",
+      "readOnly": true
+    },
+    "changeKey": {
+      "type": "string",
+      "description": "The version of the message.",
+      "readOnly": true
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The categories associated with the message."
+    },
+    "receivedDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the message was received. Uses ISO 8601 format in UTC time."
+    },
+    "sentDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the message was sent. Uses ISO 8601 format in UTC time."
+    },
+    "hasAttachments": {
+      "type": "boolean",
+      "description": "Indicates whether the message has attachments. This property does not include inline attachments. To verify inline attachments, parse the body property for a src attribute."
+    },
+    "internetMessageId": {
+      "type": "string",
+      "description": "The message ID in the format specified by RFC 2822."
+    },
+    "internetMessageHeaders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/InternetMessageHeader"
+      },
+      "description": "A collection of message headers defined by RFC 5322. Includes custom message headers starting with 'x-'. Returned only on applying a $select query option."
+    },
+    "subject": {
+      "type": "string",
+      "description": "The subject of the message."
+    },
+    "body": {
+      "$ref": "#/$defs/ItemBody",
+      "description": "The body of the message. Can be in HTML or text format."
+    },
+    "bodyPreview": {
+      "type": "string",
+      "maxLength": 255,
+      "description": "The first 255 characters of the message body in text format.",
+      "readOnly": true
+    },
+    "importance": {
+      "type": "string",
+      "enum": ["low", "normal", "high"],
+      "description": "The importance of the message."
+    },
+    "parentFolderId": {
+      "type": "string",
+      "description": "The unique identifier for the message's parent mailFolder."
+    },
+    "conversationId": {
+      "type": "string",
+      "description": "The ID of the conversation the email belongs to."
+    },
+    "conversationIndex": {
+      "type": "string",
+      "contentEncoding": "base64",
+      "description": "Indicates the position of the message within the conversation. Binary value encoded as base64."
+    },
+    "isDeliveryReceiptRequested": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether a delivery receipt is requested for the message."
+    },
+    "isReadReceiptRequested": {
+      "type": "boolean",
+      "description": "Indicates whether a read receipt is requested for the message."
+    },
+    "isRead": {
+      "type": "boolean",
+      "description": "Indicates whether the message has been read."
+    },
+    "isDraft": {
+      "type": "boolean",
+      "description": "Indicates whether the message is a draft. A message is a draft if it has not been sent yet."
+    },
+    "webLink": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to open the message in Outlook on the web. Append ispopout=0 to show in the review pane instead of a popout window.",
+      "readOnly": true
+    },
+    "inferenceClassification": {
+      "type": "string",
+      "enum": ["focused", "other"],
+      "description": "The classification of the message for the user, based on inferred relevance or importance, or on an explicit override."
+    },
+    "flag": {
+      "$ref": "#/$defs/FollowupFlag",
+      "description": "The follow-up flag value indicating the status, start date, due date, or completion date for the message."
+    },
+    "from": {
+      "$ref": "#/$defs/Recipient",
+      "description": "The owner of the mailbox from which the message is sent. In most cases, this is the same as the sender property, except for sharing or delegation scenarios."
+    },
+    "sender": {
+      "$ref": "#/$defs/Recipient",
+      "description": "The account that is used to generate the message. In most cases, this is the same as the from property. Can differ when sending from a shared mailbox or as a delegate."
+    },
+    "toRecipients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Recipient"
+      },
+      "description": "The To: recipients for the message."
+    },
+    "ccRecipients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Recipient"
+      },
+      "description": "The Cc: recipients for the message."
+    },
+    "bccRecipients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Recipient"
+      },
+      "description": "The Bcc: recipients for the message."
+    },
+    "replyTo": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Recipient"
+      },
+      "description": "The email addresses to use when replying."
+    },
+    "uniqueBody": {
+      "$ref": "#/$defs/ItemBody",
+      "description": "The part of the body of the message that is unique to the current message. Not returned by default; use $select=uniqueBody."
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Attachment"
+      },
+      "description": "The fileAttachment and itemAttachment attachments for the message."
+    }
+  },
+  "$defs": {
+    "Recipient": {
+      "type": "object",
+      "title": "Recipient",
+      "description": "Represents information about a user in the context of a message (sender, from, to, cc, bcc, replyTo).",
+      "properties": {
+        "emailAddress": {
+          "$ref": "#/$defs/EmailAddress"
+        }
+      },
+      "required": ["emailAddress"]
+    },
+    "EmailAddress": {
+      "type": "object",
+      "title": "Email Address",
+      "description": "Represents the name and email address of a person or entity.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The display name of the person or entity."
+        },
+        "address": {
+          "type": "string",
+          "format": "email",
+          "description": "The email address of the person or entity."
+        }
+      },
+      "required": ["address"]
+    },
+    "ItemBody": {
+      "type": "object",
+      "title": "Item Body",
+      "description": "Represents the body content of a message, event, or other item.",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "enum": ["text", "html"],
+          "description": "The type of the content. Possible values are text and html."
+        },
+        "content": {
+          "type": "string",
+          "description": "The content of the item body."
+        }
+      },
+      "required": ["contentType", "content"]
+    },
+    "InternetMessageHeader": {
+      "type": "object",
+      "title": "Internet Message Header",
+      "description": "A key-value pair representing an Internet message header as defined by RFC 5322. Custom headers should start with 'x-'.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the message header."
+        },
+        "value": {
+          "type": "string",
+          "description": "The value for the message header."
+        }
+      },
+      "required": ["name", "value"]
+    },
+    "FollowupFlag": {
+      "type": "object",
+      "title": "Follow-up Flag",
+      "description": "Represents the follow-up flag status, start date, due date, or completion date for a message.",
+      "properties": {
+        "flagStatus": {
+          "type": "string",
+          "enum": ["notFlagged", "complete", "flagged"],
+          "description": "The follow-up status for the message."
+        },
+        "startDateTime": {
+          "$ref": "#/$defs/DateTimeTimeZone",
+          "description": "The date and time to start the follow up."
+        },
+        "dueDateTime": {
+          "$ref": "#/$defs/DateTimeTimeZone",
+          "description": "The date and time the follow up is due."
+        },
+        "completedDateTime": {
+          "$ref": "#/$defs/DateTimeTimeZone",
+          "description": "The date and time the follow up was completed."
+        }
+      },
+      "required": ["flagStatus"]
+    },
+    "DateTimeTimeZone": {
+      "type": "object",
+      "title": "DateTime with Time Zone",
+      "description": "Describes the date, time, and time zone of a point in time.",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "description": "A single point of time in a combined date and time representation (e.g., 2017-08-29T04:00:00.0000000)."
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "Represents a time zone (e.g., Pacific Standard Time). See supported time zones."
+        }
+      },
+      "required": ["dateTime", "timeZone"]
+    },
+    "Attachment": {
+      "type": "object",
+      "title": "Attachment",
+      "description": "Base type for file, item, and reference attachments on a message. Use @odata.type to distinguish between types.",
+      "properties": {
+        "@odata.type": {
+          "type": "string",
+          "enum": [
+            "#microsoft.graph.fileAttachment",
+            "#microsoft.graph.itemAttachment",
+            "#microsoft.graph.referenceAttachment"
+          ],
+          "description": "The OData type discriminator for the attachment."
+        },
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the attachment.",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the attachment. Does not need to be the actual file name."
+        },
+        "contentType": {
+          "type": "string",
+          "description": "The MIME type of the attachment."
+        },
+        "size": {
+          "type": "integer",
+          "description": "The length of the attachment in bytes."
+        },
+        "isInline": {
+          "type": "boolean",
+          "description": "True if the attachment is an inline attachment; otherwise, false."
+        },
+        "lastModifiedDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time the attachment was last modified in UTC (ISO 8601)."
+        },
+        "contentBytes": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "description": "The base64-encoded contents of the file. Only for fileAttachment type."
+        },
+        "contentId": {
+          "type": ["string", "null"],
+          "description": "The ID of the attachment in the Exchange store. Only for fileAttachment type."
+        },
+        "contentLocation": {
+          "type": ["string", "null"],
+          "description": "The URI corresponding to the location of the content of the attachment."
+        }
+      },
+      "required": ["@odata.type"]
+    },
+    "MailFolder": {
+      "type": "object",
+      "title": "Mail Folder",
+      "description": "A mail folder in a user's mailbox, such as Inbox and Drafts. Mail folders can contain messages, other Outlook items, and child mail folders.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the mail folder.",
+          "readOnly": true
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The mail folder's display name."
+        },
+        "parentFolderId": {
+          "type": "string",
+          "description": "The unique identifier for the parent mail folder."
+        },
+        "childFolderCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The number of immediate child mail folders."
+        },
+        "unreadItemCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The number of items marked as unread in the folder."
+        },
+        "totalItemCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The number of items in the folder."
+        },
+        "isHidden": {
+          "type": "boolean",
+          "description": "Indicates whether the mail folder is hidden. Can only be set when creating the folder."
+        }
+      }
+    }
+  }
+}

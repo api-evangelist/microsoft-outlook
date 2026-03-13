@@ -1,0 +1,1516 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Graph Mail API
+  description: >-
+    API for accessing Outlook email messages, mail folders, and attachments
+    through Microsoft Graph. Provides full CRUD operations on messages,
+    mail folder management, attachment handling, and message actions such
+    as send, reply, forward, copy, and move.
+  version: 1.0.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph/support
+  license:
+    name: Microsoft API Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  x-api-id: microsoft-graph-mail
+  x-audience: external
+
+servers:
+  - url: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph v1.0 production endpoint
+
+security:
+  - oauth2: []
+
+tags:
+  - name: Messages
+    description: Operations on email messages in a user mailbox
+  - name: Mail Folders
+    description: Operations on mail folders in a user mailbox
+  - name: Attachments
+    description: Operations on message attachments
+
+paths:
+  /me/messages:
+    get:
+      operationId: listMessages
+      summary: List messages
+      description: >-
+        Get all the messages in the signed-in user's mailbox including the
+        Deleted Items and Clutter folders. Supports OData query parameters
+        including $filter, $select, $top, $skip, $orderby, and $count.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/select'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderby'
+        - $ref: '#/components/parameters/count'
+        - $ref: '#/components/parameters/search'
+      responses:
+        '200':
+          description: Successfully retrieved messages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createDraftMessage
+      summary: Create draft message
+      description: >-
+        Create a draft of a new message in the signed-in user's mailbox.
+        The message is saved in the Drafts folder. You can then update or
+        send the draft.
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '201':
+          description: Successfully created draft message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}:
+    get:
+      operationId: getMessage
+      summary: Get message
+      description: >-
+        Read the properties and relationships of a message object. Supports
+        $select and $expand query parameters. Use $select=internetMessageHeaders
+        to get custom internet message headers.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+        - $ref: '#/components/parameters/select'
+      responses:
+        '200':
+          description: Successfully retrieved message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    patch:
+      operationId: updateMessage
+      summary: Update message
+      description: >-
+        Update the properties of a message object. Only draft messages can
+        have their toRecipients, ccRecipients, bccRecipients, subject, body,
+        and other content properties updated. Sent messages can have isRead
+        and categories updated.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '200':
+          description: Successfully updated message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    delete:
+      operationId: deleteMessage
+      summary: Delete message
+      description: >-
+        Delete a message in the specified user's mailbox. The message is moved
+        to the Deleted Items folder.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        '204':
+          description: Successfully deleted message.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/send:
+    post:
+      operationId: sendDraftMessage
+      summary: Send draft message
+      description: >-
+        Send a previously created message draft. The message is then saved
+        in the Sent Items folder.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      responses:
+        '202':
+          description: Accepted. The message is queued for sending.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/copy:
+    post:
+      operationId: copyMessage
+      summary: Copy message
+      description: >-
+        Copy a message to a folder within the user's mailbox.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destinationId:
+                  type: string
+                  description: The destination folder ID or well-known folder name.
+              required:
+                - destinationId
+      responses:
+        '201':
+          description: Successfully copied message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/move:
+    post:
+      operationId: moveMessage
+      summary: Move message
+      description: >-
+        Move a message to a different folder within the user's mailbox. This
+        creates a new copy of the message in the destination folder and removes
+        the original message.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destinationId:
+                  type: string
+                  description: The destination folder ID or well-known folder name.
+              required:
+                - destinationId
+      responses:
+        '201':
+          description: Successfully moved message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/reply:
+    post:
+      operationId: replyToMessage
+      summary: Reply to message
+      description: >-
+        Reply to the sender of a message using either JSON or MIME format.
+        The message is then saved in the Sent Items folder.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                comment:
+                  type: string
+                  description: A comment to include with the reply.
+      responses:
+        '202':
+          description: Accepted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/replyAll:
+    post:
+      operationId: replyAllToMessage
+      summary: Reply all to message
+      description: >-
+        Reply to all recipients of a message. The message is then saved in
+        the Sent Items folder.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                comment:
+                  type: string
+                  description: A comment to include with the reply.
+      responses:
+        '202':
+          description: Accepted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/forward:
+    post:
+      operationId: forwardMessage
+      summary: Forward message
+      description: >-
+        Forward a message. The message is then saved in the Sent Items folder.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                comment:
+                  type: string
+                  description: A comment to include when forwarding.
+                toRecipients:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Recipient'
+                  description: Recipients to forward the message to.
+              required:
+                - toRecipients
+      responses:
+        '202':
+          description: Accepted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/createForward:
+    post:
+      operationId: createForwardDraft
+      summary: Create draft to forward message
+      description: >-
+        Create a draft of the forward message. You can then update or send
+        the draft.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                comment:
+                  type: string
+                toRecipients:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Recipient'
+      responses:
+        '201':
+          description: Successfully created forward draft.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /me/messages/{message-id}/createReply:
+    post:
+      operationId: createReplyDraft
+      summary: Create draft to reply
+      description: >-
+        Create a draft of the reply message. You can then update or send
+        the draft.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                comment:
+                  type: string
+      responses:
+        '201':
+          description: Successfully created reply draft.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /me/messages/{message-id}/createReplyAll:
+    post:
+      operationId: createReplyAllDraft
+      summary: Create draft to reply all
+      description: >-
+        Create a draft of the reply-all message. You can then update or send
+        the draft.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                comment:
+                  type: string
+      responses:
+        '201':
+          description: Successfully created reply-all draft.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /me/sendMail:
+    post:
+      operationId: sendMail
+      summary: Send mail
+      description: >-
+        Send the message specified in the request body using either JSON or
+        MIME format. The message is saved in the Sent Items folder by default.
+      tags:
+        - Messages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/Message'
+                saveToSentItems:
+                  type: boolean
+                  description: Whether to save the message in Sent Items. Default is true.
+                  default: true
+              required:
+                - message
+      responses:
+        '202':
+          description: Accepted.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/mailFolders:
+    get:
+      operationId: listMailFolders
+      summary: List mail folders
+      description: >-
+        Get all the mail folders in the specified user's mailbox, including
+        any mail search folders. Use the includeHiddenFolders query parameter
+        to include hidden folders.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/select'
+        - $ref: '#/components/parameters/filter'
+        - name: includeHiddenFolders
+          in: query
+          description: Include hidden mail folders in the response.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved mail folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolderCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: createMailFolder
+      summary: Create mail folder
+      description: >-
+        Create a new mail folder in the root folder of the user's mailbox.
+      tags:
+        - Mail Folders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolder'
+      responses:
+        '201':
+          description: Successfully created mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/mailFolders/{mailFolder-id}:
+    get:
+      operationId: getMailFolder
+      summary: Get mail folder
+      description: >-
+        Read the properties and relationships of a mail folder object.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+        - $ref: '#/components/parameters/select'
+      responses:
+        '200':
+          description: Successfully retrieved mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    patch:
+      operationId: updateMailFolder
+      summary: Update mail folder
+      description: >-
+        Update the properties of a mail folder object.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolder'
+      responses:
+        '200':
+          description: Successfully updated mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    delete:
+      operationId: deleteMailFolder
+      summary: Delete mail folder
+      description: >-
+        Delete the specified mail folder. The folder can be a mailSearchFolder.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+      responses:
+        '204':
+          description: Successfully deleted mail folder.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/mailFolders/{mailFolder-id}/childFolders:
+    get:
+      operationId: listChildFolders
+      summary: List child folders
+      description: >-
+        Get the folder collection under the specified folder.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+      responses:
+        '200':
+          description: Successfully retrieved child folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolderCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: createChildFolder
+      summary: Create child folder
+      description: >-
+        Create a new child mail folder under the specified folder.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolder'
+      responses:
+        '201':
+          description: Successfully created child folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/mailFolders/{mailFolder-id}/messages:
+    get:
+      operationId: listMessagesInFolder
+      summary: List messages in folder
+      description: >-
+        Get all the messages in the specified mail folder.
+      tags:
+        - Mail Folders
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+        - $ref: '#/components/parameters/top'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/select'
+        - $ref: '#/components/parameters/filter'
+        - $ref: '#/components/parameters/orderby'
+      responses:
+        '200':
+          description: Successfully retrieved messages from folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: createMessageInFolder
+      summary: Create message in folder
+      description: >-
+        Create a new message draft in the specified mail folder.
+      tags:
+        - Mail Folders
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '201':
+          description: Successfully created message in folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/mailFolders/{mailFolder-id}/copy:
+    post:
+      operationId: copyMailFolder
+      summary: Copy mail folder
+      description: >-
+        Copy a mail folder and its contents to another mail folder.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destinationId:
+                  type: string
+                  description: The destination folder ID or well-known folder name.
+              required:
+                - destinationId
+      responses:
+        '200':
+          description: Successfully copied mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/mailFolders/{mailFolder-id}/move:
+    post:
+      operationId: moveMailFolder
+      summary: Move mail folder
+      description: >-
+        Move a mail folder and its contents to another mail folder.
+      tags:
+        - Mail Folders
+      parameters:
+        - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destinationId:
+                  type: string
+                  description: The destination folder ID or well-known folder name.
+              required:
+                - destinationId
+      responses:
+        '200':
+          description: Successfully moved mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/attachments:
+    get:
+      operationId: listAttachments
+      summary: List attachments
+      description: >-
+        Retrieve a list of attachment objects attached to a message.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+        - $ref: '#/components/parameters/select'
+        - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Successfully retrieved attachments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentCollectionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    post:
+      operationId: addAttachment
+      summary: Add attachment
+      description: >-
+        Add a file, item, or link attachment to a message. This operation
+        limits the size of the attachment to under 3 MB. For larger files
+        (3 MB to 150 MB), use the upload session endpoint.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+      responses:
+        '201':
+          description: Successfully added attachment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/attachments/{attachment-id}:
+    get:
+      operationId: getAttachment
+      summary: Get attachment
+      description: >-
+        Read the properties, relationships, or raw contents of an attachment
+        attached to a message.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+        - $ref: '#/components/parameters/attachmentId'
+        - $ref: '#/components/parameters/select'
+      responses:
+        '200':
+          description: Successfully retrieved attachment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    delete:
+      operationId: deleteAttachment
+      summary: Delete attachment
+      description: >-
+        Delete an attachment from a message.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+        - $ref: '#/components/parameters/attachmentId'
+      responses:
+        '204':
+          description: Successfully deleted attachment.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /me/messages/{message-id}/attachments/createUploadSession:
+    post:
+      operationId: createAttachmentUploadSession
+      summary: Create upload session for large attachment
+      description: >-
+        Create an upload session that allows an app to iteratively upload
+        ranges of a file to attach it to a message. The file size must be
+        between 3 MB and 150 MB.
+      tags:
+        - Attachments
+      parameters:
+        - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AttachmentItem:
+                  type: object
+                  properties:
+                    attachmentType:
+                      type: string
+                      enum:
+                        - file
+                        - item
+                        - reference
+                    name:
+                      type: string
+                      description: The display name of the attachment.
+                    size:
+                      type: integer
+                      format: int64
+                      description: The size of the attachment in bytes.
+                    contentType:
+                      type: string
+                      description: The MIME type of the attachment.
+                  required:
+                    - attachmentType
+                    - name
+                    - size
+              required:
+                - AttachmentItem
+      responses:
+        '201':
+          description: Successfully created upload session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadSession'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        Microsoft identity platform OAuth 2.0 authorization. Supports
+        delegated (user) and application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            Mail.Read: Read user mail
+            Mail.ReadWrite: Read and write access to user mail
+            Mail.Send: Send mail as a user
+            Mail.ReadBasic: Read user basic mail
+            Mail.Read.Shared: Read mail in shared mailboxes
+            Mail.ReadWrite.Shared: Read and write mail in shared mailboxes
+
+  parameters:
+    messageId:
+      name: message-id
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+    mailFolderId:
+      name: mailFolder-id
+      in: path
+      required: true
+      description: >-
+        The unique identifier of the mail folder, or a well-known folder name
+        such as inbox, drafts, sentitems, deleteditems, archive, junkemail,
+        or outbox.
+      schema:
+        type: string
+    attachmentId:
+      name: attachment-id
+      in: path
+      required: true
+      description: The unique identifier of the attachment.
+      schema:
+        type: string
+    top:
+      name: $top
+      in: query
+      description: Sets the page size of results.
+      schema:
+        type: integer
+        minimum: 1
+    skip:
+      name: $skip
+      in: query
+      description: Number of items to skip for pagination.
+      schema:
+        type: integer
+        minimum: 0
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
+    orderby:
+      name: $orderby
+      in: query
+      description: Comma-separated list of properties to sort results by.
+      schema:
+        type: string
+    count:
+      name: $count
+      in: query
+      description: Include count of the matching resources.
+      schema:
+        type: boolean
+    search:
+      name: $search
+      in: query
+      description: Search string to filter results.
+      schema:
+        type: string
+
+  schemas:
+    Message:
+      type: object
+      description: A message in a mailFolder.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the message. Read-only.
+          readOnly: true
+        createdDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was created in UTC (ISO 8601).
+          readOnly: true
+        lastModifiedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was last changed in UTC (ISO 8601).
+          readOnly: true
+        changeKey:
+          type: string
+          description: The version of the message.
+          readOnly: true
+        categories:
+          type: array
+          items:
+            type: string
+          description: The categories associated with the message.
+        receivedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was received in UTC (ISO 8601).
+        sentDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was sent in UTC (ISO 8601).
+        hasAttachments:
+          type: boolean
+          description: >-
+            Indicates whether the message has attachments. Does not include
+            inline attachments.
+        internetMessageId:
+          type: string
+          description: The message ID in the format specified by RFC 2822.
+        internetMessageHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternetMessageHeader'
+          description: >-
+            Collection of message headers defined by RFC 5322. Returned only
+            on applying a $select query option.
+        subject:
+          type: string
+          description: The subject of the message.
+        body:
+          $ref: '#/components/schemas/ItemBody'
+        bodyPreview:
+          type: string
+          description: The first 255 characters of the message body in text format.
+          readOnly: true
+        importance:
+          type: string
+          enum:
+            - low
+            - normal
+            - high
+          description: The importance of the message.
+        parentFolderId:
+          type: string
+          description: The unique identifier for the message's parent mailFolder.
+        conversationId:
+          type: string
+          description: The ID of the conversation the email belongs to.
+        conversationIndex:
+          type: string
+          format: binary
+          description: Indicates the position of the message within the conversation.
+        isDeliveryReceiptRequested:
+          type: boolean
+          description: Indicates whether a delivery receipt is requested.
+        isReadReceiptRequested:
+          type: boolean
+          description: Indicates whether a read receipt is requested.
+        isRead:
+          type: boolean
+          description: Indicates whether the message has been read.
+        isDraft:
+          type: boolean
+          description: Indicates whether the message is a draft.
+        webLink:
+          type: string
+          format: uri
+          description: The URL to open the message in Outlook on the web.
+          readOnly: true
+        inferenceClassification:
+          type: string
+          enum:
+            - focused
+            - other
+          description: >-
+            The classification of the message based on inferred relevance or
+            importance, or on an explicit override.
+        flag:
+          $ref: '#/components/schemas/FollowupFlag'
+        from:
+          $ref: '#/components/schemas/Recipient'
+        sender:
+          $ref: '#/components/schemas/Recipient'
+        toRecipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The To recipients for the message.
+        ccRecipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The Cc recipients for the message.
+        bccRecipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The Bcc recipients for the message.
+        replyTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The email addresses to use when replying.
+        uniqueBody:
+          $ref: '#/components/schemas/ItemBody'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          description: The fileAttachment and itemAttachment attachments for the message.
+
+    MailFolder:
+      type: object
+      description: >-
+        A mail folder in a user's mailbox, such as Inbox and Drafts. Mail
+        folders can contain messages, other Outlook items, and child mail
+        folders.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the mail folder. Read-only.
+          readOnly: true
+        displayName:
+          type: string
+          description: The mail folder's display name.
+        parentFolderId:
+          type: string
+          description: The unique identifier for the parent mail folder.
+        childFolderCount:
+          type: integer
+          format: int32
+          description: The number of immediate child mail folders in the current folder.
+        unreadItemCount:
+          type: integer
+          format: int32
+          description: The number of items marked as unread in the folder.
+        totalItemCount:
+          type: integer
+          format: int32
+          description: The number of items in the folder.
+        isHidden:
+          type: boolean
+          description: >-
+            Indicates whether the mail folder is hidden. Can only be set when
+            creating the folder.
+
+    Attachment:
+      type: object
+      description: >-
+        Base resource for file, item, and reference attachments. Use the
+        @odata.type property to specify the derived type.
+      properties:
+        '@odata.type':
+          type: string
+          description: >-
+            The OData type of the attachment. Use
+            #microsoft.graph.fileAttachment for file attachments or
+            #microsoft.graph.itemAttachment for item attachments.
+          enum:
+            - '#microsoft.graph.fileAttachment'
+            - '#microsoft.graph.itemAttachment'
+            - '#microsoft.graph.referenceAttachment'
+        id:
+          type: string
+          description: The unique identifier of the attachment. Read-only.
+          readOnly: true
+        name:
+          type: string
+          description: The display name of the attachment.
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+        size:
+          type: integer
+          format: int32
+          description: The length of the attachment in bytes.
+        isInline:
+          type: boolean
+          description: True if the attachment is an inline attachment.
+        lastModifiedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the attachment was last modified in UTC.
+        contentBytes:
+          type: string
+          format: byte
+          description: >-
+            The base64-encoded contents of the file. Only applicable for
+            fileAttachment.
+        contentId:
+          type: string
+          description: >-
+            The ID of the attachment in the Exchange store. Only applicable
+            for fileAttachment.
+        contentLocation:
+          type: string
+          description: >-
+            The Uniform Resource Identifier (URI) corresponding to the
+            location of the content of the attachment.
+
+    Recipient:
+      type: object
+      description: Represents information about a user or contact in a message.
+      properties:
+        emailAddress:
+          $ref: '#/components/schemas/EmailAddress'
+
+    EmailAddress:
+      type: object
+      description: Represents an email address entity.
+      properties:
+        name:
+          type: string
+          description: The display name of the person or entity.
+        address:
+          type: string
+          format: email
+          description: The email address of the person or entity.
+
+    ItemBody:
+      type: object
+      description: Represents the body content of a message.
+      properties:
+        contentType:
+          type: string
+          enum:
+            - text
+            - html
+          description: The type of the content. Possible values are text and html.
+        content:
+          type: string
+          description: The content of the item body.
+
+    InternetMessageHeader:
+      type: object
+      description: >-
+        A key-value pair representing an Internet message header as defined
+        by RFC 5322.
+      properties:
+        name:
+          type: string
+          description: The name of the message header.
+        value:
+          type: string
+          description: The value of the message header.
+
+    FollowupFlag:
+      type: object
+      description: Represents the follow-up flag status on a message.
+      properties:
+        completedDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        dueDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        startDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        flagStatus:
+          type: string
+          enum:
+            - notFlagged
+            - complete
+            - flagged
+          description: The follow-up status.
+
+    DateTimeTimeZone:
+      type: object
+      description: A date-time value with a time zone designation.
+      properties:
+        dateTime:
+          type: string
+          description: >-
+            A single point of time in a combined date and time representation
+            (e.g. 2017-08-29T04:00:00.0000000).
+        timeZone:
+          type: string
+          description: >-
+            Represents a time zone, for example, Pacific Standard Time.
+
+    UploadSession:
+      type: object
+      description: Represents the upload session for iterative file upload.
+      properties:
+        uploadUrl:
+          type: string
+          format: uri
+          description: The URL endpoint that accepts PUT requests for byte ranges of the file.
+        expirationDateTime:
+          type: string
+          format: date-time
+          description: The date and time in UTC that the upload session will expire.
+        nextExpectedRanges:
+          type: array
+          items:
+            type: string
+          description: >-
+            A collection of byte ranges that the server is missing for the file,
+            such as "0-25", "128-500".
+
+    MessageCollectionResponse:
+      type: object
+      description: Collection of message resources with optional pagination link.
+      properties:
+        '@odata.context':
+          type: string
+          description: The OData context URL.
+        '@odata.count':
+          type: integer
+          description: The total count of matching resources.
+        '@odata.nextLink':
+          type: string
+          format: uri
+          description: The URL for the next page of results.
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+
+    MailFolderCollectionResponse:
+      type: object
+      description: Collection of mail folder resources with optional pagination link.
+      properties:
+        '@odata.context':
+          type: string
+        '@odata.nextLink':
+          type: string
+          format: uri
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailFolder'
+
+    AttachmentCollectionResponse:
+      type: object
+      description: Collection of attachment resources.
+      properties:
+        '@odata.context':
+          type: string
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+
+    ODataError:
+      type: object
+      description: OData error response from Microsoft Graph.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The error code.
+            message:
+              type: string
+              description: The error message.
+            innerError:
+              type: object
+              properties:
+                request-id:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Forbidden:
+      description: Forbidden. The caller does not have sufficient permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'

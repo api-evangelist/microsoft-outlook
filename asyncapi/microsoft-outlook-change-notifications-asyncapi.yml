@@ -1,0 +1,456 @@
+asyncapi: 3.0.0
+info:
+  title: Microsoft Outlook Change Notifications
+  version: 1.0.0
+  description: >-
+    AsyncAPI specification for Microsoft Graph change notifications (webhooks)
+    for Outlook mail resources. Enables real-time event-driven architecture
+    by subscribing to changes in messages, mail folders, contacts, and calendar
+    events through the Microsoft Graph subscriptions API.
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph/support
+  license:
+    name: Microsoft API Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  externalDocs:
+    description: Microsoft Graph Change Notifications Documentation
+    url: https://learn.microsoft.com/en-us/graph/change-notifications-overview
+  tags:
+    - name: mail
+      description: Change notifications for Outlook mail messages
+    - name: webhooks
+      description: Webhook-based push notifications
+    - name: subscriptions
+      description: Subscription management for change notifications
+
+servers:
+  graphApi:
+    host: graph.microsoft.com
+    pathname: /v1.0
+    protocol: https
+    description: >-
+      Microsoft Graph v1.0 endpoint for creating and managing webhook
+      subscriptions. Applications POST subscription requests to this server
+      to register for change notifications.
+    security:
+      - $ref: '#/components/securitySchemes/oauth2'
+
+  webhookEndpoint:
+    host: '{webhookHost}'
+    pathname: '{webhookPath}'
+    protocol: https
+    description: >-
+      The application-provided HTTPS endpoint that receives change notification
+      payloads from Microsoft Graph. Must be publicly accessible and respond
+      to validation requests.
+    variables:
+      webhookHost:
+        description: The hostname of your webhook receiver endpoint.
+      webhookPath:
+        description: The path of your webhook receiver endpoint.
+
+channels:
+  messageChanged:
+    address: /me/messages
+    title: Message Change Notifications
+    description: >-
+      Receives notifications when messages in the signed-in user's mailbox
+      are created, updated, or deleted. Subscribe to this resource path via
+      POST /subscriptions on the Microsoft Graph API.
+    messages:
+      messageChangeNotification:
+        $ref: '#/components/messages/ChangeNotificationCollection'
+    parameters:
+      resource:
+        description: The Microsoft Graph resource path being monitored.
+        default: me/messages
+
+  mailFolderChanged:
+    address: /me/mailFolders
+    title: Mail Folder Change Notifications
+    description: >-
+      Receives notifications when mail folders in the user's mailbox are
+      created, updated, or deleted.
+    messages:
+      folderChangeNotification:
+        $ref: '#/components/messages/ChangeNotificationCollection'
+
+  userMailChanged:
+    address: /users/{userId}/messages
+    title: User Message Change Notifications (Application Permission)
+    description: >-
+      Receives notifications when messages in a specific user's mailbox are
+      created, updated, or deleted. Requires application permissions
+      (Mail.Read) rather than delegated permissions.
+    parameters:
+      userId:
+        description: The unique identifier or UPN of the target user.
+    messages:
+      userMailChangeNotification:
+        $ref: '#/components/messages/ChangeNotificationCollection'
+
+  subscriptionLifecycle:
+    address: /lifecycleNotifications
+    title: Subscription Lifecycle Notifications
+    description: >-
+      Receives lifecycle events for subscriptions including missed
+      notifications, subscription removal, and reauthorization requirements.
+      Configure via the lifecycleNotificationUrl property on the subscription.
+    messages:
+      lifecycleNotification:
+        $ref: '#/components/messages/LifecycleNotification'
+
+operations:
+  onMessageCreated:
+    action: receive
+    channel:
+      $ref: '#/channels/messageChanged'
+    title: Message Created
+    summary: >-
+      Triggered when a new message is created in the user's mailbox.
+    description: >-
+      A change notification is sent when a new message arrives in any folder
+      of the subscribed mailbox. The notification includes the resource URI
+      of the new message. Set changeType to "created" in the subscription.
+    messages:
+      - $ref: '#/channels/messageChanged/messages/messageChangeNotification'
+
+  onMessageUpdated:
+    action: receive
+    channel:
+      $ref: '#/channels/messageChanged'
+    title: Message Updated
+    summary: >-
+      Triggered when a message is updated (e.g., marked as read, flagged,
+      moved to a different folder).
+    description: >-
+      A change notification is sent when an existing message's properties
+      change. Set changeType to "updated" in the subscription.
+    messages:
+      - $ref: '#/channels/messageChanged/messages/messageChangeNotification'
+
+  onMessageDeleted:
+    action: receive
+    channel:
+      $ref: '#/channels/messageChanged'
+    title: Message Deleted
+    summary: >-
+      Triggered when a message is deleted from the user's mailbox.
+    description: >-
+      A change notification is sent when a message is soft-deleted (moved to
+      Deleted Items) or hard-deleted. Set changeType to "deleted" in the
+      subscription.
+    messages:
+      - $ref: '#/channels/messageChanged/messages/messageChangeNotification'
+
+  onSubscriptionLifecycleEvent:
+    action: receive
+    channel:
+      $ref: '#/channels/subscriptionLifecycle'
+    title: Subscription Lifecycle Event
+    summary: >-
+      Triggered when a subscription lifecycle event occurs such as missed
+      notifications or reauthorization required.
+    messages:
+      - $ref: '#/channels/subscriptionLifecycle/messages/lifecycleNotification'
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        Microsoft identity platform OAuth 2.0 authorization for managing
+        subscriptions and receiving change notifications.
+      flows:
+        clientCredentials:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          availableScopes:
+            Mail.Read: Read mail in all mailboxes (application permission)
+            Mail.ReadWrite: Read and write mail in all mailboxes
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          availableScopes:
+            Mail.Read: Read user mail (delegated)
+            Mail.ReadWrite: Read and write access to user mail (delegated)
+
+  messages:
+    ChangeNotificationCollection:
+      name: changeNotificationCollection
+      title: Change Notification Collection
+      summary: >-
+        A collection of one or more change notifications delivered as a batch
+        to the webhook endpoint via HTTP POST.
+      description: >-
+        Microsoft Graph delivers change notifications in batches. Each HTTP
+        POST to your notification URL contains a JSON payload with a value
+        array of changeNotification objects. Your endpoint must respond with
+        HTTP 202 Accepted within 3 seconds.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ChangeNotificationCollectionPayload'
+
+    LifecycleNotification:
+      name: lifecycleNotification
+      title: Lifecycle Notification
+      summary: >-
+        A lifecycle notification indicating a subscription state change.
+      description: >-
+        Lifecycle notifications inform the application about events like
+        missed notifications, subscription removal due to policy, or
+        reauthorization requirements. Delivered to the lifecycleNotificationUrl
+        configured on the subscription.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/LifecycleNotificationPayload'
+
+    SubscriptionValidation:
+      name: subscriptionValidation
+      title: Subscription Validation Request
+      summary: >-
+        Validation request sent by Microsoft Graph when creating a new
+        subscription to verify the notification URL.
+      description: >-
+        When a subscription is created, Microsoft Graph sends a POST request
+        to the notificationUrl with a validationToken query parameter. The
+        endpoint must respond with HTTP 200 and the validationToken value
+        as plain text in the response body within 10 seconds.
+      contentType: text/plain
+      payload:
+        type: string
+        description: The validation token that must be echoed back.
+
+  schemas:
+    ChangeNotificationCollectionPayload:
+      type: object
+      description: >-
+        The top-level payload delivered to the webhook endpoint containing
+        an array of change notifications.
+      properties:
+        value:
+          type: array
+          description: The collection of change notifications in this batch.
+          items:
+            $ref: '#/components/schemas/ChangeNotification'
+      required:
+        - value
+
+    ChangeNotification:
+      type: object
+      description: >-
+        Represents a single change notification sent to the subscriber
+        application for a Microsoft Graph subscription.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the notification.
+        subscriptionId:
+          type: string
+          format: uuid
+          description: The unique identifier of the subscription that generated this notification.
+        subscriptionExpirationDateTime:
+          type: string
+          format: date-time
+          description: The expiration date and time of the subscription in UTC.
+        changeType:
+          type: string
+          enum:
+            - created
+            - updated
+            - deleted
+          description: The type of change that triggered the notification.
+        clientState:
+          type: string
+          description: >-
+            The value of the clientState property sent in the subscription
+            request. Maximum 255 characters. Use this to validate that the
+            notification originated from Microsoft Graph.
+        resource:
+          type: string
+          description: >-
+            The URI of the resource that emitted the change notification,
+            relative to https://graph.microsoft.com/v1.0.
+          examples:
+            - users/{userId}/messages/{messageId}
+            - me/messages/{messageId}
+        resourceData:
+          $ref: '#/components/schemas/ResourceData'
+        tenantId:
+          type: string
+          format: uuid
+          description: The unique identifier of the Azure AD tenant.
+        encryptedContent:
+          $ref: '#/components/schemas/ChangeNotificationEncryptedContent'
+      required:
+        - subscriptionId
+        - changeType
+        - resource
+        - subscriptionExpirationDateTime
+        - tenantId
+
+    ResourceData:
+      type: object
+      description: >-
+        Properties of the resource that triggered the notification. The
+        content depends on the resource type being subscribed to.
+      properties:
+        '@odata.type':
+          type: string
+          description: The OData entity type in Microsoft Graph of the resource.
+          examples:
+            - '#microsoft.graph.message'
+        '@odata.id':
+          type: string
+          description: The OData identifier of the resource.
+        '@odata.etag':
+          type: string
+          description: The HTTP entity tag representing the version of the resource.
+        id:
+          type: string
+          description: The identifier of the resource.
+
+    ChangeNotificationEncryptedContent:
+      type: object
+      description: >-
+        Encrypted resource data attached with the change notification. Only
+        provided if encryptionCertificate and includeResourceData were set
+        on the subscription.
+      properties:
+        data:
+          type: string
+          description: Base64-encoded encrypted data producing a full JSON resource.
+        dataSignature:
+          type: string
+          description: Base64-encoded HMAC-SHA256 hash of the data for validation.
+        dataKey:
+          type: string
+          description: Base64-encoded symmetric key generated by Microsoft Graph to encrypt the data value and generate the data signature.
+        encryptionCertificateId:
+          type: string
+          description: The ID of the certificate used to encrypt the dataKey.
+        encryptionCertificateThumbprint:
+          type: string
+          description: Hexadecimal representation of the thumbprint of the certificate used to encrypt the dataKey.
+
+    LifecycleNotificationPayload:
+      type: object
+      description: >-
+        Payload for subscription lifecycle notifications.
+      properties:
+        value:
+          type: array
+          items:
+            type: object
+            properties:
+              subscriptionId:
+                type: string
+                format: uuid
+                description: The subscription that this lifecycle event relates to.
+              subscriptionExpirationDateTime:
+                type: string
+                format: date-time
+                description: The expiration date and time of the subscription.
+              clientState:
+                type: string
+                description: The client state value from the subscription.
+              tenantId:
+                type: string
+                format: uuid
+                description: The Azure AD tenant identifier.
+              resource:
+                type: string
+                description: The resource path of the subscription.
+              lifecycleEvent:
+                type: string
+                enum:
+                  - missed
+                  - subscriptionRemoved
+                  - reauthorizationRequired
+                description: The type of lifecycle event.
+            required:
+              - subscriptionId
+              - lifecycleEvent
+              - tenantId
+
+    Subscription:
+      type: object
+      description: >-
+        Represents a webhook subscription created via the Microsoft Graph
+        subscriptions API. Applications create subscriptions to receive
+        change notifications when data changes.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the subscription. Read-only.
+          readOnly: true
+        resource:
+          type: string
+          description: >-
+            The resource that is monitored for changes. Do not include the
+            base URL (https://graph.microsoft.com/v1.0/).
+          examples:
+            - me/messages
+            - me/mailFolders('inbox')/messages
+            - users/{id}/messages
+        changeType:
+          type: string
+          description: >-
+            The type of change in the subscribed resource that raises a
+            notification. Multiple values can be combined with comma separation.
+          examples:
+            - created
+            - updated
+            - deleted
+            - created,updated,deleted
+        notificationUrl:
+          type: string
+          format: uri
+          description: The HTTPS URL of the endpoint that receives change notifications.
+        expirationDateTime:
+          type: string
+          format: date-time
+          description: >-
+            The date and time when the subscription expires in UTC. Maximum
+            for Outlook messages is 4230 minutes (under 3 days). For rich
+            notifications (includeResourceData=true), maximum is 1 day.
+        clientState:
+          type: string
+          maxLength: 128
+          description: >-
+            A client-provided value included in each notification for
+            validation. Maximum 128 characters.
+        lifecycleNotificationUrl:
+          type: string
+          format: uri
+          description: >-
+            The HTTPS URL that receives lifecycle notifications including
+            subscriptionRemoved, reauthorizationRequired, and missed events.
+        includeResourceData:
+          type: boolean
+          description: >-
+            When true, change notifications include resource data (rich
+            notifications). Requires encryptionCertificate.
+        encryptionCertificate:
+          type: string
+          description: >-
+            A base64-encoded certificate with a public key used to encrypt
+            resource data in change notifications. Required when
+            includeResourceData is true.
+        encryptionCertificateId:
+          type: string
+          description: A custom identifier to help identify the decryption certificate.
+        applicationId:
+          type: string
+          description: Identifier of the application used to create the subscription. Read-only.
+          readOnly: true
+        creatorId:
+          type: string
+          description: Identifier of the user or service principal that created the subscription. Read-only.
+          readOnly: true
+      required:
+        - resource
+        - changeType
+        - notificationUrl
+        - expirationDateTime
