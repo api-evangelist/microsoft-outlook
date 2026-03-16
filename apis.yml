@@ -1,9 +1,10 @@
+aid: microsoft-outlook
 name: Microsoft Outlook
 description: Microsoft Outlook is a personal information manager and email client that is part of the Microsoft Office suite. It provides email, calendar, contact management, task management, and other productivity features.
 image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2019/11/Outlook-logo.png
 created: '2024'
-modified: '2026-03-03'
-specificationVersion: '0.18'
+modified: '2026-03-16'
+specificationVersion: '0.19'
 url: https://outlook.office.com
 apis:
 - name: Microsoft Graph Mail API
