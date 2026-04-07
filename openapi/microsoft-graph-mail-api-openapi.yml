@@ -24,13 +24,13 @@ security:
   - oauth2: []
 
 tags:
-  - name: Messages
-    description: Operations on email messages in a user mailbox
-  - name: Mail Folders
-    description: Operations on mail folders in a user mailbox
   - name: Attachments
     description: Operations on message attachments
 
+  - name: Mail Folders
+    description: Operations on mail folders in a user mailbox
+  - name: Messages
+    description: Operations on email messages in a user mailbox
 paths:
   /me/messages:
     get:
