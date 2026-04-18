@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MailFolder",
+  "type": "object",
+  "description": "A mail folder in a user's mailbox, such as Inbox and Drafts. Mail folders can contain messages, other Outlook items, and child mail folders.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the mail folder. Read-only."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "The mail folder's display name."
+    },
+    "parentFolderId": {
+      "type": "string",
+      "description": "The unique identifier for the parent mail folder."
+    },
+    "childFolderCount": {
+      "type": "integer",
+      "description": "The number of immediate child mail folders in the current folder."
+    },
+    "unreadItemCount": {
+      "type": "integer",
+      "description": "The number of items marked as unread in the folder."
+    },
+    "totalItemCount": {
+      "type": "integer",
+      "description": "The number of items in the folder."
+    },
+    "isHidden": {
+      "type": "boolean",
+      "description": "Indicates whether the mail folder is hidden. Can only be set when creating the folder."
+    }
+  }
+}

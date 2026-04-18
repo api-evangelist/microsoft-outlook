@@ -1,0 +1,443 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Microsoft Outlook Email Productivity"
+  description: "Unified capability for Microsoft Outlook email productivity combining mail operations, folder management, and attachment handling via Microsoft Graph. Used by productivity teams, IT administrators, and automation engineers."
+  tags:
+    - Microsoft
+    - Outlook
+    - Email
+    - Productivity
+    - Graph API
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      MICROSOFT_GRAPH_TOKEN: MICROSOFT_GRAPH_TOKEN
+
+capability:
+  consumes:
+    - import: graph-mail
+      location: ./shared/graph-mail.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: email-productivity-api
+      description: "Unified REST API for Microsoft Outlook email productivity."
+      resources:
+        - path: /v1/messages
+          name: messages
+          description: "Email messages"
+          operations:
+            - method: GET
+              name: list-messages
+              description: "List email messages"
+              call: "graph-mail.list-messages"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-draft
+              description: "Create a draft message"
+              call: "graph-mail.create-draft-message"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/messages/{id}
+          name: message
+          description: "Single email message"
+          operations:
+            - method: GET
+              name: get-message
+              description: "Get a specific message"
+              call: "graph-mail.get-message"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PATCH
+              name: update-message
+              description: "Update a message"
+              call: "graph-mail.update-message"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-message
+              description: "Delete a message"
+              call: "graph-mail.delete-message"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/messages/{id}/send
+          name: send-draft
+          description: "Send a draft message"
+          operations:
+            - method: POST
+              name: send-draft
+              description: "Send a draft message"
+              call: "graph-mail.send-draft-message"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/messages/{id}/reply
+          name: reply
+          description: "Reply to a message"
+          operations:
+            - method: POST
+              name: reply
+              description: "Reply to a message"
+              call: "graph-mail.reply-to-message"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/messages/{id}/forward
+          name: forward
+          description: "Forward a message"
+          operations:
+            - method: POST
+              name: forward
+              description: "Forward a message"
+              call: "graph-mail.forward-message"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/messages/{id}/attachments
+          name: attachments
+          description: "Message attachments"
+          operations:
+            - method: GET
+              name: list-attachments
+              description: "List attachments"
+              call: "graph-mail.list-attachments"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: add-attachment
+              description: "Add an attachment"
+              call: "graph-mail.add-attachment"
+              with:
+                message-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/send-mail
+          name: send-mail
+          description: "Send a new email directly"
+          operations:
+            - method: POST
+              name: send-mail
+              description: "Send a new email message"
+              call: "graph-mail.send-mail"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/folders
+          name: folders
+          description: "Mail folders"
+          operations:
+            - method: GET
+              name: list-folders
+              description: "List mail folders"
+              call: "graph-mail.list-mail-folders"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-folder
+              description: "Create a mail folder"
+              call: "graph-mail.create-mail-folder"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/folders/{id}
+          name: folder
+          description: "Single mail folder"
+          operations:
+            - method: GET
+              name: get-folder
+              description: "Get a mail folder"
+              call: "graph-mail.get-mail-folder"
+              with:
+                mailFolder-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PATCH
+              name: update-folder
+              description: "Update a mail folder"
+              call: "graph-mail.update-mail-folder"
+              with:
+                mailFolder-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-folder
+              description: "Delete a mail folder"
+              call: "graph-mail.delete-mail-folder"
+              with:
+                mailFolder-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/folders/{id}/messages
+          name: folder-messages
+          description: "Messages in a folder"
+          operations:
+            - method: GET
+              name: list-folder-messages
+              description: "List messages in a folder"
+              call: "graph-mail.list-messages-in-folder"
+              with:
+                mailFolder-id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: email-productivity-mcp
+      transport: http
+      description: "MCP server for AI-assisted Microsoft Outlook email productivity."
+      tools:
+        - name: list-messages
+          description: "List email messages in the Outlook mailbox"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "graph-mail.list-messages"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-message
+          description: "Get a specific email message by ID"
+          hints:
+            readOnly: true
+          call: "graph-mail.get-message"
+          with:
+            message-id: "tools.message_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: send-mail
+          description: "Send a new email message directly"
+          hints:
+            readOnly: false
+          call: "graph-mail.send-mail"
+          with:
+            message: "tools.message"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-draft
+          description: "Create a draft email message"
+          hints:
+            readOnly: false
+          call: "graph-mail.create-draft-message"
+          with:
+            subject: "tools.subject"
+            body: "tools.body"
+            to_recipients: "tools.to_recipients"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: send-draft
+          description: "Send an existing draft message"
+          hints:
+            readOnly: false
+          call: "graph-mail.send-draft-message"
+          with:
+            message-id: "tools.message_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-message
+          description: "Update an email message"
+          hints:
+            readOnly: false
+            idempotent: true
+          call: "graph-mail.update-message"
+          with:
+            message-id: "tools.message_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-message
+          description: "Delete an email message"
+          hints:
+            readOnly: false
+            destructive: true
+          call: "graph-mail.delete-message"
+          with:
+            message-id: "tools.message_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: reply-to-message
+          description: "Reply to an email message"
+          hints:
+            readOnly: false
+          call: "graph-mail.reply-to-message"
+          with:
+            message-id: "tools.message_id"
+            comment: "tools.comment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: reply-all-to-message
+          description: "Reply all to an email message"
+          hints:
+            readOnly: false
+          call: "graph-mail.reply-all-to-message"
+          with:
+            message-id: "tools.message_id"
+            comment: "tools.comment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: forward-message
+          description: "Forward an email message to recipients"
+          hints:
+            readOnly: false
+          call: "graph-mail.forward-message"
+          with:
+            message-id: "tools.message_id"
+            comment: "tools.comment"
+            to_recipients: "tools.to_recipients"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: copy-message
+          description: "Copy a message to a different folder"
+          hints:
+            readOnly: false
+          call: "graph-mail.copy-message"
+          with:
+            message-id: "tools.message_id"
+            destination_id: "tools.destination_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: move-message
+          description: "Move a message to a different folder"
+          hints:
+            readOnly: false
+          call: "graph-mail.move-message"
+          with:
+            message-id: "tools.message_id"
+            destination_id: "tools.destination_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-folders
+          description: "List mail folders in the mailbox"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "graph-mail.list-mail-folders"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-folder
+          description: "Create a new mail folder"
+          hints:
+            readOnly: false
+          call: "graph-mail.create-mail-folder"
+          with:
+            display_name: "tools.display_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-folder
+          description: "Get a specific mail folder"
+          hints:
+            readOnly: true
+          call: "graph-mail.get-mail-folder"
+          with:
+            mailFolder-id: "tools.folder_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-folder
+          description: "Delete a mail folder"
+          hints:
+            readOnly: false
+            destructive: true
+          call: "graph-mail.delete-mail-folder"
+          with:
+            mailFolder-id: "tools.folder_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-folder-messages
+          description: "List messages in a specific mail folder"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "graph-mail.list-messages-in-folder"
+          with:
+            mailFolder-id: "tools.folder_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-attachments
+          description: "List attachments for a message"
+          hints:
+            readOnly: true
+          call: "graph-mail.list-attachments"
+          with:
+            message-id: "tools.message_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-attachment
+          description: "Get a specific attachment from a message"
+          hints:
+            readOnly: true
+          call: "graph-mail.get-attachment"
+          with:
+            message-id: "tools.message_id"
+            attachment-id: "tools.attachment_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: add-attachment
+          description: "Add an attachment to a message"
+          hints:
+            readOnly: false
+          call: "graph-mail.add-attachment"
+          with:
+            message-id: "tools.message_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-attachment
+          description: "Delete an attachment from a message"
+          hints:
+            readOnly: false
+            destructive: true
+          call: "graph-mail.delete-attachment"
+          with:
+            message-id: "tools.message_id"
+            attachment-id: "tools.attachment_id"
+          outputParameters:
+            - type: object
+              mapping: "$."

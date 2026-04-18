@@ -1,0 +1,12 @@
+{
+  "@odata.type": "example_value",
+  "id": "abc123",
+  "name": "Example Title",
+  "contentType": "example_value",
+  "size": 10,
+  "isInline": true,
+  "lastModifiedDateTime": "example_value",
+  "contentBytes": "example_value",
+  "contentId": "500123",
+  "contentLocation": "example_value"
+}

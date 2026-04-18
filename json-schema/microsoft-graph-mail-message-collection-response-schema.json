@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MessageCollectionResponse",
+  "type": "object",
+  "description": "Collection of message resources with optional pagination link.",
+  "properties": {
+    "@odata.context": {
+      "type": "string",
+      "description": "The OData context URL."
+    },
+    "@odata.count": {
+      "type": "integer",
+      "description": "The total count of matching resources."
+    },
+    "@odata.nextLink": {
+      "type": "string",
+      "description": "The URL for the next page of results."
+    },
+    "value": {
+      "type": "array"
+    }
+  }
+}

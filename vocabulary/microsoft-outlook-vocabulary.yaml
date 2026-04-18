@@ -1,0 +1,10 @@
+name: microsoft-outlook API Vocabulary
+provider: microsoft-outlook
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 31
+schemas: 14
+tags:
+- Attachments
+- Mail Folders
+- Messages

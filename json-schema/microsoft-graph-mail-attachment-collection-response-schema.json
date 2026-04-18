@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AttachmentCollectionResponse",
+  "type": "object",
+  "description": "Collection of attachment resources.",
+  "properties": {
+    "@odata.context": {
+      "type": "string"
+    },
+    "value": {
+      "type": "array"
+    }
+  }
+}

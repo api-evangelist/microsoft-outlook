@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UploadSession",
+  "type": "object",
+  "description": "Represents the upload session for iterative file upload.",
+  "properties": {
+    "uploadUrl": {
+      "type": "string",
+      "description": "The URL endpoint that accepts PUT requests for byte ranges of the file."
+    },
+    "expirationDateTime": {
+      "type": "string",
+      "description": "The date and time in UTC that the upload session will expire."
+    },
+    "nextExpectedRanges": {
+      "type": "array",
+      "description": "A collection of byte ranges that the server is missing for the file, such as \"0-25\", \"128-500\"."
+    }
+  }
+}

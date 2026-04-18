@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Attachment",
+  "type": "object",
+  "description": "Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.",
+  "properties": {
+    "@odata.type": {
+      "type": "string",
+      "description": "The OData type of the attachment. Use #microsoft.graph.fileAttachment for file attachments or #microsoft.graph.itemAttachment for item attachments."
+    },
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the attachment. Read-only."
+    },
+    "name": {
+      "type": "string",
+      "description": "The display name of the attachment."
+    },
+    "contentType": {
+      "type": "string",
+      "description": "The MIME type of the attachment."
+    },
+    "size": {
+      "type": "integer",
+      "description": "The length of the attachment in bytes."
+    },
+    "isInline": {
+      "type": "boolean",
+      "description": "True if the attachment is an inline attachment."
+    },
+    "lastModifiedDateTime": {
+      "type": "string",
+      "description": "The date and time the attachment was last modified in UTC."
+    },
+    "contentBytes": {
+      "type": "string",
+      "description": "The base64-encoded contents of the file. Only applicable for fileAttachment."
+    },
+    "contentId": {
+      "type": "string",
+      "description": "The ID of the attachment in the Exchange store. Only applicable for fileAttachment."
+    },
+    "contentLocation": {
+      "type": "string",
+      "description": "The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment."
+    }
+  }
+}

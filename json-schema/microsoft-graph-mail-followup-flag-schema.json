@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FollowupFlag",
+  "type": "object",
+  "description": "Represents the follow-up flag status on a message.",
+  "properties": {
+    "flagStatus": {
+      "type": "string",
+      "description": "The follow-up status."
+    }
+  }
+}

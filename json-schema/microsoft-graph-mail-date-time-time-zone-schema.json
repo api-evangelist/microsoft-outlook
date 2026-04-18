@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DateTimeTimeZone",
+  "type": "object",
+  "description": "A date-time value with a time zone designation.",
+  "properties": {
+    "dateTime": {
+      "type": "string",
+      "description": "A single point of time in a combined date and time representation (e.g. 2017-08-29T04:00:00.0000000)."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "Represents a time zone, for example, Pacific Standard Time."
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "createdDateTime": {
+      "type": "string"
+    },
+    "lastModifiedDateTime": {
+      "type": "string"
+    },
+    "changeKey": {
+      "type": "string"
+    },
+    "categories": {
+      "type": "array"
+    },
+    "receivedDateTime": {
+      "type": "string"
+    },
+    "sentDateTime": {
+      "type": "string"
+    },
+    "hasAttachments": {
+      "type": "boolean"
+    },
+    "internetMessageId": {
+      "type": "string"
+    },
+    "internetMessageHeaders": {
+      "type": "array"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "bodyPreview": {
+      "type": "string"
+    },
+    "importance": {
+      "type": "string"
+    },
+    "parentFolderId": {
+      "type": "string"
+    },
+    "conversationId": {
+      "type": "string"
+    },
+    "conversationIndex": {
+      "type": "string"
+    },
+    "isDeliveryReceiptRequested": {
+      "type": "boolean"
+    },
+    "isReadReceiptRequested": {
+      "type": "boolean"
+    },
+    "isRead": {
+      "type": "boolean"
+    },
+    "isDraft": {
+      "type": "boolean"
+    },
+    "webLink": {
+      "type": "string"
+    },
+    "inferenceClassification": {
+      "type": "string"
+    },
+    "toRecipients": {
+      "type": "array"
+    },
+    "ccRecipients": {
+      "type": "array"
+    },
+    "bccRecipients": {
+      "type": "array"
+    },
+    "replyTo": {
+      "type": "array"
+    },
+    "attachments": {
+      "type": "array"
+    }
+  }
+}

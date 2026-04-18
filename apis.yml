@@ -3,7 +3,7 @@ name: Microsoft Outlook
 description: Microsoft Outlook is a personal information manager and email client that is part of the Microsoft Office suite. It provides email, calendar, contact management, task management, and other productivity features.
 image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2019/11/Outlook-logo.png
 created: '2024'
-modified: '2026-03-16'
+modified: '2026-04-18'
 specificationVersion: '0.19'
 url: https://outlook.office.com
 apis:
@@ -28,17 +28,17 @@ apis:
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
       - type: JSONSchema
         url: json-schema/microsoft-outlook-message-schema.json
-      - type: JSONLDContext
+      - type: JSONLD
         url: json-ld/microsoft-outlook-context.jsonld
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/graph/outlook-mail-concept-overview
-      - type: API Reference
+      - type: APIReference
         url: https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-      - type: Change Log
+      - type: ChangeLog
         url: https://developer.microsoft.com/en-us/graph/changelog
   - name: Microsoft Graph Calendar API
     description: >-
@@ -59,15 +59,15 @@ apis:
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
-      - type: Code Samples
+      - type: CodeExamples
         url: https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0#code-samples
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/graph/outlook-calendar-concept-overview
-      - type: API Reference
+      - type: APIReference
         url: https://learn.microsoft.com/en-us/graph/api/resources/calendar-overview?view=graph-rest-1.0
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-      - type: Change Log
+      - type: ChangeLog
         url: https://developer.microsoft.com/en-us/graph/changelog
   - name: Microsoft Graph Contacts API
     description: >-
@@ -86,13 +86,13 @@ apis:
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/graph/outlook-contacts-concept-overview
-      - type: API Reference
+      - type: APIReference
         url: https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-      - type: Change Log
+      - type: ChangeLog
         url: https://developer.microsoft.com/en-us/graph/changelog
   - name: Microsoft Graph Tasks API
     description: >-
@@ -111,13 +111,13 @@ apis:
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/graph/todo-concept-overview
-      - type: API Reference
+      - type: APIReference
         url: https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-      - type: Change Log
+      - type: ChangeLog
         url: https://developer.microsoft.com/en-us/graph/changelog
   - name: Outlook Add-ins API
     description: >-
@@ -135,13 +135,13 @@ apis:
     properties:
       - type: Documentation
         url: https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/office/dev/add-ins/quickstarts/outlook-quickstart-yo
-      - type: API Reference
+      - type: APIReference
         url: https://learn.microsoft.com/en-us/office/dev/add-ins/reference/javascript-api-for-office
       - type: Authentication
         url: https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/microsoft-graph
-      - type: GitHubOrg
+      - type: GitHubOrganization
         url: https://github.com/OfficeDev/office-js
   - name: Microsoft Graph People API
     description: >-
@@ -162,9 +162,9 @@ apis:
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-      - type: Change Log
+      - type: ChangeLog
         url: https://developer.microsoft.com/en-us/graph/changelog
   - name: Microsoft Graph Change Notifications API
     description: >-
@@ -181,19 +181,17 @@ apis:
     properties:
       - type: Documentation
         url: https://learn.microsoft.com/en-us/graph/outlook-change-notifications-overview
-      - type: AsyncAPI
-        url: asyncapi/microsoft-outlook-change-notifications-asyncapi.yml
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/graph/change-notifications-delivery-webhooks
-      - type: API Reference
+      - type: APIReference
         url: https://learn.microsoft.com/en-us/graph/api/resources/change-notifications-api-overview?view=graph-rest-1.0
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-      - type: Change Log
+      - type: ChangeLog
         url: https://developer.microsoft.com/en-us/graph/changelog
   - name: Microsoft Graph Focused Inbox API
     description: >-
@@ -214,7 +212,7 @@ apis:
         url: https://learn.microsoft.com/en-us/graph/auth/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
   - name: Microsoft Graph Mail Rules API
     description: >-
@@ -232,13 +230,13 @@ apis:
     properties:
       - type: Documentation
         url: https://learn.microsoft.com/en-us/graph/api/resources/messagerule?view=graph-rest-1.0
-      - type: Getting Started
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/graph/outlook-organize-messages
       - type: Authentication
         url: https://learn.microsoft.com/en-us/graph/auth/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
   - name: Microsoft Graph Categories API
     description: >-
@@ -259,53 +257,81 @@ apis:
         url: https://learn.microsoft.com/en-us/graph/auth/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml
-      - type: SDKs
+      - type: SDK
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
 common:
   - type: Portal
     url: https://developer.microsoft.com/en-us/graph
-  - type: Website
-    url: https://outlook.office.com
-  - type: Getting Started
+  - type: GettingStarted
     url: https://learn.microsoft.com/en-us/graph/overview
   - type: Documentation
     url: https://learn.microsoft.com/en-us/outlook/
   - type: Authentication
     url: https://learn.microsoft.com/en-us/graph/auth/
-  - type: SDKs
+  - type: SDK
     url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
-  - type: Change Log
+  - type: ChangeLog
     url: https://developer.microsoft.com/en-us/graph/changelog
-  - type: API Reference
+  - type: APIReference
     url: https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0
   - type: Blog
     url: https://devblogs.microsoft.com/microsoft365dev/tag/outlook/
-  - type: GitHub
+  - type: GitHubOrganization
     url: https://github.com/microsoftgraph
-  - type: Sign Up
+  - type: SignUp
     url: https://developer.microsoft.com/en-us/microsoft-365/dev-program
   - type: Login
     url: https://portal.azure.com
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://privacy.microsoft.com/en-us/privacystatement
   - type: Support
     url: https://developer.microsoft.com/en-us/graph/support
-  - type: Status
+  - type: StatusPage
     url: https://status.cloud.microsoft/
-  - type: Stack Overflow
+  - type: StackOverflow
     url: https://stackoverflow.com/questions/tagged/microsoft-graph
-  - type: Graph Explorer
-    url: https://developer.microsoft.com/en-us/graph/graph-explorer
-  - type: Quick Start
+  - type: Quickstart
     url: https://developer.microsoft.com/en-us/graph/quick-start
   - type: Training
     url: https://learn.microsoft.com/en-us/training/paths/m365-msgraph-fundamentals/
-  - type: Whats New
-    url: https://learn.microsoft.com/en-us/graph/whats-new-overview
-  - type: App Registration
-    url: https://learn.microsoft.com/en-us/graph/auth-register-app-v2
+  - type: Features
+    data:
+      - Email management with full CRUD operations on messages
+      - Calendar scheduling with meeting invitations and RSVPs
+      - Contact management across personal and organizational directories
+      - Task and to-do list management
+      - Focused Inbox classification and mail rules
+      - Real-time change notifications via webhooks
+      - Rich attachment handling with large file support
+      - Categories for organizing messages, events, and contacts
+      - People insights aggregated across multiple sources
+      - Outlook add-in extensibility via Office.js
+  - type: UseCases
+    data:
+      - Building email client integrations and automation workflows
+      - Scheduling meetings and managing calendars programmatically
+      - Syncing contacts between systems
+      - Creating automated email processing pipelines
+      - Building productivity dashboards with mail and calendar data
+      - Extending Outlook with custom add-ins
+  - type: Integrations
+    data:
+      - Microsoft Teams
+      - Microsoft Power Automate
+      - Microsoft Power Apps
+      - SharePoint
+      - OneDrive
+      - Azure Active Directory
+      - Microsoft To Do
+properties:
+  - type: Capabilities
+    url: capabilities/email-productivity.yaml
+    title: Email Productivity Capability
+  - type: Capabilities
+    url: capabilities/shared/graph-mail.yaml
+    title: Graph Mail API Shared Definition
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

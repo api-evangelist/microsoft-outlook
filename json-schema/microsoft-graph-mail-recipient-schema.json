@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Recipient",
+  "type": "object",
+  "description": "Represents information about a user or contact in a message.",
+  "properties": {}
+}

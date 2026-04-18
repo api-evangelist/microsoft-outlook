@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MailFolderCollectionResponse",
+  "type": "object",
+  "description": "Collection of mail folder resources with optional pagination link.",
+  "properties": {
+    "@odata.context": {
+      "type": "string"
+    },
+    "@odata.nextLink": {
+      "type": "string"
+    },
+    "value": {
+      "type": "array"
+    }
+  }
+}
