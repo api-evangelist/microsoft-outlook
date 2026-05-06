@@ -4,134 +4,79 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Microsoft Outlook
 providerId: microsoft-outlook
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Calendar
-  - Contacts
-  - Email
-  - Enterprise
-  - Microsoft
-  - Office 365
-  - Productivity
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Microsoft Outlook API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+  - Email
+  - Calendar
+  - Outlook
+  - Microsoft Graph
+  - Microsoft
+description: Outlook programmatic access is via Microsoft Graph mail / calendar / contacts endpoints (preferred),
+  Exchange Web Services (legacy), and the deprecated Outlook REST v2.0. Throttling is enforced per app/mailbox
+  and at the Microsoft Graph global ceiling. SMTP submission and recipient caps apply to Exchange Online
+  mailboxes regardless of API used. Returns 429 with Retry-After.
+sources:
+  - https://learn.microsoft.com/en-us/graph/throttling
+  - https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/exchange-web-services/ews-throttling-in-exchange-online
+  - https://learn.microsoft.com/en-us/exchange/troubleshoot/send-emails/smtp-submission-limits
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
   retryAfter: Retry-After
-  policy: RateLimit-Policy
+  requestId: request-id
+  throttleScope: x-ms-throttle-scope
+  throttleLimit: x-ms-throttle-limit-percentage
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
+  - name: Microsoft Graph global ceiling
+    scope: application
+    metric: requests_per_10_seconds
+    limit: 130000
+    timeFrame: second
+  - name: EWS — concurrent connections per app/mailbox
+    scope: app/mailbox
+    metric: concurrent_connections
+    limit: 27
+    notes: Hard cap of 27 concurrent EWS connections per (application, mailbox) tuple
+  - name: EWS — total per mailbox
+    scope: mailbox
+    metric: concurrent_connections
+    limit: 27
+  - name: SMTP submission per mailbox
+    scope: mailbox
+    metric: messages_per_minute
+    limit: 30
     timeFrame: minute
-    applies:
-      - Microsoft Graph Mail API
-      - Microsoft Graph Calendar API
-      - Microsoft Graph Contacts API
-      - Microsoft Graph Tasks API
-      - Outlook Add-ins API
-      - Microsoft Graph People API
-      - Microsoft Graph Change Notifications API
-      - Microsoft Graph Focused Inbox API
-      - Microsoft Graph Mail Rules API
-      - Microsoft Graph Categories API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Microsoft Graph Mail API
-      - Microsoft Graph Calendar API
-      - Microsoft Graph Contacts API
-      - Microsoft Graph Tasks API
-      - Outlook Add-ins API
-      - Microsoft Graph People API
-      - Microsoft Graph Change Notifications API
-      - Microsoft Graph Focused Inbox API
-      - Microsoft Graph Mail Rules API
-      - Microsoft Graph Categories API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Microsoft Graph Mail API
-      - Microsoft Graph Calendar API
-      - Microsoft Graph Contacts API
-      - Microsoft Graph Tasks API
-      - Outlook Add-ins API
-      - Microsoft Graph People API
-      - Microsoft Graph Change Notifications API
-      - Microsoft Graph Focused Inbox API
-      - Microsoft Graph Mail Rules API
-      - Microsoft Graph Categories API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Microsoft Graph Mail API
-      - Microsoft Graph Calendar API
-      - Microsoft Graph Contacts API
-      - Microsoft Graph Tasks API
-      - Outlook Add-ins API
-      - Microsoft Graph People API
-      - Microsoft Graph Change Notifications API
-      - Microsoft Graph Focused Inbox API
-      - Microsoft Graph Mail Rules API
-      - Microsoft Graph Categories API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Microsoft Graph Mail API
-      - Microsoft Graph Calendar API
-      - Microsoft Graph Contacts API
-      - Microsoft Graph Tasks API
-      - Outlook Add-ins API
-      - Microsoft Graph People API
-      - Microsoft Graph Change Notifications API
-      - Microsoft Graph Focused Inbox API
-      - Microsoft Graph Mail Rules API
-      - Microsoft Graph Categories API
+  - name: SMTP recipients per mailbox
+    scope: mailbox
+    metric: recipients_per_day
+    limit: 10000
+    timeFrame: day
+  - name: Outlook (mail / calendar / contacts) on Microsoft Graph
+    scope: app/mailbox
+    metric: varies
+    limit: per-mailbox throttling — fall back to Retry-After. No fixed numeric per-second value published.
+  - name: Identity & Access (read) per app/tenant (used for user lookups)
+    scope: app/tenant
+    metric: resource_units_per_10_seconds
+    limit: 3500–8000 RU per 10s based on tenant size
+    timeFrame: second
 policies:
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: Honour Retry-After on 429; the Microsoft Graph SDKs implement this automatically.
+  - name: Use Microsoft Graph over EWS / Outlook REST
+    description: EWS is on a deprecation path and Outlook REST v2.0 is deprecated for work / school accounts;
+      target Microsoft Graph for new development.
+  - name: Use change notifications
+    description: Subscribe to mail and calendar change notifications instead of polling.
+  - name: SMTP relay for high volume
+    description: For application-generated mail above mailbox SMTP caps, use a connector or a third-party
+      relay; the 30 msg/min and 10K recipients/day limits are hard caps.
+  - name: Use $batch
+    description: Combine related calls in $batch envelopes; each is throttled individually but network
+      overhead is reduced.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
-    url: https://apievangelist.com

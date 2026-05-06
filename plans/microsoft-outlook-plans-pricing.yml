@@ -4,180 +4,172 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Microsoft Outlook
 providerId: microsoft-outlook
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Calendar
-  - Contacts
   - Email
-  - Enterprise
-  - Microsoft
-  - Office 365
+  - Calendar
   - Productivity
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+  - Outlook
+  - Microsoft
+description: Microsoft Outlook is delivered as a free consumer service (Outlook.com) and as a paid client
+  bundled with Microsoft 365 / Office 365. Programmatic access (Microsoft Graph mail / calendar / contacts)
+  is included with the seat licence. New Outlook for Windows is free with a Microsoft account; classic
+  Outlook desktop requires Microsoft 365.
+sources:
+  - https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook
+  - https://www.microsoft.com/en-us/microsoft-365/business/compare-all-plans
+  - https://www.microsoft.com/en-us/microsoft-365/exchange/compare-microsoft-exchange-online-plans
 plans:
-  - id: microsoft-outlook-free
-    name: Free
+  - id: microsoft-outlook-com-free
+    name: Outlook.com (Free)
     type: freemium
-    description: Free entry tier for the Microsoft Outlook API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    description: Free consumer email at outlook.com / hotmail.com with 15 GB mailbox and 5 GB OneDrive.
+      Includes ads in the inbox.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
+      - label: Free with a Microsoft account
+        name: outlook_com_free
+        type: subscription
+        metric: seat
+        limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
         unit: 1
         price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
+        userMultiplied: true
+      - label: Mailbox
+        name: outlook_com_mailbox
+        type: quota
+        metric: gb
+        limit: 15
+        timeFrame: usage
         geo: global
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
         unit: 1
-        price: '0.00'
-        userMultiplied: false
+        price: included
+        userMultiplied: true
     elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Microsoft Graph Mail API
-      - name: Microsoft Graph Calendar API
-      - name: Microsoft Graph Contacts API
-      - name: Microsoft Graph Tasks API
-      - name: Outlook Add-ins API
-      - name: Microsoft Graph People API
-      - name: Microsoft Graph Change Notifications API
-      - name: Microsoft Graph Focused Inbox API
-  - id: microsoft-outlook-pro
-    name: Professional
-    type: paid
-    description: Production tier for Microsoft Outlook. Provides higher quotas, priority support, and
-      access to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+      - name: 15 GB mailbox
+      - name: Outlook.com / Hotmail web access
+      - name: New Outlook for Windows
+      - name: Free Microsoft Graph access (personal accounts)
+  - id: microsoft-outlook-business-basic
+    name: Outlook via Microsoft 365 Business Basic
+    type: subscription
+    description: Web + mobile Outlook with a 50 GB mailbox via Exchange Online Plan 1. $6.00/user/month
+      with Teams, $4.40/user/month without Teams (annual).
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
+      - label: Per user, paid yearly (with Teams)
+        name: business_basic
+        type: subscription
+        metric: seat
+        limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
         unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
+        price: '6.00'
+        userMultiplied: true
+      - label: Per user, paid yearly (no Teams)
+        name: business_basic_no_teams
+        type: subscription
+        metric: seat
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '4.40'
+        userMultiplied: true
+      - label: Mailbox
+        name: mailbox
+        type: quota
+        metric: gb
+        limit: 50
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: true
+    elements:
+      - name: Outlook web and mobile
+      - name: 50 GB Exchange Online mailbox
+      - name: Calendar and contacts
+  - id: microsoft-outlook-business-standard
+    name: Outlook via Microsoft 365 Business Standard
+    type: subscription
+    description: Adds Outlook desktop client. $12.50/user/month with Teams (annual).
+    entries:
+      - label: Per user, paid yearly (with Teams)
+        name: business_standard
+        type: subscription
+        metric: seat
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '12.50'
+        userMultiplied: true
+      - label: Mailbox
+        name: mailbox
+        type: quota
+        metric: gb
+        limit: 50
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: true
+    elements:
+      - name: Outlook desktop, web, mobile
+      - name: 50 GB mailbox
+      - name: Bookings
+  - id: microsoft-outlook-exchange-plan-2
+    name: Outlook via Exchange Online Plan 2
+    type: subscription
+    description: 100 GB mailbox plus 1.5 TB auto-expanding archive. $8.00/user/month, paid yearly.
+    entries:
+      - label: Per user, paid yearly
+        name: exchange_plan_2
+        type: subscription
+        metric: seat
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '8.00'
+        userMultiplied: true
+      - label: Mailbox
+        name: mailbox_primary
+        type: quota
+        metric: gb
         limit: 100
-        timeFrame: minute
+        timeFrame: usage
         geo: global
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
         unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
-        unit: 1000
-        price: TBD
-        userMultiplied: false
+        price: included
+        userMultiplied: true
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Microsoft Graph Mail API
-      - name: Microsoft Graph Calendar API
-      - name: Microsoft Graph Contacts API
-      - name: Microsoft Graph Tasks API
-      - name: Outlook Add-ins API
-      - name: Microsoft Graph People API
-      - name: Microsoft Graph Change Notifications API
-      - name: Microsoft Graph Focused Inbox API
-      - name: Microsoft Graph Mail Rules API
-      - name: Microsoft Graph Categories API
-  - id: microsoft-outlook-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for Microsoft Outlook. Includes dedicated capacity, contractual
-      SLAs, security review, data residency options, and named technical account management.
+      - name: 100 GB mailbox
+      - name: 1.5 TB auto-expanding archive
+      - name: DLP and hosted voicemail
+  - id: microsoft-outlook-e5
+    name: Outlook via Microsoft 365 E5
+    type: subscription
+    description: Top enterprise tier including Exchange Plan 2 and Defender for Office 365 P2. $57.00/user/month,
+      paid yearly (with Teams).
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Per user, paid yearly (with Teams)
+        name: m365_e5
+        type: subscription
+        metric: seat
         limit: -1
         timeFrame: month
-        geo: configurable
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
+        geo: global
         unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://graph.microsoft.com/v1.0
-          - https://appsforoffice.microsoft.com/lib/1/hosted/office.js
-        unit: 1
-        price: custom
-        userMultiplied: false
+        price: '57.00'
+        userMultiplied: true
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Microsoft Graph Mail API
-      - name: Microsoft Graph Calendar API
-      - name: Microsoft Graph Contacts API
-      - name: Microsoft Graph Tasks API
-      - name: Outlook Add-ins API
-      - name: Microsoft Graph People API
-      - name: Microsoft Graph Change Notifications API
-      - name: Microsoft Graph Focused Inbox API
-      - name: Microsoft Graph Mail Rules API
-      - name: Microsoft Graph Categories API
+      - name: Outlook desktop, web, mobile
+      - name: Defender for Office 365 P2
+      - name: Advanced eDiscovery
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
-    url: https://apievangelist.com
