@@ -1,0 +1,425 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Microsoft Outlook Microsoft Graph Mail API — Mail Folders
+  description: 'Microsoft Outlook Microsoft Graph Mail API — Mail Folders. 11 operations. Lead operation: Microsoft Outlook
+    List Mail Folders. Self-contained Naftiko capability covering one Microsoft Outlook business surface.'
+  tags:
+  - Microsoft Outlook
+  - Mail Folders
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_OUTLOOK_API_KEY: MICROSOFT_OUTLOOK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: microsoft-graph-mail-mail-folders
+    baseUri: https://graph.microsoft.com/v1.0
+    description: Microsoft Outlook Microsoft Graph Mail API — Mail Folders business capability. Self-contained, no shared
+      references.
+    resources:
+    - name: me-mailFolders
+      path: /me/mailFolders
+      operations:
+      - name: listmailfolders
+        method: GET
+        description: Microsoft Outlook List Mail Folders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: includeHiddenFolders
+          in: query
+          type: string
+          description: Include hidden mail folders in the response.
+      - name: createmailfolder
+        method: POST
+        description: Microsoft Outlook Create Mail Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: me-mailFolders-mailFolder-id
+      path: /me/mailFolders/{mailFolder-id}
+      operations:
+      - name: getmailfolder
+        method: GET
+        description: Microsoft Outlook Get Mail Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatemailfolder
+        method: PATCH
+        description: Microsoft Outlook Update Mail Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletemailfolder
+        method: DELETE
+        description: Microsoft Outlook Delete Mail Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: me-mailFolders-mailFolder-id-childFolders
+      path: /me/mailFolders/{mailFolder-id}/childFolders
+      operations:
+      - name: listchildfolders
+        method: GET
+        description: Microsoft Outlook List Child Folders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createchildfolder
+        method: POST
+        description: Microsoft Outlook Create Child Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: me-mailFolders-mailFolder-id-copy
+      path: /me/mailFolders/{mailFolder-id}/copy
+      operations:
+      - name: copymailfolder
+        method: POST
+        description: Microsoft Outlook Copy Mail Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: me-mailFolders-mailFolder-id-messages
+      path: /me/mailFolders/{mailFolder-id}/messages
+      operations:
+      - name: listmessagesinfolder
+        method: GET
+        description: Microsoft Outlook List Messages in Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createmessageinfolder
+        method: POST
+        description: Microsoft Outlook Create Message in Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: me-mailFolders-mailFolder-id-move
+      path: /me/mailFolders/{mailFolder-id}/move
+      operations:
+      - name: movemailfolder
+        method: POST
+        description: Microsoft Outlook Move Mail Folder
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_OUTLOOK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: microsoft-graph-mail-mail-folders-rest
+    port: 8080
+    description: REST adapter for Microsoft Outlook Microsoft Graph Mail API — Mail Folders. One Spectral-compliant resource
+      per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/me/mailfolders
+      name: me-mailfolders
+      description: REST surface for me-mailFolders.
+      operations:
+      - method: GET
+        name: listmailfolders
+        description: Microsoft Outlook List Mail Folders
+        call: microsoft-graph-mail-mail-folders.listmailfolders
+        with:
+          includeHiddenFolders: rest.includeHiddenFolders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createmailfolder
+        description: Microsoft Outlook Create Mail Folder
+        call: microsoft-graph-mail-mail-folders.createmailfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/me/mailfolders/{mailfolder-id}
+      name: me-mailfolders-mailfolder-id
+      description: REST surface for me-mailFolders-mailFolder-id.
+      operations:
+      - method: GET
+        name: getmailfolder
+        description: Microsoft Outlook Get Mail Folder
+        call: microsoft-graph-mail-mail-folders.getmailfolder
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatemailfolder
+        description: Microsoft Outlook Update Mail Folder
+        call: microsoft-graph-mail-mail-folders.updatemailfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemailfolder
+        description: Microsoft Outlook Delete Mail Folder
+        call: microsoft-graph-mail-mail-folders.deletemailfolder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/me/mailfolders/{mailfolder-id}/childfolders
+      name: me-mailfolders-mailfolder-id-childfolders
+      description: REST surface for me-mailFolders-mailFolder-id-childFolders.
+      operations:
+      - method: GET
+        name: listchildfolders
+        description: Microsoft Outlook List Child Folders
+        call: microsoft-graph-mail-mail-folders.listchildfolders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createchildfolder
+        description: Microsoft Outlook Create Child Folder
+        call: microsoft-graph-mail-mail-folders.createchildfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/me/mailfolders/{mailfolder-id}/copy
+      name: me-mailfolders-mailfolder-id-copy
+      description: REST surface for me-mailFolders-mailFolder-id-copy.
+      operations:
+      - method: POST
+        name: copymailfolder
+        description: Microsoft Outlook Copy Mail Folder
+        call: microsoft-graph-mail-mail-folders.copymailfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/me/mailfolders/{mailfolder-id}/messages
+      name: me-mailfolders-mailfolder-id-messages
+      description: REST surface for me-mailFolders-mailFolder-id-messages.
+      operations:
+      - method: GET
+        name: listmessagesinfolder
+        description: Microsoft Outlook List Messages in Folder
+        call: microsoft-graph-mail-mail-folders.listmessagesinfolder
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createmessageinfolder
+        description: Microsoft Outlook Create Message in Folder
+        call: microsoft-graph-mail-mail-folders.createmessageinfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/me/mailfolders/{mailfolder-id}/move
+      name: me-mailfolders-mailfolder-id-move
+      description: REST surface for me-mailFolders-mailFolder-id-move.
+      operations:
+      - method: POST
+        name: movemailfolder
+        description: Microsoft Outlook Move Mail Folder
+        call: microsoft-graph-mail-mail-folders.movemailfolder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: microsoft-graph-mail-mail-folders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Microsoft Outlook Microsoft Graph Mail API — Mail Folders. One tool per consumed operation,
+      routed inline through this capability's consumes block.
+    tools:
+    - name: microsoft-outlook-list-mail-folders
+      description: Microsoft Outlook List Mail Folders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-graph-mail-mail-folders.listmailfolders
+      with:
+        includeHiddenFolders: tools.includeHiddenFolders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-create-mail-folder
+      description: Microsoft Outlook Create Mail Folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-graph-mail-mail-folders.createmailfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-get-mail-folder
+      description: Microsoft Outlook Get Mail Folder
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-graph-mail-mail-folders.getmailfolder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-update-mail-folder
+      description: Microsoft Outlook Update Mail Folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: microsoft-graph-mail-mail-folders.updatemailfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-delete-mail-folder
+      description: Microsoft Outlook Delete Mail Folder
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: microsoft-graph-mail-mail-folders.deletemailfolder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-list-child-folders
+      description: Microsoft Outlook List Child Folders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-graph-mail-mail-folders.listchildfolders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-create-child-folder
+      description: Microsoft Outlook Create Child Folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-graph-mail-mail-folders.createchildfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-copy-mail-folder
+      description: Microsoft Outlook Copy Mail Folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-graph-mail-mail-folders.copymailfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-list-messages-folder
+      description: Microsoft Outlook List Messages in Folder
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: microsoft-graph-mail-mail-folders.listmessagesinfolder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-create-message-folder
+      description: Microsoft Outlook Create Message in Folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-graph-mail-mail-folders.createmessageinfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: microsoft-outlook-move-mail-folder
+      description: Microsoft Outlook Move Mail Folder
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: microsoft-graph-mail-mail-folders.movemailfolder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
