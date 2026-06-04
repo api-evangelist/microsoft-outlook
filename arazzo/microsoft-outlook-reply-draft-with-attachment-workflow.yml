@@ -1,0 +1,100 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Reply Draft with Attachment
+  summary: Create a reply draft for a message, attach a file, and send the reply.
+  description: >-
+    A reply-with-document pattern. The workflow creates a draft reply to an
+    existing message, adds a file attachment to that reply draft using the new
+    draft's message id, and sends the completed reply draft. Creating the draft
+    first lets the caller attach files before the reply leaves the mailbox.
+    Every step inlines its request so the flow runs without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: reply-draft-with-attachment
+  summary: Stage a reply draft, attach a file to it, then send the reply.
+  description: >-
+    Creates a reply draft for the supplied message, adds a file attachment to
+    the draft, and sends the completed reply draft.
+  inputs:
+    type: object
+    required:
+    - sourceMessageId
+    - attachmentName
+    - attachmentContentBytes
+    properties:
+      sourceMessageId:
+        type: string
+        description: The id of the message being replied to.
+      comment:
+        type: string
+        description: Optional comment text to seed the reply body.
+        default: ''
+      attachmentName:
+        type: string
+        description: The display name of the file attachment.
+      attachmentContentBytes:
+        type: string
+        description: The base64-encoded content of the attachment.
+      attachmentContentType:
+        type: string
+        description: The MIME type of the attachment.
+        default: application/octet-stream
+  steps:
+  - stepId: createReply
+    description: >-
+      Create a draft reply to the source message. The draft is saved in the
+      Drafts folder and returns its own message id.
+    operationId: createReplyDraft
+    parameters:
+    - name: message-id
+      in: path
+      value: $inputs.sourceMessageId
+    requestBody:
+      contentType: application/json
+      payload:
+        comment: $inputs.comment
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      draftId: $response.body#/id
+  - stepId: attachFile
+    description: >-
+      Add a file attachment to the reply draft using the draft message id
+      returned by the previous step.
+    operationId: addAttachment
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createReply.outputs.draftId
+    requestBody:
+      contentType: application/json
+      payload:
+        '@odata.type': '#microsoft.graph.fileAttachment'
+        name: $inputs.attachmentName
+        contentType: $inputs.attachmentContentType
+        contentBytes: $inputs.attachmentContentBytes
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      attachmentId: $response.body#/id
+  - stepId: sendReply
+    description: >-
+      Send the completed reply draft. Graph returns 202 Accepted and saves
+      the reply to Sent Items.
+    operationId: sendDraftMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createReply.outputs.draftId
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      sendStatus: $statusCode
+  outputs:
+    draftId: $steps.createReply.outputs.draftId
+    attachmentId: $steps.attachFile.outputs.attachmentId

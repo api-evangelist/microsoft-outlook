@@ -1,0 +1,97 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Large Attachment Upload Session
+  summary: Draft a message and open an upload session for a large (3-150 MB) attachment.
+  description: >-
+    The large-file outbound pattern. Files between 3 MB and 150 MB cannot be
+    added with a single addAttachment call, so the workflow creates a draft
+    message and then opens an upload session against that draft, returning the
+    uploadUrl the caller uses to PUT byte ranges out of band. The draft message
+    id chains from the first step into the upload-session step so the flow runs
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: large-attachment-upload-session
+  summary: Create a draft, then open an upload session for a large attachment.
+  description: >-
+    Creates a draft message and opens an upload session for a large file
+    attachment, returning the uploadUrl and expiration for chunked upload.
+  inputs:
+    type: object
+    required:
+    - subject
+    - toRecipientAddress
+    - attachmentName
+    - attachmentSize
+    properties:
+      subject:
+        type: string
+        description: The subject line of the draft message.
+      bodyContent:
+        type: string
+        description: The body content of the draft message.
+        default: ''
+      toRecipientAddress:
+        type: string
+        description: The email address of the primary recipient.
+      attachmentName:
+        type: string
+        description: The display name of the large file attachment.
+      attachmentSize:
+        type: integer
+        description: The size of the attachment in bytes (must be 3 MB to 150 MB).
+      attachmentContentType:
+        type: string
+        description: The MIME type of the attachment.
+        default: application/octet-stream
+  steps:
+  - stepId: createDraft
+    description: >-
+      Create a draft message to attach the large file to, and capture its
+      message id.
+    operationId: createDraftMessage
+    requestBody:
+      contentType: application/json
+      payload:
+        subject: $inputs.subject
+        body:
+          contentType: html
+          content: $inputs.bodyContent
+        toRecipients:
+        - emailAddress:
+            address: $inputs.toRecipientAddress
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      messageId: $response.body#/id
+  - stepId: openUploadSession
+    description: >-
+      Open an upload session against the draft for the large attachment. Graph
+      returns 201 with the uploadUrl the caller PUTs byte ranges to.
+    operationId: createAttachmentUploadSession
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createDraft.outputs.messageId
+    requestBody:
+      contentType: application/json
+      payload:
+        AttachmentItem:
+          attachmentType: file
+          name: $inputs.attachmentName
+          size: $inputs.attachmentSize
+          contentType: $inputs.attachmentContentType
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      uploadUrl: $response.body#/uploadUrl
+      expirationDateTime: $response.body#/expirationDateTime
+      nextExpectedRanges: $response.body#/nextExpectedRanges
+  outputs:
+    messageId: $steps.createDraft.outputs.messageId
+    uploadUrl: $steps.openUploadSession.outputs.uploadUrl
+    expirationDateTime: $steps.openUploadSession.outputs.expirationDateTime

@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Archive Copy of a Message
+  summary: Create an archive folder, copy a message into it, and read the copy back.
+  description: >-
+    A keep-a-copy pattern. The workflow creates a dedicated archive folder,
+    copies an existing message into that folder (leaving the original in place),
+    and reads the resulting copy to confirm it landed in the new folder. The
+    folder id and the copied message id chain across the steps so the flow runs
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: archive-copy-message
+  summary: Create an archive folder, copy a message into it, and verify the copy.
+  description: >-
+    Creates an archive folder, copies the supplied message into it, and reads
+    the copied message back to confirm its new parent folder.
+  inputs:
+    type: object
+    required:
+    - sourceMessageId
+    properties:
+      archiveFolderName:
+        type: string
+        description: The display name of the archive folder to create.
+        default: Archive Copies
+      sourceMessageId:
+        type: string
+        description: The id of the message to copy into the archive folder.
+  steps:
+  - stepId: createArchiveFolder
+    description: >-
+      Create a top-level archive folder in the root of the mailbox and capture
+      its folder id as the copy destination.
+    operationId: createMailFolder
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.archiveFolderName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      folderId: $response.body#/id
+  - stepId: copyMessage
+    description: >-
+      Copy the source message into the archive folder. Graph returns 201 with
+      the new copy; the original message is left untouched.
+    operationId: copyMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $inputs.sourceMessageId
+    requestBody:
+      contentType: application/json
+      payload:
+        destinationId: $steps.createArchiveFolder.outputs.folderId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      copiedMessageId: $response.body#/id
+  - stepId: verifyCopy
+    description: >-
+      Read the copied message back to confirm its subject and that it now
+      lives in the archive folder.
+    operationId: getMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.copyMessage.outputs.copiedMessageId
+    - name: $select
+      in: query
+      value: id,subject,parentFolderId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      parentFolderId: $response.body#/parentFolderId
+      subject: $response.body#/subject
+  outputs:
+    archiveFolderId: $steps.createArchiveFolder.outputs.folderId
+    copiedMessageId: $steps.copyMessage.outputs.copiedMessageId

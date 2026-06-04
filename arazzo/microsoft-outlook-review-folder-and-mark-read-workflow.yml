@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Review Folder and Mark Read
+  summary: Open a mail folder, list its unread messages, and mark the top one as read.
+  description: >-
+    An inbox-cleanup pattern. The workflow reads a well-known mail folder such
+    as inbox to confirm its unread count, lists the unread messages inside it,
+    and marks the most recent unread message as read by patching its isRead
+    property. The folder id and message id chain across the steps so the flow
+    runs without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: review-folder-and-mark-read
+  summary: Read a folder, list its unread messages, and mark the top one read.
+  description: >-
+    Reads a mail folder, lists the unread messages in it, and marks the first
+    unread message as read.
+  inputs:
+    type: object
+    properties:
+      mailFolderId:
+        type: string
+        description: The folder id or well-known name (e.g. inbox) to review.
+        default: inbox
+      pageSize:
+        type: integer
+        description: How many unread messages to list.
+        default: 25
+  steps:
+  - stepId: openFolder
+    description: >-
+      Read the target mail folder to confirm it exists and capture its unread
+      item count.
+    operationId: getMailFolder
+    parameters:
+    - name: mailFolder-id
+      in: path
+      value: $inputs.mailFolderId
+    - name: $select
+      in: query
+      value: id,displayName,unreadItemCount
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      folderId: $response.body#/id
+      unreadItemCount: $response.body#/unreadItemCount
+  - stepId: listUnread
+    description: >-
+      List the unread messages in the folder ordered by received date,
+      capturing the id of the most recent unread message.
+    operationId: listMessagesInFolder
+    parameters:
+    - name: mailFolder-id
+      in: path
+      value: $steps.openFolder.outputs.folderId
+    - name: $filter
+      in: query
+      value: isRead eq false
+    - name: $orderby
+      in: query
+      value: receivedDateTime desc
+    - name: $top
+      in: query
+      value: $inputs.pageSize
+    - name: $select
+      in: query
+      value: id,subject,isRead
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topUnreadId: $response.body#/value/0/id
+    onSuccess:
+    - name: hasUnread
+      type: goto
+      stepId: markRead
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: allRead
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: markRead
+    description: >-
+      Patch the most recent unread message to set isRead to true. Graph
+      returns 200 with the updated message.
+    operationId: updateMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.listUnread.outputs.topUnreadId
+    requestBody:
+      contentType: application/json
+      payload:
+        isRead: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedMessageId: $response.body#/id
+      isRead: $response.body#/isRead
+  outputs:
+    folderId: $steps.openFolder.outputs.folderId
+    markedReadMessageId: $steps.markRead.outputs.updatedMessageId

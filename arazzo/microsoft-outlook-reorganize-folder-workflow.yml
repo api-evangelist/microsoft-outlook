@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Reorganize Folder
+  summary: Create a destination folder, find a source folder by name, and move it under the destination.
+  description: >-
+    A mailbox-reorganization pattern. The workflow creates a destination parent
+    folder, searches the top-level folders for a source folder matching a
+    supplied display name, and moves that source folder (and its contents)
+    beneath the destination. The destination folder id and source folder id
+    chain across the steps so the flow runs without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: reorganize-folder
+  summary: Create a parent folder, find a folder by name, and move it under the parent.
+  description: >-
+    Creates a destination parent folder, finds a source folder by display name,
+    and moves the source folder beneath the destination.
+  inputs:
+    type: object
+    required:
+    - destinationFolderName
+    - sourceFolderName
+    properties:
+      destinationFolderName:
+        type: string
+        description: The display name of the new destination parent folder.
+      sourceFolderName:
+        type: string
+        description: The display name of the existing folder to move.
+  steps:
+  - stepId: createDestination
+    description: >-
+      Create the destination parent folder in the root of the mailbox and
+      capture its folder id.
+    operationId: createMailFolder
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.destinationFolderName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      destinationId: $response.body#/id
+  - stepId: findSource
+    description: >-
+      Search the top-level mail folders for the first folder whose display name
+      matches the supplied source folder name.
+    operationId: listMailFolders
+    parameters:
+    - name: $filter
+      in: query
+      value: "displayName eq '$inputs.sourceFolderName'"
+    - name: $top
+      in: query
+      value: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sourceFolderId: $response.body#/value/0/id
+    onSuccess:
+    - name: sourceFound
+      type: goto
+      stepId: moveFolder
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: notFound
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: moveFolder
+    description: >-
+      Move the source folder beneath the destination folder by passing the
+      destination folder id. Graph returns 200 with the moved folder.
+    operationId: moveMailFolder
+    parameters:
+    - name: mailFolder-id
+      in: path
+      value: $steps.findSource.outputs.sourceFolderId
+    requestBody:
+      contentType: application/json
+      payload:
+        destinationId: $steps.createDestination.outputs.destinationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      movedFolderId: $response.body#/id
+      newParentFolderId: $response.body#/parentFolderId
+  outputs:
+    destinationId: $steps.createDestination.outputs.destinationId
+    movedFolderId: $steps.moveFolder.outputs.movedFolderId

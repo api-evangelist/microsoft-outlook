@@ -1,0 +1,95 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Draft, Refine, and Send
+  summary: Create a draft, refine its body and importance, then send the polished draft.
+  description: >-
+    An edit-before-send pattern. The workflow creates a draft message with a
+    subject and recipient, patches the draft to refine its body content and set
+    importance, and then sends the polished draft. Splitting creation from the
+    final body lets a caller generate or review content between the two steps.
+    The draft message id chains across all three steps so the flow runs without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: draft-refine-send
+  summary: Create a draft, update its body and importance, then send it.
+  description: >-
+    Creates a draft message, patches it with refined body content and an
+    importance level, and sends the finished draft.
+  inputs:
+    type: object
+    required:
+    - subject
+    - toRecipientAddress
+    - refinedBody
+    properties:
+      subject:
+        type: string
+        description: The subject line of the draft message.
+      toRecipientAddress:
+        type: string
+        description: The email address of the primary recipient.
+      refinedBody:
+        type: string
+        description: The refined HTML body content to apply before sending.
+      importance:
+        type: string
+        description: The importance level (low, normal, or high).
+        default: normal
+  steps:
+  - stepId: createDraft
+    description: >-
+      Create a draft message with the subject and recipient. The body is filled
+      in by the refine step.
+    operationId: createDraftMessage
+    requestBody:
+      contentType: application/json
+      payload:
+        subject: $inputs.subject
+        toRecipients:
+        - emailAddress:
+            address: $inputs.toRecipientAddress
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      messageId: $response.body#/id
+  - stepId: refineDraft
+    description: >-
+      Patch the draft to set the refined body content and importance level.
+      Graph returns 200 with the updated draft.
+    operationId: updateMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createDraft.outputs.messageId
+    requestBody:
+      contentType: application/json
+      payload:
+        body:
+          contentType: html
+          content: $inputs.refinedBody
+        importance: $inputs.importance
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      updatedId: $response.body#/id
+  - stepId: sendDraft
+    description: >-
+      Send the refined draft. Graph returns 202 Accepted and saves the message
+      to Sent Items.
+    operationId: sendDraftMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createDraft.outputs.messageId
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      sendStatus: $statusCode
+  outputs:
+    messageId: $steps.createDraft.outputs.messageId
+    sendStatus: $steps.sendDraft.outputs.sendStatus

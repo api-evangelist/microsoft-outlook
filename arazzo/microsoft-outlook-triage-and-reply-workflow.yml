@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Triage and Reply
+  summary: List the newest messages, read the top one in full, and reply to its sender.
+  description: >-
+    A common inbox-triage pattern. The workflow lists the most recent messages,
+    selects the top result, reads its full content to confirm the subject and
+    sender, and then sends a reply to the sender with a supplied comment. The
+    message id flows from the list step through the read and reply steps so the
+    whole flow can be executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: triage-and-reply
+  summary: List recent messages, read the top one, and reply to its sender.
+  description: >-
+    Lists messages ordered by received date, reads the most recent message in
+    full, and replies to the original sender with the supplied comment text.
+  inputs:
+    type: object
+    required:
+    - replyComment
+    properties:
+      pageSize:
+        type: integer
+        description: How many messages to return in the listing.
+        default: 10
+      replyComment:
+        type: string
+        description: The comment text to include in the reply.
+  steps:
+  - stepId: listRecent
+    description: >-
+      List the most recent messages in the mailbox ordered by received date
+      descending, capped to the supplied page size.
+    operationId: listMessages
+    parameters:
+    - name: $top
+      in: query
+      value: $inputs.pageSize
+    - name: $orderby
+      in: query
+      value: receivedDateTime desc
+    - name: $select
+      in: query
+      value: id,subject,from,receivedDateTime,isRead
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      topMessageId: $response.body#/value/0/id
+      topSubject: $response.body#/value/0/subject
+  - stepId: readTop
+    description: >-
+      Read the full properties of the most recent message to confirm the
+      subject, sender, and body before replying.
+    operationId: getMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.listRecent.outputs.topMessageId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subject: $response.body#/subject
+      fromAddress: $response.body#/from/emailAddress/address
+      conversationId: $response.body#/conversationId
+  - stepId: replySender
+    description: >-
+      Reply to the sender of the message with the supplied comment. Graph
+      returns 202 Accepted and saves the reply to Sent Items.
+    operationId: replyToMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.listRecent.outputs.topMessageId
+    requestBody:
+      contentType: application/json
+      payload:
+        comment: $inputs.replyComment
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      replyStatus: $statusCode
+  outputs:
+    repliedMessageId: $steps.listRecent.outputs.topMessageId
+    subject: $steps.readTop.outputs.subject
+    fromAddress: $steps.readTop.outputs.fromAddress

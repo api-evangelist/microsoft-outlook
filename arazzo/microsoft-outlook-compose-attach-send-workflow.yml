@@ -1,0 +1,113 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Compose, Attach, and Send
+  summary: Create a draft message, attach a file to it, and send the finished draft.
+  description: >-
+    The canonical Outlook outbound mail pattern. The workflow creates a draft
+    message in the signed-in user's Drafts folder, adds a file attachment to
+    that draft using the returned message id, and then sends the draft so it
+    is delivered and saved to Sent Items. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: compose-attach-send
+  summary: Draft a message, attach a file, then send it in one chained flow.
+  description: >-
+    Creates a draft message, adds a file attachment under 3 MB to the draft,
+    and sends the completed draft. The message id returned by the draft
+    creation is reused for both the attachment and the send.
+  inputs:
+    type: object
+    required:
+    - subject
+    - bodyContent
+    - toRecipientAddress
+    - attachmentName
+    - attachmentContentBytes
+    properties:
+      subject:
+        type: string
+        description: The subject line of the message.
+      bodyContent:
+        type: string
+        description: The body content of the message.
+      bodyContentType:
+        type: string
+        description: The body content type, either text or html.
+        default: html
+      toRecipientAddress:
+        type: string
+        description: The email address of the primary recipient.
+      attachmentName:
+        type: string
+        description: The display name of the file attachment.
+      attachmentContentBytes:
+        type: string
+        description: The base64-encoded content of the attachment.
+      attachmentContentType:
+        type: string
+        description: The MIME type of the attachment.
+        default: application/octet-stream
+  steps:
+  - stepId: createDraft
+    description: >-
+      Create a draft message with the supplied subject, body, and recipient.
+      The draft is saved in the Drafts folder and returns its message id.
+    operationId: createDraftMessage
+    requestBody:
+      contentType: application/json
+      payload:
+        subject: $inputs.subject
+        body:
+          contentType: $inputs.bodyContentType
+          content: $inputs.bodyContent
+        toRecipients:
+        - emailAddress:
+            address: $inputs.toRecipientAddress
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      messageId: $response.body#/id
+      webLink: $response.body#/webLink
+  - stepId: attachFile
+    description: >-
+      Add a file attachment to the draft message using the message id
+      returned by the draft creation step.
+    operationId: addAttachment
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createDraft.outputs.messageId
+    requestBody:
+      contentType: application/json
+      payload:
+        '@odata.type': '#microsoft.graph.fileAttachment'
+        name: $inputs.attachmentName
+        contentType: $inputs.attachmentContentType
+        contentBytes: $inputs.attachmentContentBytes
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      attachmentId: $response.body#/id
+  - stepId: sendDraft
+    description: >-
+      Send the completed draft. Graph returns 202 Accepted and the message
+      is queued for delivery and saved to Sent Items.
+    operationId: sendDraftMessage
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.createDraft.outputs.messageId
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      sendStatus: $statusCode
+  outputs:
+    messageId: $steps.createDraft.outputs.messageId
+    attachmentId: $steps.attachFile.outputs.attachmentId
+    webLink: $steps.createDraft.outputs.webLink

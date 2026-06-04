@@ -1,0 +1,114 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Inspect and Remove Attachment
+  summary: Find a message with attachments, inspect the first one, and delete it.
+  description: >-
+    An attachment-cleanup pattern. The workflow finds the first message that
+    has attachments, lists that message's attachments, reads the first
+    attachment to inspect its name and size, and then deletes it. The message
+    id and attachment id chain across the steps so the flow runs without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: inspect-and-remove-attachment
+  summary: Locate an attachment on a message, inspect it, and remove it.
+  description: >-
+    Finds the first message with attachments, lists its attachments, reads the
+    first attachment, and deletes it.
+  inputs:
+    type: object
+    properties:
+      pageSize:
+        type: integer
+        description: How many candidate messages to scan.
+        default: 10
+  steps:
+  - stepId: findWithAttachments
+    description: >-
+      List messages that have attachments and capture the id of the first
+      such message.
+    operationId: listMessages
+    parameters:
+    - name: $filter
+      in: query
+      value: hasAttachments eq true
+    - name: $top
+      in: query
+      value: $inputs.pageSize
+    - name: $select
+      in: query
+      value: id,subject,hasAttachments
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messageId: $response.body#/value/0/id
+    onSuccess:
+    - name: hasCandidate
+      type: goto
+      stepId: listMessageAttachments
+      criteria:
+      - context: $response.body
+        condition: $.value.length > 0
+        type: jsonpath
+    - name: none
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.value.length == 0
+        type: jsonpath
+  - stepId: listMessageAttachments
+    description: >-
+      List the attachments on the matched message and capture the id of the
+      first attachment.
+    operationId: listAttachments
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.findWithAttachments.outputs.messageId
+    - name: $select
+      in: query
+      value: id,name,size,contentType
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      attachmentId: $response.body#/value/0/id
+  - stepId: inspectAttachment
+    description: >-
+      Read the first attachment to inspect its name, size, and content type
+      before deleting it.
+    operationId: getAttachment
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.findWithAttachments.outputs.messageId
+    - name: attachment-id
+      in: path
+      value: $steps.listMessageAttachments.outputs.attachmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      name: $response.body#/name
+      size: $response.body#/size
+  - stepId: removeAttachment
+    description: >-
+      Delete the inspected attachment from the message. Graph returns 204 No
+      Content on success.
+    operationId: deleteAttachment
+    parameters:
+    - name: message-id
+      in: path
+      value: $steps.findWithAttachments.outputs.messageId
+    - name: attachment-id
+      in: path
+      value: $steps.listMessageAttachments.outputs.attachmentId
+    successCriteria:
+    - condition: $statusCode == 204
+    outputs:
+      deleteStatus: $statusCode
+  outputs:
+    messageId: $steps.findWithAttachments.outputs.messageId
+    removedAttachmentName: $steps.inspectAttachment.outputs.name

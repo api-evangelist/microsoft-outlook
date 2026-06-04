@@ -251,6 +251,45 @@ apis:
   - type: SDK
     url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/microsoft-outlook-archive-copy-message-workflow.yml
+    name: Microsoft Outlook Archive Copy of a Message
+    summary: Create an archive folder, copy a message into it, and read the copy back.
+  - url: arazzo/microsoft-outlook-build-folder-tree-and-seed-draft-workflow.yml
+    name: Microsoft Outlook Build Folder Tree and Seed Draft
+    summary: Create a parent folder, a child subfolder, and a seed draft inside the child.
+  - url: arazzo/microsoft-outlook-compose-attach-send-workflow.yml
+    name: Microsoft Outlook Compose, Attach, and Send
+    summary: Create a draft message, attach a file to it, and send the finished draft.
+  - url: arazzo/microsoft-outlook-draft-refine-send-workflow.yml
+    name: Microsoft Outlook Draft, Refine, and Send
+    summary: Create a draft, refine its body and importance, then send the polished draft.
+  - url: arazzo/microsoft-outlook-file-message-into-new-folder-workflow.yml
+    name: Microsoft Outlook File Message into New Folder
+    summary: Create a mail folder, find a matching message, and move it into the folder.
+  - url: arazzo/microsoft-outlook-find-and-forward-workflow.yml
+    name: Microsoft Outlook Find and Forward
+    summary: Find a message by subject, read it, then forward it to a new recipient.
+  - url: arazzo/microsoft-outlook-inspect-and-remove-attachment-workflow.yml
+    name: Microsoft Outlook Inspect and Remove Attachment
+    summary: Find a message with attachments, inspect the first one, and delete it.
+  - url: arazzo/microsoft-outlook-large-attachment-upload-session-workflow.yml
+    name: Microsoft Outlook Large Attachment Upload Session
+    summary: Draft a message and open an upload session for a large (3-150 MB) attachment.
+  - url: arazzo/microsoft-outlook-reorganize-folder-workflow.yml
+    name: Microsoft Outlook Reorganize Folder
+    summary: Create a destination folder, find a source folder by name, and move it under the destination.
+  - url: arazzo/microsoft-outlook-reply-draft-with-attachment-workflow.yml
+    name: Microsoft Outlook Reply Draft with Attachment
+    summary: Create a reply draft for a message, attach a file, and send the reply.
+  - url: arazzo/microsoft-outlook-review-folder-and-mark-read-workflow.yml
+    name: Microsoft Outlook Review Folder and Mark Read
+    summary: Open a mail folder, list its unread messages, and mark the top one as read.
+  - url: arazzo/microsoft-outlook-triage-and-reply-workflow.yml
+    name: Microsoft Outlook Triage and Reply
+    summary: List the newest messages, read the top one in full, and reply to its sender.
 - type: Portal
   url: https://developer.microsoft.com/en-us/graph
 - type: GettingStarted

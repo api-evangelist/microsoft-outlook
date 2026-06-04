@@ -1,0 +1,96 @@
+arazzo: 1.0.1
+info:
+  title: Microsoft Outlook Build Folder Tree and Seed Draft
+  summary: Create a parent folder, a child subfolder, and a seed draft inside the child.
+  description: >-
+    A project-setup pattern. The workflow creates a parent mail folder, creates
+    a child subfolder beneath it, and then creates a seed draft message inside
+    that child folder. The parent folder id feeds the child creation and the
+    child folder id feeds the message creation, so the whole hierarchy is built
+    in one chained flow without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: outlookMailApi
+  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: build-folder-tree-and-seed-draft
+  summary: Create a parent folder, a child folder, and a draft inside the child.
+  description: >-
+    Creates a parent mail folder, creates a child subfolder under it, and
+    creates a seed draft message in the child folder.
+  inputs:
+    type: object
+    required:
+    - parentFolderName
+    - childFolderName
+    - seedSubject
+    properties:
+      parentFolderName:
+        type: string
+        description: The display name of the parent mail folder.
+      childFolderName:
+        type: string
+        description: The display name of the child subfolder.
+      seedSubject:
+        type: string
+        description: The subject of the seed draft message.
+      seedBody:
+        type: string
+        description: The body content of the seed draft message.
+        default: ''
+  steps:
+  - stepId: createParent
+    description: >-
+      Create the parent mail folder in the root of the mailbox and capture its
+      folder id.
+    operationId: createMailFolder
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.parentFolderName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      parentFolderId: $response.body#/id
+  - stepId: createChild
+    description: >-
+      Create a child subfolder under the parent folder using the parent folder
+      id, and capture the child folder id.
+    operationId: createChildFolder
+    parameters:
+    - name: mailFolder-id
+      in: path
+      value: $steps.createParent.outputs.parentFolderId
+    requestBody:
+      contentType: application/json
+      payload:
+        displayName: $inputs.childFolderName
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      childFolderId: $response.body#/id
+  - stepId: seedDraft
+    description: >-
+      Create a seed draft message inside the child folder using the child
+      folder id. Graph returns 201 with the new draft.
+    operationId: createMessageInFolder
+    parameters:
+    - name: mailFolder-id
+      in: path
+      value: $steps.createChild.outputs.childFolderId
+    requestBody:
+      contentType: application/json
+      payload:
+        subject: $inputs.seedSubject
+        body:
+          contentType: html
+          content: $inputs.seedBody
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      seedMessageId: $response.body#/id
+  outputs:
+    parentFolderId: $steps.createParent.outputs.parentFolderId
+    childFolderId: $steps.createChild.outputs.childFolderId
+    seedMessageId: $steps.seedDraft.outputs.seedMessageId
