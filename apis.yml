@@ -252,6 +252,8 @@ apis:
       - type: SDKs
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
 common:
+  - type: OAuthScopes
+    url: scopes/microsoft-outlook-scopes.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-outlook/overview
   - type: Arazzo

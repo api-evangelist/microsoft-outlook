@@ -1,0 +1,49 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/microsoft-graph-mail-api-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/microsoft-graph-mail-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+  description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user)
+    and application permissions.
+scopes:
+- scope: Mail.Read
+  description: Read user mail
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-graph-mail-api-openapi.yml
+- scope: Mail.Read.Shared
+  description: Read mail in shared mailboxes
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-graph-mail-api-openapi.yml
+- scope: Mail.ReadBasic
+  description: Read user basic mail
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-graph-mail-api-openapi.yml
+- scope: Mail.ReadWrite
+  description: Read and write access to user mail
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-graph-mail-api-openapi.yml
+- scope: Mail.ReadWrite.Shared
+  description: Read and write mail in shared mailboxes
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-graph-mail-api-openapi.yml
+- scope: Mail.Send
+  description: Send mail as a user
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/microsoft-graph-mail-api-openapi.yml
