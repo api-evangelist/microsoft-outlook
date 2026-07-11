@@ -252,6 +252,12 @@ apis:
       - type: SDKs
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
 common:
+  - type: VulnerabilityDisclosure
+    url: security/microsoft-outlook-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/microsoft-outlook-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-outlook-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-outlook-scopes.yml
   - type: PostmanWorkspace
