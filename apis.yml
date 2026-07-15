@@ -252,6 +252,8 @@ apis:
       - type: SDKs
         url: https://learn.microsoft.com/en-us/graph/sdks/sdks-overview
 common:
+  - type: AgenticAccess
+    url: agentic-access/microsoft-outlook-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/microsoft-outlook-vulnerability-disclosure.yml
   - type: DomainSecurity
