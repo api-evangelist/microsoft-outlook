@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Microsoft Outlook Microsoft Graph Mail API
+  version: 1.0.0
+extends: openapi/microsoft-graph-mail-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: microsoft-outlook
+      x-apievangelist-enriched: '2026-06-20'
+      x-authentication: authentication/microsoft-outlook-authentication.yml
+      x-oauth-scopes: scopes/microsoft-outlook-scopes.yml
+      x-error-catalog: errors/microsoft-outlook-problem-types.yml
+      x-conventions: conventions/microsoft-outlook-conventions.yml
+      x-lifecycle: lifecycle/microsoft-outlook-lifecycle.yml
+      x-data-model: data-model/microsoft-outlook-data-model.yml
+  - target: $.info
+    update:
+      x-standards:
+        - oauth2
+        - oidc
+        - odata-v4
+        - rfc8594-sunset-header
+        - pagination
+        - webhooks-change-notifications
+  - target: $.servers[0]
+    update:
+      x-rate-limit-docs: https://learn.microsoft.com/en-us/graph/throttling
+      x-status-page: https://status.cloud.microsoft/
+  - target: $.paths['/me/messages'].get
+    update:
+      x-pagination:
+        style: server-driven
+        next: "@odata.nextLink"
+        params: [$top, $skip]

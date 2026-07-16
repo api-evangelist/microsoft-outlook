@@ -1,0 +1,54 @@
+generated: '2026-06-20'
+method: searched
+status: published
+source: https://learn.microsoft.com/en-us/graph/mcp-server/overview
+server:
+  name: Microsoft MCP Server for Enterprise
+  transport: http
+  url: https://mcp.svc.cloud.microsoft/enterprise
+  preview: true
+  vendor: Microsoft
+  scope: >-
+    Official first-party Microsoft Graph MCP server. Currently focused on
+    Microsoft Entra identity and directory READ-ONLY scenarios (users, groups,
+    applications, devices, admin reporting). Outlook mail/calendar/contacts are
+    reachable through the generic microsoft_graph_get tool but are not a
+    first-class scenario yet. All operations respect existing Microsoft Graph
+    permissions, user privileges, and tenant policy. Rate limit: 100 calls/min
+    per user, plus standard Graph throttling.
+  app_id: e8c77dc2-69b3-43f4-bc51-3213c9d915b4
+tools:
+  - name: microsoft_graph_suggest_queries
+    description: RAG search over a curated catalog of Microsoft Graph query examples matching user intent.
+  - name: microsoft_graph_get
+    description: Runs read-only Microsoft Graph API calls honoring user roles, granted scopes, and throttling.
+  - name: microsoft_graph_list_properties
+    description: Retrieves the schema for Microsoft Graph entities (properties and relationships).
+related:
+  - name: Microsoft 365 Agents Toolkit MCP Server
+    note: Official Microsoft MCP for building apps/agents for Microsoft 365 and Copilot.
+    url: https://github.com/microsoft/mcp
+candidate_tools:
+  note: >-
+    Derived candidate tool list for the Outlook Mail surface (one tool per
+    OpenAPI operationId) — not published by Microsoft as a dedicated mail MCP;
+    provided as an integration starting point.
+  source: openapi/microsoft-graph-mail-api-openapi.yml
+  tools:
+    - {name: list_messages, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#listMessages}
+    - {name: create_draft_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#createDraftMessage}
+    - {name: get_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#getMessage}
+    - {name: update_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#updateMessage}
+    - {name: delete_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#deleteMessage}
+    - {name: send_draft_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#sendDraftMessage}
+    - {name: send_mail, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#sendMail}
+    - {name: copy_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#copyMessage}
+    - {name: move_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#moveMessage}
+    - {name: reply_to_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#replyToMessage}
+    - {name: reply_all_to_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#replyAllToMessage}
+    - {name: forward_message, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#forwardMessage}
+    - {name: list_mail_folders, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#listMailFolders}
+    - {name: create_mail_folder, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#createMailFolder}
+    - {name: list_attachments, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#listAttachments}
+    - {name: add_attachment, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#addAttachment}
+    - {name: create_attachment_upload_session, source_operation: openapi/microsoft-graph-mail-api-openapi.yml#createAttachmentUploadSession}

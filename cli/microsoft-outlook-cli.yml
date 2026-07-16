@@ -1,0 +1,43 @@
+generated: '2026-06-20'
+method: searched
+source: https://github.com/microsoftgraph/msgraph-cli
+name: Microsoft Graph CLI
+binary: mgc
+description: >-
+  First-party cross-platform command-line interface for Microsoft Graph, built on
+  .NET and the Graph SDK. Reaches the full Outlook surface (mail, calendar,
+  contacts, todo, people, mailFolders, subscriptions) as command groups. A
+  separate mgc-beta binary targets the beta endpoint.
+repo: https://github.com/microsoftgraph/msgraph-cli
+docs: https://learn.microsoft.com/en-us/graph/cli/overview
+ga_version: 1.0.0
+install:
+  - method: winget
+    command: winget install microsoft.msgraphcli
+  - method: download
+    command: "Download msgraph-cli-<platform> from GitHub Releases"
+    url: https://github.com/microsoftgraph/msgraph-cli/releases
+  - method: aka.ms
+    command: "https://aka.ms/get/graphcli/latest/{win-x64,linux-x64,osx-arm64}.zip"
+auth:
+  - mgc login
+  - mgc login --scopes Mail.ReadWrite Mail.Send Calendars.ReadWrite Contacts.ReadWrite
+command_groups:
+  - group: mgc users me messages
+    purpose: List, get, create, update, delete Outlook mail messages.
+  - group: mgc users me mail-folders
+    purpose: Manage mail folders and child folders.
+  - group: mgc users me messages send-mail
+    purpose: Send mail as the signed-in user.
+  - group: mgc users me events
+    purpose: Manage Outlook calendar events.
+  - group: mgc users me calendars
+    purpose: Manage calendars.
+  - group: mgc users me contacts
+    purpose: Manage Outlook contacts and contact folders.
+  - group: mgc users me todo lists
+    purpose: Manage Microsoft To Do task lists and tasks.
+  - group: mgc users me people
+    purpose: Query the People API.
+  - group: mgc subscriptions
+    purpose: Create and manage change-notification subscriptions (webhooks).

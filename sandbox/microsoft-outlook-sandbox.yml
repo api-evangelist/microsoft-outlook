@@ -1,0 +1,27 @@
+generated: '2026-06-20'
+method: searched
+source: https://developer.microsoft.com/en-us/microsoft-365/dev-program
+note: >-
+  Microsoft Graph has no separate test/live key mode. The supported sandbox is a
+  free Microsoft 365 developer tenant (isolated from production data) provisioned
+  through the Microsoft 365 Developer Program, plus the Graph Explorer sign-in
+  playground with pre-seeded sample data. No published magic/test values — never
+  invent mailbox ids, tokens, or addresses.
+sandbox:
+  - name: Microsoft 365 Developer Program (instant sandbox)
+    url: https://developer.microsoft.com/en-us/microsoft-365/dev-program
+    description: >-
+      Free, renewable Microsoft 365 E5 developer subscription with a configurable
+      sandbox tenant (optionally pre-populated with sample users, mail, and
+      calendar data) for building and testing Graph / Outlook integrations.
+    isolation: dedicated developer tenant, separate from any production tenant
+  - name: Graph Explorer
+    url: https://developer.microsoft.com/en-us/graph/graph-explorer
+    description: >-
+      Browser playground that runs live Graph requests against either a built-in
+      sample tenant (no sign-in required) or your own tenant, with the Outlook
+      mail/calendar/contacts sample data set.
+    sample_tenant: true
+test_endpoints:
+  production: https://graph.microsoft.com/v1.0
+  preview: https://graph.microsoft.com/beta

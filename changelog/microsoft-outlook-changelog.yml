@@ -1,0 +1,36 @@
+generated: '2026-06-20'
+method: searched
+source: https://developer.microsoft.com/en-us/graph/changelog
+note: >-
+  Microsoft Graph publishes a single dated changelog (filterable by version and
+  category) plus an RSS feed; the live changelog is the source of truth. The
+  Microsoft 365 Developer Blog (Outlook tag) carries feature/announcement posts.
+  Entries below are recent Outlook-relevant highlights captured from the harvested
+  blog feed in blogs/ — not the full Graph changelog.
+scheme: dated
+feeds:
+  changelog: https://developer.microsoft.com/en-us/graph/changelog
+  changelog_rss: https://developer.microsoft.com/en-us/graph/changelog/rss
+  blog: https://devblogs.microsoft.com/microsoft365dev/tag/outlook/
+current_versions: [v1.0, beta]
+entries:
+  - date: '2026-06-30'
+    breaking: false
+    highlights: Mailbox requirement set 1.16 now available for Outlook add-ins (Office.js).
+    source: blogs/2026-06-30-mailbox-requirement-set-1-16-now-available-for-outlook-add-ins.md
+  - date: '2026-03-26'
+    breaking: true
+    highlights: Breaking change — Graph API updates to sensitive email properties.
+    source: blogs/2026-03-26-breaking-change-ahead-graph-api-updates-to-sensitive-email.md
+  - date: '2025-11-19'
+    breaking: false
+    highlights: Ignite 2025 — what's new for Office add-ins.
+    source: blogs/2025-11-19-ignite-2025-what-s-new-for-office-add-ins.md
+  - date: '2025-05-06'
+    breaking: false
+    highlights: Nested App Authentication (NAA) now generally available across Outlook.
+    source: blogs/2025-05-06-nested-app-authentication-now-generally-available-across.md
+  - date: '2024-02-15'
+    breaking: true
+    highlights: Final reminder — Outlook REST API v2.0 and beta endpoints retired.
+    source: blogs/2024-02-15-final-reminder-outlook-rest-api-v2-0-and-beta-endpoints.md

@@ -1,0 +1,36 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/microsoft-graph-mail-api-openapi.yml
+enriched_from: https://learn.microsoft.com/en-us/graph/overview
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: openapi securitySchemes type oauth2 (Microsoft identity platform authorizationCode flow)
+  - id: oidc
+    conforms: true
+    evidence: OpenID Connect discovery at login.microsoftonline.com/common/v2.0/.well-known/openid-configuration
+  - id: odata-v4
+    conforms: true
+    evidence: Microsoft Graph is an OData 4.0 service; $filter/$select/$top/$skip/$orderby/$count/$search query options and @odata.* annotations
+  - id: rfc8594-sunset-header
+    conforms: true
+    evidence: Microsoft Graph deprecation policy uses Deprecation and Sunset response headers
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: errors use the OData error envelope (application/json), not application/problem+json
+  - id: pagination
+    conforms: true
+    evidence: server-driven paging via @odata.nextLink; client paging via $top/$skip
+  - id: webhooks-change-notifications
+    conforms: true
+    evidence: change notifications via subscription resource delivered to a webhook notificationUrl
+  - id: idempotency-key
+    conforms: false
+    evidence: no standard idempotency-key header; write operations are not declared idempotent
+  - id: fhir
+    conforms: false
+  - id: scim
+    conforms: false
+    note: SCIM is offered by Microsoft Entra provisioning, not by the Outlook/Graph mail surface
+  - id: json-api
+    conforms: false

@@ -1,0 +1,24 @@
+generated: '2026-06-20'
+method: searched
+source: live probes of API + identity hosts
+note: >-
+  The Microsoft Graph data-plane host (graph.microsoft.com) returns 401 on all
+  /.well-known/ paths — the surface is auth-gated, not publicly discoverable. The
+  OAuth 2.0 / OpenID Connect discovery document that governs Outlook API auth is
+  published by the Microsoft identity platform (login.microsoftonline.com).
+hosts:
+  - host: https://login.microsoftonline.com/common/v2.0
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: microsoft-outlook-openid-configuration.json
+  - host: https://graph.microsoft.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-authorization-server
+        status: 401
+      - path: /.well-known/security.txt
+        status: 401
+      - path: /.well-known/api-catalog
+        status: 401

@@ -1,0 +1,55 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/microsoft-graph-mail-api-openapi.yml
+enriched_from: https://learn.microsoft.com/en-us/graph/errors
+format: odata-error
+note: >-
+  Microsoft Graph does NOT use RFC 9457 problem+json. Errors are returned as an
+  OData error object { "error": { "code": <string>, "message": <string>,
+  "innerError": { "request-id", "client-request-id", "date" } } } with the
+  matching HTTP status. `code` is a machine-readable string; `message` is a
+  human-readable, non-contractual string.
+envelope:
+  media_type: application/json
+  schema: openapi/microsoft-graph-mail-api-openapi.yml#/components/schemas/ODataError
+  fields:
+    - error.code
+    - error.message
+    - error.innerError.request-id
+    - error.innerError.client-request-id
+    - error.innerError.date
+statuses:
+  - status: 400
+    name: Bad Request
+    description: The request body or query parameters are invalid.
+    codes: [invalidRequest, ErrorInvalidIdMalformed, ErrorInvalidRecipients]
+  - status: 401
+    name: Unauthorized
+    description: A valid OAuth 2.0 access token is required or the token is expired.
+    codes: [InvalidAuthenticationToken, CompactToken_ValidationError]
+    remediation: Acquire/refresh an access token from the Microsoft identity platform with the required scope.
+  - status: 403
+    name: Forbidden
+    description: The caller is authenticated but lacks sufficient permissions (scope/role) for the resource.
+    codes: [ErrorAccessDenied, accessDenied, ErrorMessageSubmissionBlocked]
+    remediation: Grant the required delegated or application permission (e.g. Mail.ReadWrite, Mail.Send) and consent.
+  - status: 404
+    name: Not Found
+    description: The specified resource (message, mailFolder, attachment) does not exist.
+    codes: [ErrorItemNotFound, itemNotFound, ResourceNotFound]
+  - status: 429
+    name: Too Many Requests
+    description: The app has been throttled. Honor the Retry-After response header.
+    codes: [TooManyRequests, ApplicationThrottled, activityLimitReached]
+    headers: [Retry-After]
+    remediation: Back off for the number of seconds in Retry-After, then retry with exponential backoff + jitter.
+  - status: 500
+    name: Internal Server Error
+    description: An unexpected server error occurred.
+    codes: [generalException, InternalServerError]
+    remediation: Retry with backoff; if persistent, capture request-id and contact support.
+  - status: 503
+    name: Service Unavailable
+    description: The service is temporarily unavailable or overloaded.
+    codes: [serviceNotAvailable, UnknownError]
+    remediation: Retry after the Retry-After interval.

@@ -1,11 +1,27 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
 source: openapi/microsoft-graph-mail-api-openapi.yml
+docs: https://learn.microsoft.com/en-us/graph/auth/
 summary:
   types:
   - oauth2
   oauth2_flows:
   - authorizationCode
+  - clientCredentials
+  - deviceCode
+platform: Microsoft identity platform (Microsoft Entra ID)
+token_format: JWT bearer, sent in the Authorization header
+consent_models:
+  - delegated (user context, /authorize + /token)
+  - application (app-only, client credentials, admin consent required)
+supported_flows:
+  - authorizationCode (with PKCE for public clients)
+  - clientCredentials (app-only / daemon)
+  - deviceCode (input-constrained devices)
+  - onBehalfOf (middle-tier services)
+add_in_auth:
+  - Nested App Authentication (NAA) — GA across Outlook add-ins (Office.js)
+  - Office SSO (getAccessToken)
 schemes:
 - name: oauth2
   type: oauth2
@@ -14,7 +30,8 @@ schemes:
     authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
     tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
     scopes: 6
-  description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user)
-    and application permissions.
+  description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user) and application permissions.
   sources:
   - openapi/microsoft-graph-mail-api-openapi.yml
+oidc_discovery: well-known/microsoft-outlook-openid-configuration.json
+scopes: scopes/microsoft-outlook-scopes.yml

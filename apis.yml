@@ -5,7 +5,7 @@ description: >-
   provides email, calendar, contact management, task management, and other productivity features.
 image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2019/11/Outlook-logo.png
 created: '2024'
-modified: '2026-05-19'
+modified: '2026-06-20'
 specificationVersion: '0.19'
 url: https://outlook.office.com
 apis:
@@ -262,6 +262,36 @@ common:
     url: authentication/microsoft-outlook-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-outlook-scopes.yml
+  - type: TrustCenter
+    url: security/microsoft-outlook-trust-center.yml
+  - type: Packages
+    url: packages/microsoft-outlook-packages.yml
+  - type: WellKnown
+    url: well-known/microsoft-outlook-well-known.yml
+  - type: MCPServer
+    url: mcp/microsoft-outlook-mcp.yml
+  - type: LLMsTxt
+    url: llms/microsoft-outlook-llms.txt
+  - type: Overlay
+    url: overlays/microsoft-outlook-microsoft-graph-mail-api-overlay.yaml
+  - type: Conformance
+    url: conformance/microsoft-outlook-conformance.yml
+  - type: ErrorCatalog
+    url: errors/microsoft-outlook-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/microsoft-outlook-lifecycle.yml
+  - type: Conventions
+    url: conventions/microsoft-outlook-conventions.yml
+  - type: DataModel
+    url: data-model/microsoft-outlook-data-model.yml
+  - type: ChangeLog
+    url: changelog/microsoft-outlook-changelog.yml
+  - type: CLI
+    url: cli/microsoft-outlook-cli.yml
+  - type: Components
+    url: components/microsoft-outlook-components.yml
+  - type: Sandbox
+    url: sandbox/microsoft-outlook-sandbox.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-outlook/overview
   - type: Arazzo

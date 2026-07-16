@@ -1,0 +1,57 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/microsoft-graph-mail-api-openapi.yml
+enriched_from: https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview
+note: >-
+  Entity-relationship graph derived from the Outlook Mail OpenAPI schemas and
+  operation paths. Microsoft Graph ids are opaque, URL-safe, mailbox-scoped
+  strings (no human-readable prefix); an id is only valid within its user/mailbox.
+entities:
+  - name: User
+    id: id
+    note: Root of the mailbox (/me or /users/{id}); implicit owner of all mail entities.
+  - name: Message
+    id: id
+    schema: openapi/microsoft-graph-mail-api-openapi.yml#/components/schemas/Message
+    key_fields: [subject, from, toRecipients, ccRecipients, body, isRead, isDraft, parentFolderId, conversationId, internetMessageHeaders]
+  - name: MailFolder
+    id: id
+    schema: openapi/microsoft-graph-mail-api-openapi.yml#/components/schemas/MailFolder
+    key_fields: [displayName, parentFolderId, childFolderCount, unreadItemCount, totalItemCount]
+  - name: Attachment
+    id: id
+    schema: openapi/microsoft-graph-mail-api-openapi.yml#/components/schemas/Attachment
+    key_fields: [name, contentType, size, isInline]
+  - name: Recipient
+    schema: openapi/microsoft-graph-mail-api-openapi.yml#/components/schemas/Recipient
+    note: Value object (emailAddress) embedded in Message, not independently addressable.
+relationships:
+  - from: User
+    to: MailFolder
+    type: has_many
+    via: /me/mailFolders
+  - from: User
+    to: Message
+    type: has_many
+    via: /me/messages
+  - from: MailFolder
+    to: MailFolder
+    type: has_many
+    via: childFolders (parentFolderId)
+  - from: MailFolder
+    to: Message
+    type: has_many
+    via: /me/mailFolders/{id}/messages (Message.parentFolderId)
+  - from: Message
+    to: MailFolder
+    type: belongs_to
+    via: parentFolderId
+  - from: Message
+    to: Attachment
+    type: has_many
+    via: /messages/{id}/attachments
+  - from: Message
+    to: Recipient
+    type: has_many
+    via: toRecipients / ccRecipients / bccRecipients / from / sender / replyTo
+render: null

@@ -1,0 +1,36 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/graph/versioning-and-support
+versioning:
+  scheme: uri-path
+  current: v1.0
+  preview: beta
+  docs: https://learn.microsoft.com/en-us/graph/versioning-and-support
+  note: >-
+    Two named versions are served under the same host — /v1.0 (production, GA)
+    and /beta (preview, not for production). The legacy Outlook REST API v2.0
+    (outlook.office.com/api) was retired in favor of Microsoft Graph.
+deprecation:
+  policy_url: https://learn.microsoft.com/en-us/graph/versioning-and-support#deprecation
+  minimum_support: 24 months after deprecation announcement (or 36 months for some data)
+  deprecation_header: true
+  sunset_header: true
+  header_standard: RFC 8594
+  changelog: https://developer.microsoft.com/en-us/graph/changelog
+sla:
+  note: >-
+    Governed by the Microsoft Online Services Level Agreement for the underlying
+    Microsoft 365 / Exchange Online service; no separate Graph API SLA document.
+  url: https://www.microsoft.com/licensing/docs/view/Service-Level-Agreements-SLA-for-Online-Services
+status_page: https://status.cloud.microsoft/
+notable_deprecations:
+  - item: Outlook REST API v1.0 and v2.0 / beta endpoints (outlook.office.com/api)
+    status: retired
+    source: blogs/2024-02-15-final-reminder-outlook-rest-api-v2-0-and-beta-endpoints.md
+  - item: Entity-based contextual Outlook add-ins
+    status: retired
+    source: blogs/2024-01-05-retirement-of-entity-based-contextual-outlook-add-ins.md
+  - item: Graph API changes to sensitive email properties (breaking change)
+    status: announced
+    source: blogs/2026-03-26-breaking-change-ahead-graph-api-updates-to-sensitive-email.md
+deprecated_operations: []

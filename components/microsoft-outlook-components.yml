@@ -1,0 +1,33 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/graph/toolkit/overview
+families:
+  - family: Microsoft Graph Toolkit (mgt)
+    description: >-
+      Collection of framework-agnostic web components + authentication providers
+      powered by Microsoft Graph. Work in any web framework and all modern
+      browsers, and bind automatically to Graph data.
+    loader:
+      npm: "@microsoft/mgt-components"
+      npm_react: "@microsoft/mgt-react"
+      cdn: https://unpkg.com/@microsoft/mgt/dist/bundle/mgt-loader.js
+    repo: https://github.com/microsoftgraph/microsoft-graph-toolkit
+    docs: https://learn.microsoft.com/en-us/graph/toolkit/overview
+    deprecation:
+      status: deprecated
+      retirement_begins: '2025-09-01'
+      full_retirement: '2026-08-28'
+      guidance: Migrate to Microsoft Graph SDKs or other supported Graph tooling.
+    components:
+      - {tag: mgt-login, purpose: Sign-in button and identity flyout.}
+      - {tag: mgt-person, purpose: Render a person or contact card.}
+      - {tag: mgt-person-card, purpose: Detailed contact card with mail/chat actions.}
+      - {tag: mgt-people, purpose: Render a group of people or contacts.}
+      - {tag: mgt-people-picker, purpose: Search and select people from the directory.}
+      - {tag: mgt-agenda, purpose: Render Outlook calendar events for a time window.}
+      - {tag: mgt-tasks, purpose: Render and manage Microsoft To Do / Planner tasks.}
+      - {tag: mgt-todo, purpose: Render and manage Microsoft To Do tasks.}
+      - {tag: mgt-get, purpose: Make any Microsoft Graph GET query directly in HTML.}
+      - {tag: mgt-file, purpose: Render a file with preview and metadata.}
+      - {tag: mgt-search-box, purpose: Search input bound to Microsoft Search.}
+      - {tag: mgt-search-results, purpose: Render Microsoft Search results.}

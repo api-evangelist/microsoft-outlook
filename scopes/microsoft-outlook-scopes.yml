@@ -1,49 +1,39 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
 source: openapi/microsoft-graph-mail-api-openapi.yml
+docs: https://learn.microsoft.com/en-us/graph/permissions-reference
+note: >-
+  Microsoft identity platform (Entra ID) OAuth 2.0 permissions. Scopes exist in
+  delegated (user-consented) and application (app-only) forms; the strings below
+  are the delegated names. The OpenAPI declares only the mail subset — the wider
+  Outlook surface (calendar, contacts, tasks, mailbox settings) is enriched from
+  the Microsoft Graph permissions reference.
 schemes:
-- name: oauth2
-  source: openapi/microsoft-graph-mail-api-openapi.yml
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
-    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
-  description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user)
-    and application permissions.
+  - name: oauth2
+    source: openapi/microsoft-graph-mail-api-openapi.yml
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+        tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+    description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user) and application permissions.
 scopes:
-- scope: Mail.Read
-  description: Read user mail
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/microsoft-graph-mail-api-openapi.yml
-- scope: Mail.Read.Shared
-  description: Read mail in shared mailboxes
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/microsoft-graph-mail-api-openapi.yml
-- scope: Mail.ReadBasic
-  description: Read user basic mail
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/microsoft-graph-mail-api-openapi.yml
-- scope: Mail.ReadWrite
-  description: Read and write access to user mail
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/microsoft-graph-mail-api-openapi.yml
-- scope: Mail.ReadWrite.Shared
-  description: Read and write mail in shared mailboxes
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/microsoft-graph-mail-api-openapi.yml
-- scope: Mail.Send
-  description: Send mail as a user
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/microsoft-graph-mail-api-openapi.yml
+  - {scope: Mail.Read, description: Read user mail, flows: [authorizationCode], sources: [openapi/microsoft-graph-mail-api-openapi.yml]}
+  - {scope: Mail.ReadBasic, description: Read user basic mail (no body/attachments), flows: [authorizationCode], sources: [openapi/microsoft-graph-mail-api-openapi.yml]}
+  - {scope: Mail.Read.Shared, description: Read mail in shared mailboxes, flows: [authorizationCode], sources: [openapi/microsoft-graph-mail-api-openapi.yml]}
+  - {scope: Mail.ReadWrite, description: Read and write access to user mail, flows: [authorizationCode], sources: [openapi/microsoft-graph-mail-api-openapi.yml]}
+  - {scope: Mail.ReadWrite.Shared, description: Read and write mail in shared mailboxes, flows: [authorizationCode], sources: [openapi/microsoft-graph-mail-api-openapi.yml]}
+  - {scope: Mail.Send, description: Send mail as a user, flows: [authorizationCode], sources: [openapi/microsoft-graph-mail-api-openapi.yml]}
+  - {scope: Mail.Send.Shared, description: Send mail on behalf of others, flows: [authorizationCode], sources: [docs]}
+  - {scope: MailboxSettings.Read, description: Read user mailbox settings (automatic replies, time zone, language), flows: [authorizationCode], sources: [docs]}
+  - {scope: MailboxSettings.ReadWrite, description: Read and write user mailbox settings, flows: [authorizationCode], sources: [docs]}
+  - {scope: MailboxFolder.Read, description: Read user mail folders, flows: [authorizationCode], sources: [docs]}
+  - {scope: MailboxFolder.ReadWrite, description: Read and write user mail folders, flows: [authorizationCode], sources: [docs]}
+  - {scope: Calendars.Read, description: Read user calendars, flows: [authorizationCode], sources: [docs]}
+  - {scope: Calendars.ReadWrite, description: Read and write user calendars, flows: [authorizationCode], sources: [docs]}
+  - {scope: Contacts.Read, description: Read user contacts, flows: [authorizationCode], sources: [docs]}
+  - {scope: Contacts.ReadWrite, description: Read and write user contacts, flows: [authorizationCode], sources: [docs]}
+  - {scope: Tasks.Read, description: Read user tasks and to-do lists, flows: [authorizationCode], sources: [docs]}
+  - {scope: Tasks.ReadWrite, description: Create, read, update, delete user tasks and to-do lists, flows: [authorizationCode], sources: [docs]}
+  - {scope: People.Read, description: Read the signed-in user's relevant people list, flows: [authorizationCode], sources: [docs]}
+  - {scope: User.Read, description: Sign in and read the user's profile, flows: [authorizationCode], sources: [docs]}
+  - {scope: offline_access, description: Maintain access via refresh tokens, flows: [authorizationCode], sources: [docs]}

@@ -1,0 +1,70 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/graph/sdks/sdk-installation
+description: >-
+  First-party Microsoft Graph SDK client libraries. Outlook mail, calendar,
+  contacts, tasks, people, categories, and change notifications are all reached
+  through the unified Microsoft Graph SDKs (no Outlook-specific package) plus the
+  Office.js library for Outlook add-ins.
+packages:
+  - language: dotnet
+    registry: nuget
+    name: Microsoft.Graph
+    url: https://www.nuget.org/packages/Microsoft.Graph/
+    install: dotnet add package Microsoft.Graph
+    official: true
+  - language: dotnet
+    registry: nuget
+    name: Microsoft.Graph.Beta
+    url: https://www.nuget.org/packages/Microsoft.Graph.Beta
+    install: dotnet add package Microsoft.Graph.Beta
+    official: true
+  - language: javascript
+    registry: npm
+    name: "@microsoft/microsoft-graph-client"
+    url: https://www.npmjs.com/package/@microsoft/microsoft-graph-client
+    install: npm install @microsoft/microsoft-graph-client
+    official: true
+  - language: javascript
+    registry: npm
+    name: "@microsoft/msgraph-sdk"
+    url: https://www.npmjs.com/package/@microsoft/msgraph-sdk
+    install: npm install @microsoft/msgraph-sdk
+    official: true
+  - language: python
+    registry: pypi
+    name: msgraph-sdk
+    url: https://pypi.org/project/msgraph-sdk/
+    install: pip install msgraph-sdk
+    official: true
+  - language: java
+    registry: maven
+    name: com.microsoft.graph:microsoft-graph
+    url: https://central.sonatype.com/artifact/com.microsoft.graph/microsoft-graph
+    install: "implementation 'com.microsoft.graph:microsoft-graph'"
+    official: true
+  - language: go
+    registry: pkg.go.dev
+    name: github.com/microsoftgraph/msgraph-sdk-go
+    url: https://pkg.go.dev/github.com/microsoftgraph/msgraph-sdk-go
+    install: go get github.com/microsoftgraph/msgraph-sdk-go
+    official: true
+  - language: php
+    registry: packagist
+    name: microsoft/microsoft-graph
+    url: https://packagist.org/packages/microsoft/microsoft-graph
+    install: composer require microsoft/microsoft-graph
+    official: true
+  - language: powershell
+    registry: powershell-gallery
+    name: Microsoft.Graph
+    url: https://www.powershellgallery.com/packages/Microsoft.Graph
+    install: Install-Module Microsoft.Graph
+    official: true
+  - language: javascript
+    registry: cdn
+    name: office.js
+    url: https://appsforoffice.microsoft.com/lib/1/hosted/office.js
+    install: "<script src=\"https://appsforoffice.microsoft.com/lib/1/hosted/office.js\"></script>"
+    official: true
+    note: Office JavaScript API library used by Outlook add-ins (Mailbox requirement set).

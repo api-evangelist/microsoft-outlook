@@ -1,0 +1,58 @@
+generated: '2026-06-20'
+method: searched
+source: https://learn.microsoft.com/en-us/graph/api/overview
+derived_from: openapi/microsoft-graph-mail-api-openapi.yml
+authentication:
+  style: oauth2
+  platform: Microsoft identity platform (Entra ID)
+  flow: authorizationCode
+  token: Bearer JWT in Authorization header
+  see: authentication/microsoft-outlook-authentication.yml
+base_url: https://graph.microsoft.com/v1.0
+protocol: OData 4.0 (REST + JSON)
+pagination:
+  style: server-driven + client-driven
+  server_field: "@odata.nextLink"
+  client_params: [$top, $skip]
+  count: $count
+  note: Follow @odata.nextLink until absent; page size caps vary by resource (mail defaults ~10, max 1000).
+query_options:
+  filter: $filter
+  select: $select
+  expand: $expand
+  orderby: $orderby
+  search: $search
+  note: $search on messages uses KQL; some combinations of $filter + $orderby require ConsistencyLevel=eventual + $count=true.
+field_selection:
+  sparse: $select
+  expansion: $expand
+metadata:
+  annotations: ["@odata.type", "@odata.etag", "@odata.id", "@odata.context"]
+concurrency:
+  etag: true
+  headers: [If-Match, If-None-Match]
+  note: Messages/folders carry @odata.etag; use If-Match for optimistic concurrency on update/delete.
+request_tracing:
+  request_headers: [client-request-id]
+  response_fields: [error.innerError.request-id, error.innerError.client-request-id]
+  note: request-id / client-request-id are echoed in error innerError and Graph activity logs.
+idempotency:
+  supported: false
+  note: No idempotency-key header; retries of write operations are not guaranteed safe.
+versioning:
+  style: uri-path (v1.0 | beta)
+  see: lifecycle/microsoft-outlook-lifecycle.yml
+error_envelope:
+  format: odata-error
+  see: errors/microsoft-outlook-problem-types.yml
+rate_limiting:
+  signal: HTTP 429 with Retry-After header
+  model: per-app + per-mailbox throttling
+  docs: https://learn.microsoft.com/en-us/graph/throttling
+  see: rate-limits/microsoft-outlook-rate-limits.yml
+change_notifications:
+  mechanism: subscription resource + webhook notificationUrl (validation handshake, clientState, maxlifetime renewal)
+  docs: https://learn.microsoft.com/en-us/graph/change-notifications-overview
+batching:
+  endpoint: POST https://graph.microsoft.com/v1.0/$batch
+  docs: https://learn.microsoft.com/en-us/graph/json-batching

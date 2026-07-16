@@ -1,0 +1,34 @@
+generated: '2026-06-20'
+method: searched
+probe: true
+url: https://www.microsoft.com/en-us/trust-center
+service_trust_portal: https://servicetrust.microsoft.com/
+compliance_offerings: https://learn.microsoft.com/en-us/compliance/regulatory/offering-home
+certifications:
+  - SOC 1
+  - SOC 2
+  - SOC 3
+  - ISO 27001
+  - ISO 27017
+  - ISO 27018
+  - ISO 27701
+  - ISO 42001
+  - ISO 22301
+  - CSA STAR Certification
+  - CSA STAR Attestation
+  - FedRAMP
+  - FIPS 140-2
+  - HIPAA / HITECH
+  - HITRUST
+  - PCI DSS
+  - GDPR
+  - SOX
+evidence:
+  - source: https://learn.microsoft.com/en-us/compliance/regulatory/offering-home
+    keywords: [soc 1, soc 2, iso 27001, fedramp, hipaa, pci-dss, csa star, gdpr]
+  - source: https://www.microsoft.com/en-us/trust-center
+    kind: trust center
+note: >-
+  Microsoft cloud services (which back the Outlook / Microsoft Graph APIs) carry
+  an extensive compliance portfolio. Audit reports and certificates are
+  downloadable from the Service Trust Portal.

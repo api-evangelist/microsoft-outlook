@@ -1,0 +1,41 @@
+# Microsoft Outlook (Microsoft Graph)
+
+> Microsoft Outlook is a personal information manager and email client in the Microsoft 365 suite. Its programmatic surface is Microsoft Graph — a unified OData 4.0 REST API over mail, calendar, contacts, tasks, people, categories, mail rules, focused inbox, and change notifications — plus the Office.js library for Outlook add-ins. Authentication is OAuth 2.0 via the Microsoft identity platform (Entra ID). Base URL: https://graph.microsoft.com/v1.0.
+
+## APIs
+- [Microsoft Graph Mail API](https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0): Messages, mail folders, attachments, send/reply/forward/copy/move.
+- [Microsoft Graph Calendar API](https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0): Events, calendars, scheduling, invitations.
+- [Microsoft Graph Contacts API](https://learn.microsoft.com/en-us/graph/api/resources/contact?view=graph-rest-1.0): Contacts and contact folders.
+- [Microsoft Graph Tasks (To Do) API](https://learn.microsoft.com/en-us/graph/api/resources/todo-overview?view=graph-rest-1.0): Task lists and to-do items.
+- [Microsoft Graph People API](https://learn.microsoft.com/en-us/graph/people-insights-overview): People relevant to the user.
+- [Microsoft Graph Change Notifications API](https://learn.microsoft.com/en-us/graph/outlook-change-notifications-overview): Webhook subscriptions for mail, events, contacts.
+- [Microsoft Graph Focused Inbox API](https://learn.microsoft.com/en-us/graph/api/resources/manage-focused-inbox?view=graph-rest-1.0): Focused/Other classification overrides.
+- [Microsoft Graph Mail Rules API](https://learn.microsoft.com/en-us/graph/api/resources/messagerule?view=graph-rest-1.0): Inbox rules automation.
+- [Microsoft Graph Categories API](https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0): Master category list.
+- [Outlook Add-ins API](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/): Office.js Mailbox requirement set.
+
+## Specs
+- [Outlook Mail OpenAPI (API Evangelist)](openapi/microsoft-graph-mail-api-openapi.yml)
+- [Microsoft Graph v1.0 OpenAPI (upstream)](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml)
+- [Change Notifications AsyncAPI](asyncapi/microsoft-outlook-change-notifications-asyncapi.yml)
+- [OpenID Connect discovery](well-known/microsoft-outlook-openid-configuration.json)
+
+## Artifacts
+- [Authentication profile](authentication/microsoft-outlook-authentication.yml)
+- [OAuth scopes](scopes/microsoft-outlook-scopes.yml)
+- [Error catalog (OData error)](errors/microsoft-outlook-problem-types.yml)
+- [API conventions](conventions/microsoft-outlook-conventions.yml)
+- [Lifecycle & versioning](lifecycle/microsoft-outlook-lifecycle.yml)
+- [Data model](data-model/microsoft-outlook-data-model.yml)
+- [Packages / SDKs](packages/microsoft-outlook-packages.yml)
+- [CLI (mgc)](cli/microsoft-outlook-cli.yml)
+- [MCP server](mcp/microsoft-outlook-mcp.yml)
+- [Rate limits](rate-limits/microsoft-outlook-rate-limits.yml)
+
+## Docs
+- [Microsoft Graph overview](https://learn.microsoft.com/en-us/graph/overview)
+- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
+- [Permissions reference](https://learn.microsoft.com/en-us/graph/permissions-reference)
+- [Throttling](https://learn.microsoft.com/en-us/graph/throttling)
+- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
+- [Status](https://status.cloud.microsoft/)
