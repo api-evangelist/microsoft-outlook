@@ -1,0 +1,447 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Outlook Microsoft Graph Mail Attachments API
+  description: API for accessing Outlook email messages, mail folders, and attachments through Microsoft Graph. Provides full CRUD operations on messages, mail folder management, attachment handling, and message actions such as send, reply, forward, copy, and move.
+  version: 1.0.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph/support
+  license:
+    name: Microsoft API Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  x-api-id: microsoft-graph-mail
+  x-audience: external
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+security:
+- oauth2: []
+tags:
+- name: Attachments
+  description: Operations on message attachments
+paths:
+  /me/messages/{message-id}/attachments:
+    get:
+      operationId: listAttachments
+      summary: Microsoft Outlook List Attachments
+      description: Retrieve a list of attachment objects attached to a message.
+      tags:
+      - Attachments
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      - $ref: '#/components/parameters/select'
+      - $ref: '#/components/parameters/filter'
+      responses:
+        '200':
+          description: Successfully retrieved attachments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentCollectionResponse'
+              examples:
+                Listattachments200Example:
+                  summary: Default listAttachments 200 response
+                  x-microcks-default: true
+                  value:
+                    '@odata.context': example_value
+                    value:
+                    - '@odata.type': '#microsoft.graph.fileAttachment'
+                      id: abc123
+                      name: Example Title
+                      contentType: example_value
+                      size: 10
+                      isInline: true
+                      lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                      contentBytes: example_value
+                      contentId: '500123'
+                      contentLocation: example_value
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: addAttachment
+      summary: Microsoft Outlook Add Attachment
+      description: Add a file, item, or link attachment to a message. This operation limits the size of the attachment to under 3 MB. For larger files (3 MB to 150 MB), use the upload session endpoint.
+      tags:
+      - Attachments
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+            examples:
+              AddattachmentRequestExample:
+                summary: Default addAttachment request
+                x-microcks-default: true
+                value:
+                  '@odata.type': '#microsoft.graph.fileAttachment'
+                  id: abc123
+                  name: Example Title
+                  contentType: example_value
+                  size: 10
+                  isInline: true
+                  lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                  contentBytes: example_value
+                  contentId: '500123'
+                  contentLocation: example_value
+      responses:
+        '201':
+          description: Successfully added attachment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+              examples:
+                Addattachment201Example:
+                  summary: Default addAttachment 201 response
+                  x-microcks-default: true
+                  value:
+                    '@odata.type': '#microsoft.graph.fileAttachment'
+                    id: abc123
+                    name: Example Title
+                    contentType: example_value
+                    size: 10
+                    isInline: true
+                    lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                    contentBytes: example_value
+                    contentId: '500123'
+                    contentLocation: example_value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/messages/{message-id}/attachments/{attachment-id}:
+    get:
+      operationId: getAttachment
+      summary: Microsoft Outlook Get Attachment
+      description: Read the properties, relationships, or raw contents of an attachment attached to a message.
+      tags:
+      - Attachments
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      - $ref: '#/components/parameters/attachmentId'
+      - $ref: '#/components/parameters/select'
+      responses:
+        '200':
+          description: Successfully retrieved attachment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+              examples:
+                Getattachment200Example:
+                  summary: Default getAttachment 200 response
+                  x-microcks-default: true
+                  value:
+                    '@odata.type': '#microsoft.graph.fileAttachment'
+                    id: abc123
+                    name: Example Title
+                    contentType: example_value
+                    size: 10
+                    isInline: true
+                    lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                    contentBytes: example_value
+                    contentId: '500123'
+                    contentLocation: example_value
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteAttachment
+      summary: Microsoft Outlook Delete Attachment
+      description: Delete an attachment from a message.
+      tags:
+      - Attachments
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      - $ref: '#/components/parameters/attachmentId'
+      responses:
+        '204':
+          description: Successfully deleted attachment.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/messages/{message-id}/attachments/createUploadSession:
+    post:
+      operationId: createAttachmentUploadSession
+      summary: Microsoft Outlook Create Upload Session for Large Attachment
+      description: Create an upload session that allows an app to iteratively upload ranges of a file to attach it to a message. The file size must be between 3 MB and 150 MB.
+      tags:
+      - Attachments
+      parameters:
+      - $ref: '#/components/parameters/messageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AttachmentItem:
+                  type: object
+                  properties:
+                    attachmentType:
+                      type: string
+                      enum:
+                      - file
+                      - item
+                      - reference
+                    name:
+                      type: string
+                      description: The display name of the attachment.
+                    size:
+                      type: integer
+                      format: int64
+                      description: The size of the attachment in bytes.
+                    contentType:
+                      type: string
+                      description: The MIME type of the attachment.
+                  required:
+                  - attachmentType
+                  - name
+                  - size
+              required:
+              - AttachmentItem
+            examples:
+              CreateattachmentuploadsessionRequestExample:
+                summary: Default createAttachmentUploadSession request
+                x-microcks-default: true
+                value:
+                  AttachmentItem:
+                    attachmentType: file
+                    name: Example Title
+                    size: 10
+                    contentType: example_value
+      responses:
+        '201':
+          description: Successfully created upload session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadSession'
+              examples:
+                Createattachmentuploadsession201Example:
+                  summary: Default createAttachmentUploadSession 201 response
+                  x-microcks-default: true
+                  value:
+                    uploadUrl: https://www.example.com
+                    expirationDateTime: '2026-01-15T10:30:00Z'
+                    nextExpectedRanges:
+                    - example_value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
+    messageId:
+      name: message-id
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+    attachmentId:
+      name: attachment-id
+      in: path
+      required: true
+      description: The unique identifier of the attachment.
+      schema:
+        type: string
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+  responses:
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  schemas:
+    UploadSession:
+      type: object
+      description: Represents the upload session for iterative file upload.
+      properties:
+        uploadUrl:
+          type: string
+          format: uri
+          description: The URL endpoint that accepts PUT requests for byte ranges of the file.
+          example: https://www.example.com
+        expirationDateTime:
+          type: string
+          format: date-time
+          description: The date and time in UTC that the upload session will expire.
+          example: '2026-01-15T10:30:00Z'
+        nextExpectedRanges:
+          type: array
+          items:
+            type: string
+          description: A collection of byte ranges that the server is missing for the file, such as "0-25", "128-500".
+          example: []
+    AttachmentCollectionResponse:
+      type: object
+      description: Collection of attachment resources.
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          example: []
+    Attachment:
+      type: object
+      description: Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.
+      properties:
+        '@odata.type':
+          type: string
+          description: 'The OData type of the attachment. Use #microsoft.graph.fileAttachment for file attachments or #microsoft.graph.itemAttachment for item attachments.'
+          enum:
+          - '#microsoft.graph.fileAttachment'
+          - '#microsoft.graph.itemAttachment'
+          - '#microsoft.graph.referenceAttachment'
+          example: '#microsoft.graph.fileAttachment'
+        id:
+          type: string
+          description: The unique identifier of the attachment. Read-only.
+          readOnly: true
+          example: abc123
+        name:
+          type: string
+          description: The display name of the attachment.
+          example: Example Title
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+          example: example_value
+        size:
+          type: integer
+          format: int32
+          description: The length of the attachment in bytes.
+          example: 10
+        isInline:
+          type: boolean
+          description: True if the attachment is an inline attachment.
+          example: true
+        lastModifiedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the attachment was last modified in UTC.
+          example: '2026-01-15T10:30:00Z'
+        contentBytes:
+          type: string
+          format: byte
+          description: The base64-encoded contents of the file. Only applicable for fileAttachment.
+          example: example_value
+        contentId:
+          type: string
+          description: The ID of the attachment in the Exchange store. Only applicable for fileAttachment.
+          example: '500123'
+        contentLocation:
+          type: string
+          description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
+          example: example_value
+    ODataError:
+      type: object
+      description: OData error response from Microsoft Graph.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The error code.
+            message:
+              type: string
+              description: The error message.
+            innerError:
+              type: object
+              properties:
+                request-id:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+          example: example_value
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user) and application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            Mail.Read: Read user mail
+            Mail.ReadWrite: Read and write access to user mail
+            Mail.Send: Send mail as a user
+            Mail.ReadBasic: Read user basic mail
+            Mail.Read.Shared: Read mail in shared mailboxes
+            Mail.ReadWrite.Shared: Read and write mail in shared mailboxes

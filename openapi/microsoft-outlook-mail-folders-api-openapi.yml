@@ -1,0 +1,1125 @@
+openapi: 3.1.0
+info:
+  title: Microsoft Outlook Microsoft Graph Mail Attachments Mail Folders API
+  description: API for accessing Outlook email messages, mail folders, and attachments through Microsoft Graph. Provides full CRUD operations on messages, mail folder management, attachment handling, and message actions such as send, reply, forward, copy, and move.
+  version: 1.0.0
+  contact:
+    name: Microsoft Graph Support
+    url: https://developer.microsoft.com/en-us/graph/support
+  license:
+    name: Microsoft API Terms of Use
+    url: https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use
+  x-api-id: microsoft-graph-mail
+  x-audience: external
+servers:
+- url: https://graph.microsoft.com/v1.0
+  description: Microsoft Graph v1.0 production endpoint
+security:
+- oauth2: []
+tags:
+- name: Mail Folders
+  description: Operations on mail folders in a user mailbox
+paths:
+  /me/mailFolders:
+    get:
+      operationId: listMailFolders
+      summary: Microsoft Outlook List Mail Folders
+      description: Get all the mail folders in the specified user's mailbox, including any mail search folders. Use the includeHiddenFolders query parameter to include hidden folders.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/top'
+      - $ref: '#/components/parameters/skip'
+      - $ref: '#/components/parameters/select'
+      - $ref: '#/components/parameters/filter'
+      - name: includeHiddenFolders
+        in: query
+        description: Include hidden mail folders in the response.
+        schema:
+          type: string
+        example: example_value
+      responses:
+        '200':
+          description: Successfully retrieved mail folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolderCollectionResponse'
+              examples:
+                Listmailfolders200Example:
+                  summary: Default listMailFolders 200 response
+                  x-microcks-default: true
+                  value:
+                    '@odata.context': example_value
+                    '@odata.nextLink': https://www.example.com
+                    value:
+                    - id: abc123
+                      displayName: example_value
+                      parentFolderId: '500123'
+                      childFolderCount: 10
+                      unreadItemCount: 10
+                      totalItemCount: 10
+                      isHidden: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createMailFolder
+      summary: Microsoft Outlook Create Mail Folder
+      description: Create a new mail folder in the root folder of the user's mailbox.
+      tags:
+      - Mail Folders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolder'
+            examples:
+              CreatemailfolderRequestExample:
+                summary: Default createMailFolder request
+                x-microcks-default: true
+                value:
+                  id: abc123
+                  displayName: example_value
+                  parentFolderId: '500123'
+                  childFolderCount: 10
+                  unreadItemCount: 10
+                  totalItemCount: 10
+                  isHidden: true
+      responses:
+        '201':
+          description: Successfully created mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+              examples:
+                Createmailfolder201Example:
+                  summary: Default createMailFolder 201 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    displayName: example_value
+                    parentFolderId: '500123'
+                    childFolderCount: 10
+                    unreadItemCount: 10
+                    totalItemCount: 10
+                    isHidden: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/mailFolders/{mailFolder-id}:
+    get:
+      operationId: getMailFolder
+      summary: Microsoft Outlook Get Mail Folder
+      description: Read the properties and relationships of a mail folder object.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      - $ref: '#/components/parameters/select'
+      responses:
+        '200':
+          description: Successfully retrieved mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+              examples:
+                Getmailfolder200Example:
+                  summary: Default getMailFolder 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    displayName: example_value
+                    parentFolderId: '500123'
+                    childFolderCount: 10
+                    unreadItemCount: 10
+                    totalItemCount: 10
+                    isHidden: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateMailFolder
+      summary: Microsoft Outlook Update Mail Folder
+      description: Update the properties of a mail folder object.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolder'
+            examples:
+              UpdatemailfolderRequestExample:
+                summary: Default updateMailFolder request
+                x-microcks-default: true
+                value:
+                  id: abc123
+                  displayName: example_value
+                  parentFolderId: '500123'
+                  childFolderCount: 10
+                  unreadItemCount: 10
+                  totalItemCount: 10
+                  isHidden: true
+      responses:
+        '200':
+          description: Successfully updated mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+              examples:
+                Updatemailfolder200Example:
+                  summary: Default updateMailFolder 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    displayName: example_value
+                    parentFolderId: '500123'
+                    childFolderCount: 10
+                    unreadItemCount: 10
+                    totalItemCount: 10
+                    isHidden: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteMailFolder
+      summary: Microsoft Outlook Delete Mail Folder
+      description: Delete the specified mail folder. The folder can be a mailSearchFolder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      responses:
+        '204':
+          description: Successfully deleted mail folder.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/mailFolders/{mailFolder-id}/childFolders:
+    get:
+      operationId: listChildFolders
+      summary: Microsoft Outlook List Child Folders
+      description: Get the folder collection under the specified folder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      - $ref: '#/components/parameters/top'
+      - $ref: '#/components/parameters/skip'
+      responses:
+        '200':
+          description: Successfully retrieved child folders.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolderCollectionResponse'
+              examples:
+                Listchildfolders200Example:
+                  summary: Default listChildFolders 200 response
+                  x-microcks-default: true
+                  value:
+                    '@odata.context': example_value
+                    '@odata.nextLink': https://www.example.com
+                    value:
+                    - id: abc123
+                      displayName: example_value
+                      parentFolderId: '500123'
+                      childFolderCount: 10
+                      unreadItemCount: 10
+                      totalItemCount: 10
+                      isHidden: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createChildFolder
+      summary: Microsoft Outlook Create Child Folder
+      description: Create a new child mail folder under the specified folder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailFolder'
+            examples:
+              CreatechildfolderRequestExample:
+                summary: Default createChildFolder request
+                x-microcks-default: true
+                value:
+                  id: abc123
+                  displayName: example_value
+                  parentFolderId: '500123'
+                  childFolderCount: 10
+                  unreadItemCount: 10
+                  totalItemCount: 10
+                  isHidden: true
+      responses:
+        '201':
+          description: Successfully created child folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+              examples:
+                Createchildfolder201Example:
+                  summary: Default createChildFolder 201 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    displayName: example_value
+                    parentFolderId: '500123'
+                    childFolderCount: 10
+                    unreadItemCount: 10
+                    totalItemCount: 10
+                    isHidden: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/mailFolders/{mailFolder-id}/messages:
+    get:
+      operationId: listMessagesInFolder
+      summary: Microsoft Outlook List Messages in Folder
+      description: Get all the messages in the specified mail folder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      - $ref: '#/components/parameters/top'
+      - $ref: '#/components/parameters/skip'
+      - $ref: '#/components/parameters/select'
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/orderby'
+      responses:
+        '200':
+          description: Successfully retrieved messages from folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCollectionResponse'
+              examples:
+                Listmessagesinfolder200Example:
+                  summary: Default listMessagesInFolder 200 response
+                  x-microcks-default: true
+                  value:
+                    '@odata.context': example_value
+                    '@odata.count': 10
+                    '@odata.nextLink': https://www.example.com
+                    value:
+                    - id: abc123
+                      createdDateTime: '2026-01-15T10:30:00Z'
+                      lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                      changeKey: example_value
+                      categories: {}
+                      receivedDateTime: '2026-01-15T10:30:00Z'
+                      sentDateTime: '2026-01-15T10:30:00Z'
+                      hasAttachments: true
+                      internetMessageId: '500123'
+                      internetMessageHeaders: {}
+                      subject: example_value
+                      bodyPreview: example_value
+                      importance: low
+                      parentFolderId: '500123'
+                      conversationId: '500123'
+                      conversationIndex: example_value
+                      isDeliveryReceiptRequested: true
+                      isReadReceiptRequested: true
+                      isRead: true
+                      isDraft: true
+                      webLink: https://www.example.com
+                      inferenceClassification: focused
+                      toRecipients: {}
+                      ccRecipients: {}
+                      bccRecipients: {}
+                      replyTo: {}
+                      attachments: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createMessageInFolder
+      summary: Microsoft Outlook Create Message in Folder
+      description: Create a new message draft in the specified mail folder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+            examples:
+              CreatemessageinfolderRequestExample:
+                summary: Default createMessageInFolder request
+                x-microcks-default: true
+                value:
+                  id: abc123
+                  createdDateTime: '2026-01-15T10:30:00Z'
+                  lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                  changeKey: example_value
+                  categories:
+                  - example_value
+                  receivedDateTime: '2026-01-15T10:30:00Z'
+                  sentDateTime: '2026-01-15T10:30:00Z'
+                  hasAttachments: true
+                  internetMessageId: '500123'
+                  internetMessageHeaders:
+                  - name: Example Title
+                    value: example_value
+                  subject: example_value
+                  body:
+                    contentType: text
+                    content: example_value
+                  bodyPreview: example_value
+                  importance: low
+                  parentFolderId: '500123'
+                  conversationId: '500123'
+                  conversationIndex: example_value
+                  isDeliveryReceiptRequested: true
+                  isReadReceiptRequested: true
+                  isRead: true
+                  isDraft: true
+                  webLink: https://www.example.com
+                  inferenceClassification: focused
+                  flag:
+                    flagStatus: notFlagged
+                  from: {}
+                  sender: {}
+                  toRecipients:
+                  - {}
+                  ccRecipients:
+                  - {}
+                  bccRecipients:
+                  - {}
+                  replyTo:
+                  - {}
+                  uniqueBody:
+                    contentType: text
+                    content: example_value
+                  attachments:
+                  - '@odata.type': '#microsoft.graph.fileAttachment'
+                    id: abc123
+                    name: Example Title
+                    contentType: example_value
+                    size: 10
+                    isInline: true
+                    lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                    contentBytes: example_value
+                    contentId: '500123'
+                    contentLocation: example_value
+      responses:
+        '201':
+          description: Successfully created message in folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+              examples:
+                Createmessageinfolder201Example:
+                  summary: Default createMessageInFolder 201 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    createdDateTime: '2026-01-15T10:30:00Z'
+                    lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                    changeKey: example_value
+                    categories:
+                    - example_value
+                    receivedDateTime: '2026-01-15T10:30:00Z'
+                    sentDateTime: '2026-01-15T10:30:00Z'
+                    hasAttachments: true
+                    internetMessageId: '500123'
+                    internetMessageHeaders:
+                    - name: Example Title
+                      value: example_value
+                    subject: example_value
+                    body:
+                      contentType: text
+                      content: example_value
+                    bodyPreview: example_value
+                    importance: low
+                    parentFolderId: '500123'
+                    conversationId: '500123'
+                    conversationIndex: example_value
+                    isDeliveryReceiptRequested: true
+                    isReadReceiptRequested: true
+                    isRead: true
+                    isDraft: true
+                    webLink: https://www.example.com
+                    inferenceClassification: focused
+                    flag:
+                      flagStatus: notFlagged
+                    from: {}
+                    sender: {}
+                    toRecipients:
+                    - {}
+                    ccRecipients:
+                    - {}
+                    bccRecipients:
+                    - {}
+                    replyTo:
+                    - {}
+                    uniqueBody:
+                      contentType: text
+                      content: example_value
+                    attachments:
+                    - '@odata.type': '#microsoft.graph.fileAttachment'
+                      id: abc123
+                      name: Example Title
+                      contentType: example_value
+                      size: 10
+                      isInline: true
+                      lastModifiedDateTime: '2026-01-15T10:30:00Z'
+                      contentBytes: example_value
+                      contentId: '500123'
+                      contentLocation: example_value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/mailFolders/{mailFolder-id}/copy:
+    post:
+      operationId: copyMailFolder
+      summary: Microsoft Outlook Copy Mail Folder
+      description: Copy a mail folder and its contents to another mail folder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destinationId:
+                  type: string
+                  description: The destination folder ID or well-known folder name.
+              required:
+              - destinationId
+            examples:
+              CopymailfolderRequestExample:
+                summary: Default copyMailFolder request
+                x-microcks-default: true
+                value:
+                  destinationId: '500123'
+      responses:
+        '200':
+          description: Successfully copied mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+              examples:
+                Copymailfolder200Example:
+                  summary: Default copyMailFolder 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    displayName: example_value
+                    parentFolderId: '500123'
+                    childFolderCount: 10
+                    unreadItemCount: 10
+                    totalItemCount: 10
+                    isHidden: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /me/mailFolders/{mailFolder-id}/move:
+    post:
+      operationId: moveMailFolder
+      summary: Microsoft Outlook Move Mail Folder
+      description: Move a mail folder and its contents to another mail folder.
+      tags:
+      - Mail Folders
+      parameters:
+      - $ref: '#/components/parameters/mailFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destinationId:
+                  type: string
+                  description: The destination folder ID or well-known folder name.
+              required:
+              - destinationId
+            examples:
+              MovemailfolderRequestExample:
+                summary: Default moveMailFolder request
+                x-microcks-default: true
+                value:
+                  destinationId: '500123'
+      responses:
+        '200':
+          description: Successfully moved mail folder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailFolder'
+              examples:
+                Movemailfolder200Example:
+                  summary: Default moveMailFolder 200 response
+                  x-microcks-default: true
+                  value:
+                    id: abc123
+                    displayName: example_value
+                    parentFolderId: '500123'
+                    childFolderCount: 10
+                    unreadItemCount: 10
+                    totalItemCount: 10
+                    isHidden: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    MailFolderCollectionResponse:
+      type: object
+      description: Collection of mail folder resources with optional pagination link.
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailFolder'
+          example: []
+    Attachment:
+      type: object
+      description: Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.
+      properties:
+        '@odata.type':
+          type: string
+          description: 'The OData type of the attachment. Use #microsoft.graph.fileAttachment for file attachments or #microsoft.graph.itemAttachment for item attachments.'
+          enum:
+          - '#microsoft.graph.fileAttachment'
+          - '#microsoft.graph.itemAttachment'
+          - '#microsoft.graph.referenceAttachment'
+          example: '#microsoft.graph.fileAttachment'
+        id:
+          type: string
+          description: The unique identifier of the attachment. Read-only.
+          readOnly: true
+          example: abc123
+        name:
+          type: string
+          description: The display name of the attachment.
+          example: Example Title
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+          example: example_value
+        size:
+          type: integer
+          format: int32
+          description: The length of the attachment in bytes.
+          example: 10
+        isInline:
+          type: boolean
+          description: True if the attachment is an inline attachment.
+          example: true
+        lastModifiedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the attachment was last modified in UTC.
+          example: '2026-01-15T10:30:00Z'
+        contentBytes:
+          type: string
+          format: byte
+          description: The base64-encoded contents of the file. Only applicable for fileAttachment.
+          example: example_value
+        contentId:
+          type: string
+          description: The ID of the attachment in the Exchange store. Only applicable for fileAttachment.
+          example: '500123'
+        contentLocation:
+          type: string
+          description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
+          example: example_value
+    MessageCollectionResponse:
+      type: object
+      description: Collection of message resources with optional pagination link.
+      properties:
+        '@odata.context':
+          type: string
+          description: The OData context URL.
+          example: example_value
+        '@odata.count':
+          type: integer
+          description: The total count of matching resources.
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          description: The URL for the next page of results.
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          example: []
+    Message:
+      type: object
+      description: A message in a mailFolder.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the message. Read-only.
+          readOnly: true
+          example: abc123
+        createdDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was created in UTC (ISO 8601).
+          readOnly: true
+          example: '2026-01-15T10:30:00Z'
+        lastModifiedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was last changed in UTC (ISO 8601).
+          readOnly: true
+          example: '2026-01-15T10:30:00Z'
+        changeKey:
+          type: string
+          description: The version of the message.
+          readOnly: true
+          example: example_value
+        categories:
+          type: array
+          items:
+            type: string
+          description: The categories associated with the message.
+          example: []
+        receivedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was received in UTC (ISO 8601).
+          example: '2026-01-15T10:30:00Z'
+        sentDateTime:
+          type: string
+          format: date-time
+          description: The date and time the message was sent in UTC (ISO 8601).
+          example: '2026-01-15T10:30:00Z'
+        hasAttachments:
+          type: boolean
+          description: Indicates whether the message has attachments. Does not include inline attachments.
+          example: true
+        internetMessageId:
+          type: string
+          description: The message ID in the format specified by RFC 2822.
+          example: '500123'
+        internetMessageHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/InternetMessageHeader'
+          description: Collection of message headers defined by RFC 5322. Returned only on applying a $select query option.
+          example: []
+        subject:
+          type: string
+          description: The subject of the message.
+          example: example_value
+        body:
+          $ref: '#/components/schemas/ItemBody'
+        bodyPreview:
+          type: string
+          description: The first 255 characters of the message body in text format.
+          readOnly: true
+          example: example_value
+        importance:
+          type: string
+          enum:
+          - low
+          - normal
+          - high
+          description: The importance of the message.
+          example: low
+        parentFolderId:
+          type: string
+          description: The unique identifier for the message's parent mailFolder.
+          example: '500123'
+        conversationId:
+          type: string
+          description: The ID of the conversation the email belongs to.
+          example: '500123'
+        conversationIndex:
+          type: string
+          format: binary
+          description: Indicates the position of the message within the conversation.
+          example: example_value
+        isDeliveryReceiptRequested:
+          type: boolean
+          description: Indicates whether a delivery receipt is requested.
+          example: true
+        isReadReceiptRequested:
+          type: boolean
+          description: Indicates whether a read receipt is requested.
+          example: true
+        isRead:
+          type: boolean
+          description: Indicates whether the message has been read.
+          example: true
+        isDraft:
+          type: boolean
+          description: Indicates whether the message is a draft.
+          example: true
+        webLink:
+          type: string
+          format: uri
+          description: The URL to open the message in Outlook on the web.
+          readOnly: true
+          example: https://www.example.com
+        inferenceClassification:
+          type: string
+          enum:
+          - focused
+          - other
+          description: The classification of the message based on inferred relevance or importance, or on an explicit override.
+          example: focused
+        flag:
+          $ref: '#/components/schemas/FollowupFlag'
+        from:
+          $ref: '#/components/schemas/Recipient'
+        sender:
+          $ref: '#/components/schemas/Recipient'
+        toRecipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The To recipients for the message.
+          example: []
+        ccRecipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The Cc recipients for the message.
+          example: []
+        bccRecipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The Bcc recipients for the message.
+          example: []
+        replyTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recipient'
+          description: The email addresses to use when replying.
+          example: []
+        uniqueBody:
+          $ref: '#/components/schemas/ItemBody'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          description: The fileAttachment and itemAttachment attachments for the message.
+          example: []
+    EmailAddress:
+      type: object
+      description: Represents an email address entity.
+      properties:
+        name:
+          type: string
+          description: The display name of the person or entity.
+          example: Example Title
+        address:
+          type: string
+          format: email
+          description: The email address of the person or entity.
+          example: example_value
+    FollowupFlag:
+      type: object
+      description: Represents the follow-up flag status on a message.
+      properties:
+        completedDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        dueDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        startDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        flagStatus:
+          type: string
+          enum:
+          - notFlagged
+          - complete
+          - flagged
+          description: The follow-up status.
+          example: notFlagged
+    Recipient:
+      type: object
+      description: Represents information about a user or contact in a message.
+      properties:
+        emailAddress:
+          $ref: '#/components/schemas/EmailAddress'
+    DateTimeTimeZone:
+      type: object
+      description: A date-time value with a time zone designation.
+      properties:
+        dateTime:
+          type: string
+          description: A single point of time in a combined date and time representation (e.g. 2017-08-29T04:00:00.0000000).
+          example: example_value
+        timeZone:
+          type: string
+          description: Represents a time zone, for example, Pacific Standard Time.
+          example: example_value
+    ODataError:
+      type: object
+      description: OData error response from Microsoft Graph.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The error code.
+            message:
+              type: string
+              description: The error message.
+            innerError:
+              type: object
+              properties:
+                request-id:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+          example: example_value
+    InternetMessageHeader:
+      type: object
+      description: A key-value pair representing an Internet message header as defined by RFC 5322.
+      properties:
+        name:
+          type: string
+          description: The name of the message header.
+          example: Example Title
+        value:
+          type: string
+          description: The value of the message header.
+          example: example_value
+    MailFolder:
+      type: object
+      description: A mail folder in a user's mailbox, such as Inbox and Drafts. Mail folders can contain messages, other Outlook items, and child mail folders.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the mail folder. Read-only.
+          readOnly: true
+          example: abc123
+        displayName:
+          type: string
+          description: The mail folder's display name.
+          example: example_value
+        parentFolderId:
+          type: string
+          description: The unique identifier for the parent mail folder.
+          example: '500123'
+        childFolderCount:
+          type: integer
+          format: int32
+          description: The number of immediate child mail folders in the current folder.
+          example: 10
+        unreadItemCount:
+          type: integer
+          format: int32
+          description: The number of items marked as unread in the folder.
+          example: 10
+        totalItemCount:
+          type: integer
+          format: int32
+          description: The number of items in the folder.
+          example: 10
+        isHidden:
+          type: boolean
+          description: Indicates whether the mail folder is hidden. Can only be set when creating the folder.
+          example: true
+    ItemBody:
+      type: object
+      description: Represents the body content of a message.
+      properties:
+        contentType:
+          type: string
+          enum:
+          - text
+          - html
+          description: The type of the content. Possible values are text and html.
+          example: text
+        content:
+          type: string
+          description: The content of the item body.
+          example: example_value
+  parameters:
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+    top:
+      name: $top
+      in: query
+      description: Sets the page size of results.
+      schema:
+        type: integer
+        minimum: 1
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
+    mailFolderId:
+      name: mailFolder-id
+      in: path
+      required: true
+      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
+      schema:
+        type: string
+    skip:
+      name: $skip
+      in: query
+      description: Number of items to skip for pagination.
+      schema:
+        type: integer
+        minimum: 0
+    orderby:
+      name: $orderby
+      in: query
+      description: Comma-separated list of properties to sort results by.
+      schema:
+        type: string
+  responses:
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Microsoft identity platform OAuth 2.0 authorization. Supports delegated (user) and application permissions.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+          scopes:
+            Mail.Read: Read user mail
+            Mail.ReadWrite: Read and write access to user mail
+            Mail.Send: Send mail as a user
+            Mail.ReadBasic: Read user basic mail
+            Mail.Read.Shared: Read mail in shared mailboxes
+            Mail.ReadWrite.Shared: Read and write mail in shared mailboxes
