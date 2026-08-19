@@ -19,7 +19,7 @@ accessModel:
 image: https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2019/11/Outlook-logo.png
 created: '2024'
 modified: '2026-06-20'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 url: https://outlook.office.com
 apis:
 - name: Outlook Add-ins API
