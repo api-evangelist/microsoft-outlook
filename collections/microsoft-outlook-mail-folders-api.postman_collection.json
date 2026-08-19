@@ -1,0 +1,3578 @@
+{
+  "item": [
+    {
+      "id": "17698e90-79fc-4259-9c70-9d23aed8f63b",
+      "name": "Mail Folders",
+      "description": {
+        "content": "Operations on mail folders in a user mailbox",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "49a7fd3d-367f-4536-b536-898b698c69ea",
+          "name": "Microsoft Outlook List Mail Folders",
+          "request": {
+            "name": "Microsoft Outlook List Mail Folders",
+            "description": {
+              "content": "Get all the mail folders in the specified user's mailbox, including any mail search folders. Use the includeHiddenFolders query parameter to include hidden folders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Sets the page size of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of items to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to filter results."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeHiddenFolders",
+                  "value": "<string>",
+                  "description": "Include hidden mail folders in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f582659-80ab-43b8-89ba-28205341c042",
+              "name": "Successfully retrieved mail folders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeHiddenFolders",
+                      "value": "example_value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.nextLink\": \"https://www.example.com\",\n  \"value\": [\n    {\n      \"id\": \"abc123\",\n      \"displayName\": \"example_value\",\n      \"parentFolderId\": \"500123\",\n      \"childFolderCount\": 10,\n      \"unreadItemCount\": 10,\n      \"totalItemCount\": 10,\n      \"isHidden\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35aa9301-ae1a-4de6-a979-76a707c78e83",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeHiddenFolders",
+                      "value": "example_value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21d7db71-276f-47af-a0e7-2c57ba6e6b5b",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeHiddenFolders",
+                      "value": "example_value"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6066100b-b69f-4dff-9968-c215e052a44e",
+          "name": "Microsoft Outlook Create Mail Folder",
+          "request": {
+            "name": "Microsoft Outlook Create Mail Folder",
+            "description": {
+              "content": "Create a new mail folder in the root folder of the user's mailbox.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"childFolderCount\": \"<integer>\",\n  \"unreadItemCount\": \"<integer>\",\n  \"totalItemCount\": \"<integer>\",\n  \"isHidden\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "51064bb9-78cf-4568-83ab-0de035b06f75",
+              "name": "Successfully created mail folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3e7a0e4-1fc1-43af-a384-269c4d923270",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c605f339-1de0-4659-8cfb-e671925f96ab",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc6d51bc-d5f5-478f-ad06-68215900b847",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e48106b-0cf9-42ab-a04b-fbfe0c618e6a",
+          "name": "Microsoft Outlook Get Mail Folder",
+          "request": {
+            "name": "Microsoft Outlook Get Mail Folder",
+            "description": {
+              "content": "Read the properties and relationships of a mail folder object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "123ee67b-fe55-4525-80f3-e349365418dc",
+              "name": "Successfully retrieved mail folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a26e0032-8a60-410b-9539-f4d40c1a1af3",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba77f67d-284b-4611-841a-d3282eb2a4bf",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7a5fac1-77bf-4d64-885f-9bb3a5afbf65",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25384001-e291-4768-a1f9-554bea0108f6",
+          "name": "Microsoft Outlook Update Mail Folder",
+          "request": {
+            "name": "Microsoft Outlook Update Mail Folder",
+            "description": {
+              "content": "Update the properties of a mail folder object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"childFolderCount\": \"<integer>\",\n  \"unreadItemCount\": \"<integer>\",\n  \"totalItemCount\": \"<integer>\",\n  \"isHidden\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6737caa3-539b-48b2-96ed-fa756622dda0",
+              "name": "Successfully updated mail folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6506ea7d-6221-4afa-b2c3-f5054a2869e9",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff85169b-95c1-4965-994f-fafc941ed3be",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13dadb7a-a6ab-4906-b4cb-dc497a681fd9",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7652617-b20b-4168-b43d-1acee248b05d",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc8ac9e2-34a8-4a23-ac05-140e9440a4cf",
+          "name": "Microsoft Outlook Delete Mail Folder",
+          "request": {
+            "name": "Microsoft Outlook Delete Mail Folder",
+            "description": {
+              "content": "Delete the specified mail folder. The folder can be a mailSearchFolder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e67b0049-9ea0-44eb-a75b-437c338ff478",
+              "name": "Successfully deleted mail folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "129fe337-4eed-41a6-add2-52059c8f8923",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "237da2b8-5d13-418d-8103-fafda5422d60",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cc54304-38f1-449a-a3cd-a7687e0cf762",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3e350f0-051e-4664-9ce4-64b978b11736",
+          "name": "Microsoft Outlook List Child Folders",
+          "request": {
+            "name": "Microsoft Outlook List Child Folders",
+            "description": {
+              "content": "Get the folder collection under the specified folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id",
+                "childFolders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Sets the page size of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of items to skip for pagination."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4109a548-63ba-4ae2-9b46-9dde45b87bbc",
+              "name": "Successfully retrieved child folders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.nextLink\": \"https://www.example.com\",\n  \"value\": [\n    {\n      \"id\": \"abc123\",\n      \"displayName\": \"example_value\",\n      \"parentFolderId\": \"500123\",\n      \"childFolderCount\": 10,\n      \"unreadItemCount\": 10,\n      \"totalItemCount\": 10,\n      \"isHidden\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "916435c1-195f-48bd-a9f1-04ab34389185",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57df2bbc-22ba-4135-b745-e2ed08aa9885",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "897c3bc3-dcf5-4b3c-b57e-a811b8ee7746",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59e45398-6b5e-4732-8d48-46918bac22d6",
+          "name": "Microsoft Outlook Create Child Folder",
+          "request": {
+            "name": "Microsoft Outlook Create Child Folder",
+            "description": {
+              "content": "Create a new child mail folder under the specified folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id",
+                "childFolders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"childFolderCount\": \"<integer>\",\n  \"unreadItemCount\": \"<integer>\",\n  \"totalItemCount\": \"<integer>\",\n  \"isHidden\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bcca831d-6a97-41e1-a087-52dc32511fa1",
+              "name": "Successfully created child folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93535196-06cd-4376-bf68-5f047dac1768",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0d19b6e-a5a7-49d1-bc78-9adeed1768c4",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba611fc3-60c4-4b67-a754-65aeccda2b24",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "789f4f9a-b71f-49a8-9870-21f83c80184d",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "childFolders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae8eb652-58e1-4d6f-b6e2-0c5dcdbc2b07",
+          "name": "Microsoft Outlook List Messages in Folder",
+          "request": {
+            "name": "Microsoft Outlook List Messages in Folder",
+            "description": {
+              "content": "Get all the messages in the specified mail folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "$top",
+                  "value": "<integer>",
+                  "description": "Sets the page size of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "$skip",
+                  "value": "<integer>",
+                  "description": "Number of items to skip for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "$select",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "$filter",
+                  "value": "<string>",
+                  "description": "OData filter expression to filter results."
+                },
+                {
+                  "disabled": false,
+                  "key": "$orderby",
+                  "value": "<string>",
+                  "description": "Comma-separated list of properties to sort results by."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f6f9b854-69ea-4b70-9f09-a8e689db839a",
+              "name": "Successfully retrieved messages from folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"@odata.context\": \"example_value\",\n  \"@odata.count\": 10,\n  \"@odata.nextLink\": \"https://www.example.com\",\n  \"value\": [\n    {\n      \"id\": \"abc123\",\n      \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"changeKey\": \"example_value\",\n      \"categories\": {},\n      \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n      \"hasAttachments\": true,\n      \"internetMessageId\": \"500123\",\n      \"internetMessageHeaders\": {},\n      \"subject\": \"example_value\",\n      \"bodyPreview\": \"example_value\",\n      \"importance\": \"low\",\n      \"parentFolderId\": \"500123\",\n      \"conversationId\": \"500123\",\n      \"conversationIndex\": \"example_value\",\n      \"isDeliveryReceiptRequested\": true,\n      \"isReadReceiptRequested\": true,\n      \"isRead\": true,\n      \"isDraft\": true,\n      \"webLink\": \"https://www.example.com\",\n      \"inferenceClassification\": \"focused\",\n      \"toRecipients\": {},\n      \"ccRecipients\": {},\n      \"bccRecipients\": {},\n      \"replyTo\": {},\n      \"attachments\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0c376c2-3f08-4d0e-8ad5-674d88307903",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd38b0e5-d215-4fea-a1f0-3efbd6bc78cd",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "231f7e81-eb4b-4ce9-8485-3e61cdb62358",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "$select",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "$orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7278dead-60ee-4949-a7cf-88b732f1949f",
+          "name": "Microsoft Outlook Create Message in Folder",
+          "request": {
+            "name": "Microsoft Outlook Create Message in Folder",
+            "description": {
+              "content": "Create a new message draft in the specified mail folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categories\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"receivedDateTime\": \"<dateTime>\",\n  \"sentDateTime\": \"<dateTime>\",\n  \"hasAttachments\": \"<boolean>\",\n  \"internetMessageId\": \"<string>\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"subject\": \"<string>\",\n  \"body\": {\n    \"contentType\": \"<string>\",\n    \"content\": \"<string>\"\n  },\n  \"importance\": \"<string>\",\n  \"parentFolderId\": \"<string>\",\n  \"conversationId\": \"<string>\",\n  \"conversationIndex\": \"<binary>\",\n  \"isDeliveryReceiptRequested\": \"<boolean>\",\n  \"isReadReceiptRequested\": \"<boolean>\",\n  \"isRead\": \"<boolean>\",\n  \"isDraft\": \"<boolean>\",\n  \"inferenceClassification\": \"<string>\",\n  \"flag\": {\n    \"completedDateTime\": {\n      \"dateTime\": \"<string>\",\n      \"timeZone\": \"<string>\"\n    },\n    \"dueDateTime\": {\n      \"dateTime\": \"<string>\",\n      \"timeZone\": \"<string>\"\n    },\n    \"startDateTime\": {\n      \"dateTime\": \"<string>\",\n      \"timeZone\": \"<string>\"\n    },\n    \"flagStatus\": \"<string>\"\n  },\n  \"from\": {\n    \"emailAddress\": {\n      \"name\": \"<string>\",\n      \"address\": \"<email>\"\n    }\n  },\n  \"sender\": {\n    \"emailAddress\": {\n      \"name\": \"<string>\",\n      \"address\": \"<email>\"\n    }\n  },\n  \"toRecipients\": [\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    },\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    }\n  ],\n  \"ccRecipients\": [\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    },\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    }\n  ],\n  \"bccRecipients\": [\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    },\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    }\n  ],\n  \"replyTo\": [\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    },\n    {\n      \"emailAddress\": {\n        \"name\": \"<string>\",\n        \"address\": \"<email>\"\n      }\n    }\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"<string>\",\n    \"content\": \"<string>\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"size\": \"<integer>\",\n      \"isInline\": \"<boolean>\",\n      \"lastModifiedDateTime\": \"<dateTime>\",\n      \"contentBytes\": \"<byte>\",\n      \"contentId\": \"<string>\",\n      \"contentLocation\": \"<string>\"\n    },\n    {\n      \"@odata.type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"size\": \"<integer>\",\n      \"isInline\": \"<boolean>\",\n      \"lastModifiedDateTime\": \"<dateTime>\",\n      \"contentBytes\": \"<byte>\",\n      \"contentId\": \"<string>\",\n      \"contentLocation\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a37d7334-fa39-4509-95f3-83b26d53f46b",
+              "name": "Successfully created message in folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"changeKey\": \"example_value\",\n  \"categories\": [\n    \"example_value\"\n  ],\n  \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n  \"hasAttachments\": true,\n  \"internetMessageId\": \"500123\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"Example Title\",\n      \"value\": \"example_value\"\n    }\n  ],\n  \"subject\": \"example_value\",\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"bodyPreview\": \"example_value\",\n  \"importance\": \"low\",\n  \"parentFolderId\": \"500123\",\n  \"conversationId\": \"500123\",\n  \"conversationIndex\": \"example_value\",\n  \"isDeliveryReceiptRequested\": true,\n  \"isReadReceiptRequested\": true,\n  \"isRead\": true,\n  \"isDraft\": true,\n  \"webLink\": \"https://www.example.com\",\n  \"inferenceClassification\": \"focused\",\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  },\n  \"from\": {},\n  \"sender\": {},\n  \"toRecipients\": [\n    {}\n  ],\n  \"ccRecipients\": [\n    {}\n  ],\n  \"bccRecipients\": [\n    {}\n  ],\n  \"replyTo\": [\n    {}\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"contentType\": \"example_value\",\n      \"size\": 10,\n      \"isInline\": true,\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"contentBytes\": \"example_value\",\n      \"contentId\": \"500123\",\n      \"contentLocation\": \"example_value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"changeKey\": \"example_value\",\n  \"categories\": [\n    \"example_value\"\n  ],\n  \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n  \"hasAttachments\": true,\n  \"internetMessageId\": \"500123\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"Example Title\",\n      \"value\": \"example_value\"\n    }\n  ],\n  \"subject\": \"example_value\",\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"bodyPreview\": \"example_value\",\n  \"importance\": \"low\",\n  \"parentFolderId\": \"500123\",\n  \"conversationId\": \"500123\",\n  \"conversationIndex\": \"example_value\",\n  \"isDeliveryReceiptRequested\": true,\n  \"isReadReceiptRequested\": true,\n  \"isRead\": true,\n  \"isDraft\": true,\n  \"webLink\": \"https://www.example.com\",\n  \"inferenceClassification\": \"focused\",\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  },\n  \"from\": {},\n  \"sender\": {},\n  \"toRecipients\": [\n    {}\n  ],\n  \"ccRecipients\": [\n    {}\n  ],\n  \"bccRecipients\": [\n    {}\n  ],\n  \"replyTo\": [\n    {}\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"contentType\": \"example_value\",\n      \"size\": 10,\n      \"isInline\": true,\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"contentBytes\": \"example_value\",\n      \"contentId\": \"500123\",\n      \"contentLocation\": \"example_value\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e5fcf71-fb1e-4bfc-8885-77307becd958",
+              "name": "Bad request. The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"changeKey\": \"example_value\",\n  \"categories\": [\n    \"example_value\"\n  ],\n  \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n  \"hasAttachments\": true,\n  \"internetMessageId\": \"500123\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"Example Title\",\n      \"value\": \"example_value\"\n    }\n  ],\n  \"subject\": \"example_value\",\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"bodyPreview\": \"example_value\",\n  \"importance\": \"low\",\n  \"parentFolderId\": \"500123\",\n  \"conversationId\": \"500123\",\n  \"conversationIndex\": \"example_value\",\n  \"isDeliveryReceiptRequested\": true,\n  \"isReadReceiptRequested\": true,\n  \"isRead\": true,\n  \"isDraft\": true,\n  \"webLink\": \"https://www.example.com\",\n  \"inferenceClassification\": \"focused\",\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  },\n  \"from\": {},\n  \"sender\": {},\n  \"toRecipients\": [\n    {}\n  ],\n  \"ccRecipients\": [\n    {}\n  ],\n  \"bccRecipients\": [\n    {}\n  ],\n  \"replyTo\": [\n    {}\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"contentType\": \"example_value\",\n      \"size\": 10,\n      \"isInline\": true,\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"contentBytes\": \"example_value\",\n      \"contentId\": \"500123\",\n      \"contentLocation\": \"example_value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9848445d-8a34-4037-8702-3721f2b79e13",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"changeKey\": \"example_value\",\n  \"categories\": [\n    \"example_value\"\n  ],\n  \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n  \"hasAttachments\": true,\n  \"internetMessageId\": \"500123\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"Example Title\",\n      \"value\": \"example_value\"\n    }\n  ],\n  \"subject\": \"example_value\",\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"bodyPreview\": \"example_value\",\n  \"importance\": \"low\",\n  \"parentFolderId\": \"500123\",\n  \"conversationId\": \"500123\",\n  \"conversationIndex\": \"example_value\",\n  \"isDeliveryReceiptRequested\": true,\n  \"isReadReceiptRequested\": true,\n  \"isRead\": true,\n  \"isDraft\": true,\n  \"webLink\": \"https://www.example.com\",\n  \"inferenceClassification\": \"focused\",\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  },\n  \"from\": {},\n  \"sender\": {},\n  \"toRecipients\": [\n    {}\n  ],\n  \"ccRecipients\": [\n    {}\n  ],\n  \"bccRecipients\": [\n    {}\n  ],\n  \"replyTo\": [\n    {}\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"contentType\": \"example_value\",\n      \"size\": 10,\n      \"isInline\": true,\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"contentBytes\": \"example_value\",\n      \"contentId\": \"500123\",\n      \"contentLocation\": \"example_value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aaf9b11-546a-48aa-92d3-0027ce880470",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"changeKey\": \"example_value\",\n  \"categories\": [\n    \"example_value\"\n  ],\n  \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n  \"hasAttachments\": true,\n  \"internetMessageId\": \"500123\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"Example Title\",\n      \"value\": \"example_value\"\n    }\n  ],\n  \"subject\": \"example_value\",\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"bodyPreview\": \"example_value\",\n  \"importance\": \"low\",\n  \"parentFolderId\": \"500123\",\n  \"conversationId\": \"500123\",\n  \"conversationIndex\": \"example_value\",\n  \"isDeliveryReceiptRequested\": true,\n  \"isReadReceiptRequested\": true,\n  \"isRead\": true,\n  \"isDraft\": true,\n  \"webLink\": \"https://www.example.com\",\n  \"inferenceClassification\": \"focused\",\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  },\n  \"from\": {},\n  \"sender\": {},\n  \"toRecipients\": [\n    {}\n  ],\n  \"ccRecipients\": [\n    {}\n  ],\n  \"bccRecipients\": [\n    {}\n  ],\n  \"replyTo\": [\n    {}\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"contentType\": \"example_value\",\n      \"size\": 10,\n      \"isInline\": true,\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"contentBytes\": \"example_value\",\n      \"contentId\": \"500123\",\n      \"contentLocation\": \"example_value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16b00afd-cac2-4d65-9176-d29ccddf1d5f",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"abc123\",\n  \"createdDateTime\": \"2026-01-15T10:30:00Z\",\n  \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"changeKey\": \"example_value\",\n  \"categories\": [\n    \"example_value\"\n  ],\n  \"receivedDateTime\": \"2026-01-15T10:30:00Z\",\n  \"sentDateTime\": \"2026-01-15T10:30:00Z\",\n  \"hasAttachments\": true,\n  \"internetMessageId\": \"500123\",\n  \"internetMessageHeaders\": [\n    {\n      \"name\": \"Example Title\",\n      \"value\": \"example_value\"\n    }\n  ],\n  \"subject\": \"example_value\",\n  \"body\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"bodyPreview\": \"example_value\",\n  \"importance\": \"low\",\n  \"parentFolderId\": \"500123\",\n  \"conversationId\": \"500123\",\n  \"conversationIndex\": \"example_value\",\n  \"isDeliveryReceiptRequested\": true,\n  \"isReadReceiptRequested\": true,\n  \"isRead\": true,\n  \"isDraft\": true,\n  \"webLink\": \"https://www.example.com\",\n  \"inferenceClassification\": \"focused\",\n  \"flag\": {\n    \"flagStatus\": \"notFlagged\"\n  },\n  \"from\": {},\n  \"sender\": {},\n  \"toRecipients\": [\n    {}\n  ],\n  \"ccRecipients\": [\n    {}\n  ],\n  \"bccRecipients\": [\n    {}\n  ],\n  \"replyTo\": [\n    {}\n  ],\n  \"uniqueBody\": {\n    \"contentType\": \"text\",\n    \"content\": \"example_value\"\n  },\n  \"attachments\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.fileAttachment\",\n      \"id\": \"abc123\",\n      \"name\": \"Example Title\",\n      \"contentType\": \"example_value\",\n      \"size\": 10,\n      \"isInline\": true,\n      \"lastModifiedDateTime\": \"2026-01-15T10:30:00Z\",\n      \"contentBytes\": \"example_value\",\n      \"contentId\": \"500123\",\n      \"contentLocation\": \"example_value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cdc94fe1-71ec-4b40-a096-f1df9b8f56b6",
+          "name": "Microsoft Outlook Copy Mail Folder",
+          "request": {
+            "name": "Microsoft Outlook Copy Mail Folder",
+            "description": {
+              "content": "Copy a mail folder and its contents to another mail folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id",
+                "copy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destinationId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2a7fc157-1eb3-4071-868e-06c405c7c0ac",
+              "name": "Successfully copied mail folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "188a7663-ffdf-483c-9107-ce1724e53174",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5a53a25-1403-4bdf-9435-494c1a45287a",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "439b7250-ff21-4fa7-b2b1-632c7dfd24db",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27e7d0cc-3082-4561-a9df-910d623165c3",
+          "name": "Microsoft Outlook Move Mail Folder",
+          "request": {
+            "name": "Microsoft Outlook Move Mail Folder",
+            "description": {
+              "content": "Move a mail folder and its contents to another mail folder.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me",
+                "mailFolders",
+                ":mailFolder-id",
+                "move"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mailFolder-id",
+                  "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destinationId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d50317e-f036-44f9-955b-62b533adea00",
+              "name": "Successfully moved mail folder.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "move"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"abc123\",\n  \"displayName\": \"example_value\",\n  \"parentFolderId\": \"500123\",\n  \"childFolderCount\": 10,\n  \"unreadItemCount\": 10,\n  \"totalItemCount\": 10,\n  \"isHidden\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a703442d-5c55-44ab-a7ae-b96a3162a60c",
+              "name": "Unauthorized. A valid OAuth 2.0 access token is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "move"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "184aaa9d-548e-4a43-addc-6f36428b6831",
+              "name": "Not found. The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "move"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1afc0fb-219d-45b7-a3e9-bd81c0fc58a2",
+              "name": "Too many requests. The app has been throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me",
+                    "mailFolders",
+                    ":mailFolder-id",
+                    "move"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mailFolder-id",
+                      "description": "(Required) The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinationId\": \"500123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "4732"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"innerError\": {\n      \"request-id\": \"string\",\n      \"date\": \"1993-05-20T14:46:14.612Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://graph.microsoft.com/v1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "Mail.Read Mail.ReadWrite Mail.Send Mail.ReadBasic Mail.Read.Shared Mail.ReadWrite.Shared"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d58cd82b-5320-45fb-99ef-2b856c151ae7",
+    "name": "Microsoft Outlook Microsoft Graph Mail Attachments Mail Folders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for accessing Outlook email messages, mail folders, and attachments through Microsoft Graph. Provides full CRUD operations on messages, mail folder management, attachment handling, and message actions such as send, reply, forward, copy, and move.\n\nContact Support:\n Name: Microsoft Graph Support",
+      "type": "text/plain"
+    }
+  }
+}

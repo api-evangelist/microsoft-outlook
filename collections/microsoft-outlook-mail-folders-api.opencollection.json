@@ -1,0 +1,327 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Outlook Microsoft Graph Mail Attachments Mail Folders API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "accessTokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mail Folders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Outlook List Mail Folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders",
+            "params": [
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Sets the page size of results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip for pagination."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "OData filter expression to filter results."
+              },
+              {
+                "name": "includeHiddenFolders",
+                "value": "example_value",
+                "type": "query",
+                "description": "Include hidden mail folders in the response."
+              }
+            ]
+          },
+          "docs": "Get all the mail folders in the specified user's mailbox, including any mail search folders. Use the includeHiddenFolders query parameter to include hidden folders."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Create Mail Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new mail folder in the root folder of the user's mailbox."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Get Mail Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Read the properties and relationships of a mail folder object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Update Mail Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a mail folder object."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Delete Mail Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              }
+            ]
+          },
+          "docs": "Delete the specified mail folder. The folder can be a mailSearchFolder."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook List Child Folders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id/childFolders",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Sets the page size of results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Get the folder collection under the specified folder."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Create Child Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id/childFolders",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new child mail folder under the specified folder."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook List Messages in Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id/messages",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Sets the page size of results."
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip for pagination."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "OData filter expression to filter results."
+              },
+              {
+                "name": "$orderby",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to sort results by."
+              }
+            ]
+          },
+          "docs": "Get all the messages in the specified mail folder."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Create Message in Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id/messages",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new message draft in the specified mail folder."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Copy Mail Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id/copy",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copy a mail folder and its contents to another mail folder."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Move Mail Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/mailFolders/:mailFolder-id/move",
+            "params": [
+              {
+                "name": "mailFolder-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move a mail folder and its contents to another mail folder."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

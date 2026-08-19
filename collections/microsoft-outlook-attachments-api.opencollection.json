@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Microsoft Outlook Microsoft Graph Mail Attachments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+      "accessTokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Microsoft Outlook List Attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/messages/:message-id/attachments",
+            "params": [
+              {
+                "name": "message-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response."
+              },
+              {
+                "name": "$filter",
+                "value": "",
+                "type": "query",
+                "description": "OData filter expression to filter results."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of attachment objects attached to a message."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Add Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/messages/:message-id/attachments",
+            "params": [
+              {
+                "name": "message-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a file, item, or link attachment to a message. This operation limits the size of the attachment to under 3 MB. For larger files (3 MB to 150 MB), use the upload session endpoint."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Get Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://graph.microsoft.com/v1.0/me/messages/:message-id/attachments/:attachment-id",
+            "params": [
+              {
+                "name": "message-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              },
+              {
+                "name": "attachment-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the attachment."
+              },
+              {
+                "name": "$select",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of properties to include in the response."
+              }
+            ]
+          },
+          "docs": "Read the properties, relationships, or raw contents of an attachment attached to a message."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Delete Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://graph.microsoft.com/v1.0/me/messages/:message-id/attachments/:attachment-id",
+            "params": [
+              {
+                "name": "message-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              },
+              {
+                "name": "attachment-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the attachment."
+              }
+            ]
+          },
+          "docs": "Delete an attachment from a message."
+        },
+        {
+          "info": {
+            "name": "Microsoft Outlook Create Upload Session for Large Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://graph.microsoft.com/v1.0/me/messages/:message-id/attachments/createUploadSession",
+            "params": [
+              {
+                "name": "message-id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an upload session that allows an app to iteratively upload ranges of a file to attach it to a message. The file size must be between 3 MB and 150 MB."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
