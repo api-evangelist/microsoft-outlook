@@ -32,6 +32,11 @@ apis:
   tags:
   - Add-Ins
   - Extensions
+  - Office-Js
+  - Plugins
+  tags_raw:
+  - Add-Ins
+  - Extensions
   - Office.js
   - Plugins
   properties:
@@ -182,6 +187,8 @@ apis:
     https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0
   baseURL: https://graph.microsoft.com/v1.0
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
