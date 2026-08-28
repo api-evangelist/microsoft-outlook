@@ -11,8 +11,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: outlookMailApi
-  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+- name: attachmentsApi
+  url: ../openapi/microsoft-outlook-attachments-api-openapi.yml
+  type: openapi
+- name: messagesApi
+  url: ../openapi/microsoft-outlook-messages-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: large-attachment-upload-session

@@ -10,8 +10,8 @@ info:
     flow runs without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: outlookMailApi
-  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+- name: messagesApi
+  url: ../openapi/microsoft-outlook-messages-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: find-and-forward

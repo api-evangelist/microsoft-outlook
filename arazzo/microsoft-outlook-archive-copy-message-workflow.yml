@@ -10,8 +10,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: outlookMailApi
-  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+- name: mailFoldersApi
+  url: ../openapi/microsoft-outlook-mail-folders-api-openapi.yml
+  type: openapi
+- name: messagesApi
+  url: ../openapi/microsoft-outlook-messages-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: archive-copy-message

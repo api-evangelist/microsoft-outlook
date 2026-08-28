@@ -11,8 +11,8 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: outlookMailApi
-  url: ../openapi/microsoft-graph-mail-api-openapi.yml
+- name: mailFoldersApi
+  url: ../openapi/microsoft-outlook-mail-folders-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: reorganize-folder
