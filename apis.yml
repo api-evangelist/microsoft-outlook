@@ -44,7 +44,7 @@ apis:
   tags:
   - Add-Ins
   - Extensions
-  - Office-Js
+  - Office.js
   - Plugins
   tags_raw:
   - Add-Ins
