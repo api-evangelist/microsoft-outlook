@@ -260,6 +260,8 @@ apis:
     url: >-
       https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0
 common:
+  - type: Website
+    url: https://www.microsoft.com/
   - type: AgenticAccess
     url: agentic-access/microsoft-outlook-agentic-access.yml
   - type: VulnerabilityDisclosure
@@ -422,3 +424,5 @@ tags:
   - Microsoft
   - Office 365
   - Productivity
+x-parent: microsoft
+x-relationship: product

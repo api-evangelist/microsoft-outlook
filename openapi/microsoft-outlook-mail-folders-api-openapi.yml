@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Microsoft Outlook Microsoft Graph Mail Attachments Mail Folders API
   description: API for accessing Outlook email messages, mail folders, and attachments through Microsoft Graph. Provides full CRUD operations on messages, mail folder management, attachment handling, and message actions such as send, reply, forward, copy, and move.
@@ -659,74 +659,12 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    MailFolderCollectionResponse:
+    Recipient:
       type: object
-      description: Collection of mail folder resources with optional pagination link.
+      description: Represents information about a user or contact in a message.
       properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        '@odata.nextLink':
-          type: string
-          format: uri
-          example: https://www.example.com
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/MailFolder'
-          example: []
-    Attachment:
-      type: object
-      description: Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.
-      properties:
-        '@odata.type':
-          type: string
-          description: 'The OData type of the attachment. Use #microsoft.graph.fileAttachment for file attachments or #microsoft.graph.itemAttachment for item attachments.'
-          enum:
-          - '#microsoft.graph.fileAttachment'
-          - '#microsoft.graph.itemAttachment'
-          - '#microsoft.graph.referenceAttachment'
-          example: '#microsoft.graph.fileAttachment'
-        id:
-          type: string
-          description: The unique identifier of the attachment. Read-only.
-          readOnly: true
-          example: abc123
-        name:
-          type: string
-          description: The display name of the attachment.
-          example: Example Title
-        contentType:
-          type: string
-          description: The MIME type of the attachment.
-          example: example_value
-        size:
-          type: integer
-          format: int32
-          description: The length of the attachment in bytes.
-          example: 10
-        isInline:
-          type: boolean
-          description: True if the attachment is an inline attachment.
-          example: true
-        lastModifiedDateTime:
-          type: string
-          format: date-time
-          description: The date and time the attachment was last modified in UTC.
-          example: '2026-01-15T10:30:00Z'
-        contentBytes:
-          type: string
-          format: byte
-          description: The base64-encoded contents of the file. Only applicable for fileAttachment.
-          example: example_value
-        contentId:
-          type: string
-          description: The ID of the attachment in the Exchange store. Only applicable for fileAttachment.
-          example: '500123'
-        contentLocation:
-          type: string
-          description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
-          example: example_value
+        emailAddress:
+          $ref: '#/components/schemas/EmailAddress'
     MessageCollectionResponse:
       type: object
       description: Collection of message resources with optional pagination link.
@@ -904,18 +842,17 @@ components:
             $ref: '#/components/schemas/Attachment'
           description: The fileAttachment and itemAttachment attachments for the message.
           example: []
-    EmailAddress:
+    InternetMessageHeader:
       type: object
-      description: Represents an email address entity.
+      description: A key-value pair representing an Internet message header as defined by RFC 5322.
       properties:
         name:
           type: string
-          description: The display name of the person or entity.
+          description: The name of the message header.
           example: Example Title
-        address:
+        value:
           type: string
-          format: email
-          description: The email address of the person or entity.
+          description: The value of the message header.
           example: example_value
     FollowupFlag:
       type: object
@@ -935,24 +872,6 @@ components:
           - flagged
           description: The follow-up status.
           example: notFlagged
-    Recipient:
-      type: object
-      description: Represents information about a user or contact in a message.
-      properties:
-        emailAddress:
-          $ref: '#/components/schemas/EmailAddress'
-    DateTimeTimeZone:
-      type: object
-      description: A date-time value with a time zone designation.
-      properties:
-        dateTime:
-          type: string
-          description: A single point of time in a combined date and time representation (e.g. 2017-08-29T04:00:00.0000000).
-          example: example_value
-        timeZone:
-          type: string
-          description: Represents a time zone, for example, Pacific Standard Time.
-          example: example_value
     ODataError:
       type: object
       description: OData error response from Microsoft Graph.
@@ -974,18 +893,6 @@ components:
                 date:
                   type: string
                   format: date-time
-          example: example_value
-    InternetMessageHeader:
-      type: object
-      description: A key-value pair representing an Internet message header as defined by RFC 5322.
-      properties:
-        name:
-          type: string
-          description: The name of the message header.
-          example: Example Title
-        value:
-          type: string
-          description: The value of the message header.
           example: example_value
     MailFolder:
       type: object
@@ -1023,6 +930,58 @@ components:
           type: boolean
           description: Indicates whether the mail folder is hidden. Can only be set when creating the folder.
           example: true
+    Attachment:
+      type: object
+      description: Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.
+      properties:
+        '@odata.type':
+          type: string
+          description: 'The OData type of the attachment. Use #microsoft.graph.fileAttachment for file attachments or #microsoft.graph.itemAttachment for item attachments.'
+          enum:
+          - '#microsoft.graph.fileAttachment'
+          - '#microsoft.graph.itemAttachment'
+          - '#microsoft.graph.referenceAttachment'
+          example: '#microsoft.graph.fileAttachment'
+        id:
+          type: string
+          description: The unique identifier of the attachment. Read-only.
+          readOnly: true
+          example: abc123
+        name:
+          type: string
+          description: The display name of the attachment.
+          example: Example Title
+        contentType:
+          type: string
+          description: The MIME type of the attachment.
+          example: example_value
+        size:
+          type: integer
+          format: int32
+          description: The length of the attachment in bytes.
+          example: 10
+        isInline:
+          type: boolean
+          description: True if the attachment is an inline attachment.
+          example: true
+        lastModifiedDateTime:
+          type: string
+          format: date-time
+          description: The date and time the attachment was last modified in UTC.
+          example: '2026-01-15T10:30:00Z'
+        contentBytes:
+          type: string
+          format: byte
+          description: The base64-encoded contents of the file. Only applicable for fileAttachment.
+          example: example_value
+        contentId:
+          type: string
+          description: The ID of the attachment in the Exchange store. Only applicable for fileAttachment.
+          example: '500123'
+        contentLocation:
+          type: string
+          description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
+          example: example_value
     ItemBody:
       type: object
       description: Represents the body content of a message.
@@ -1038,31 +997,59 @@ components:
           type: string
           description: The content of the item body.
           example: example_value
+    DateTimeTimeZone:
+      type: object
+      description: A date-time value with a time zone designation.
+      properties:
+        dateTime:
+          type: string
+          description: A single point of time in a combined date and time representation (e.g. 2017-08-29T04:00:00.0000000).
+          example: example_value
+        timeZone:
+          type: string
+          description: Represents a time zone, for example, Pacific Standard Time.
+          example: example_value
+    EmailAddress:
+      type: object
+      description: Represents an email address entity.
+      properties:
+        name:
+          type: string
+          description: The display name of the person or entity.
+          example: Example Title
+        address:
+          type: string
+          format: email
+          description: The email address of the person or entity.
+          example: example_value
+    MailFolderCollectionResponse:
+      type: object
+      description: Collection of mail folder resources with optional pagination link.
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        '@odata.nextLink':
+          type: string
+          format: uri
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailFolder'
+          example: []
   parameters:
-    select:
-      name: $select
-      in: query
-      description: Comma-separated list of properties to include in the response.
-      schema:
-        type: string
-    top:
-      name: $top
-      in: query
-      description: Sets the page size of results.
-      schema:
-        type: integer
-        minimum: 1
-    filter:
-      name: $filter
-      in: query
-      description: OData filter expression to filter results.
-      schema:
-        type: string
     mailFolderId:
       name: mailFolder-id
       in: path
       required: true
       description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
+      schema:
+        type: string
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
       schema:
         type: string
     skip:
@@ -1072,12 +1059,25 @@ components:
       schema:
         type: integer
         minimum: 0
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
     orderby:
       name: $orderby
       in: query
       description: Comma-separated list of properties to sort results by.
       schema:
         type: string
+    top:
+      name: $top
+      in: query
+      description: Sets the page size of results.
+      schema:
+        type: integer
+        minimum: 1
   responses:
     TooManyRequests:
       description: Too many requests. The app has been throttled.
@@ -1090,6 +1090,12 @@ components:
           description: Number of seconds to wait before retrying.
           schema:
             type: integer
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
     NotFound:
       description: Not found. The specified resource does not exist.
       content:
@@ -1098,12 +1104,6 @@ components:
             $ref: '#/components/schemas/ODataError'
     Unauthorized:
       description: Unauthorized. A valid OAuth 2.0 access token is required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:

@@ -2,20 +2,18 @@
   "repo": "microsoft-outlook",
   "feeds": [
     {
+      "source": "https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0",
+      "error": "HTTPError"
+    },
+    {
       "source": "https://devblogs.microsoft.com/microsoft365dev/tag/outlook/feed/",
       "feed_url": "https://devblogs.microsoft.com/microsoft365dev/tag/outlook/feed/",
       "title": "",
       "saved": 0,
-      "method": "feed",
-      "nature": "undetermined",
-      "nature_basis": null
-    },
-    {
-      "source": "https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0",
-      "error": "HTTPError"
+      "method": "feed"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
+  "fetched": "2026-09-06T19:17:18Z",
   "post_count": 12,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
