@@ -1,9 +1,7 @@
 {
   "provider": "microsoft-outlook",
   "sources": [
-    "microsoft-outlook-attachments-api-openapi.yml",
-    "microsoft-outlook-mail-folders-api-openapi.yml",
-    "microsoft-outlook-messages-api-openapi.yml"
+    "_original/microsoft-graph-mail-api-openapi.yml"
   ],
   "outputs": [
     "microsoft-outlook-attachments-api-openapi.yml",
@@ -14,10 +12,13 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "microsoft-outlook-attachments-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-outlook-mail-folders-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-outlook-messages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "microsoft-graph-mail-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "microsoft-outlook-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-outlook-mail-folders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-outlook-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

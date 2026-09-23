@@ -1,24 +1,54 @@
-generated: '2026-06-20'
+generated: '2026-09-19'
 method: searched
 source: live probes of API + identity hosts
-note: >-
-  The Microsoft Graph data-plane host (graph.microsoft.com) returns 401 on all
-  /.well-known/ paths — the surface is auth-gated, not publicly discoverable. The
-  OAuth 2.0 / OpenID Connect discovery document that governs Outlook API auth is
-  published by the Microsoft identity platform (login.microsoftonline.com).
+note: 'The Microsoft Graph data-plane host (graph.microsoft.com) returns 401 on all /.well-known/ paths
+  — the surface is auth-gated, not publicly discoverable. The OAuth 2.0 / OpenID Connect discovery document
+  that governs Outlook API auth is published by the Microsoft identity platform (login.microsoftonline.com).
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
-  - host: https://login.microsoftonline.com/common/v2.0
-    documents:
-      - path: /.well-known/openid-configuration
-        status: 200
-        file: microsoft-outlook-openid-configuration.json
-  - host: https://graph.microsoft.com
-    documents:
-      - path: /.well-known/openid-configuration
-        status: 401
-      - path: /.well-known/oauth-authorization-server
-        status: 401
-      - path: /.well-known/security.txt
-        status: 401
-      - path: /.well-known/api-catalog
-        status: 401
+- host: https://login.microsoftonline.com/common/v2.0
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: microsoft-outlook-openid-configuration.json
+- host: https://graph.microsoft.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+- host: https://mcp.svc.cloud.microsoft
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: microsoft-outlook-mcp-oauth-protected-resource.json
+    bytes: 295
+  path_echo_control: passed
+- host: https://login.microsoftonline.com
+  documents:
+  - path: /organizations/v2.0/.well-known/openid-configuration
+    status: 200
+    file: microsoft-outlook-login-openid-configuration.json
+    bytes: 1777
+  path_echo_control: passed
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.svc.cloud.microsoft
+    path: /.well-known/oauth-protected-resource
+    file: microsoft-outlook-mcp-oauth-protected-resource.json
+  - host: https://login.microsoftonline.com
+    path: /organizations/v2.0/.well-known/openid-configuration
+    file: microsoft-outlook-login-openid-configuration.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
