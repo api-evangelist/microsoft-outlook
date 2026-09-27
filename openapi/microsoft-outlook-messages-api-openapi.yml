@@ -1715,91 +1715,47 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    skip:
-      name: $skip
-      in: query
-      description: Number of items to skip for pagination.
-      schema:
-        type: integer
-        minimum: 0
-    count:
-      name: $count
-      in: query
-      description: Include count of the matching resources.
-      schema:
-        type: boolean
-    orderby:
-      name: $orderby
-      in: query
-      description: Comma-separated list of properties to sort results by.
-      schema:
-        type: string
-    filter:
-      name: $filter
-      in: query
-      description: OData filter expression to filter results.
-      schema:
-        type: string
-    mailFolderId:
-      name: mailFolder-id
-      in: path
-      required: true
-      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
-      schema:
-        type: string
-    search:
-      name: $search
-      in: query
-      description: Search string to filter results.
-      schema:
-        type: string
-    top:
-      name: $top
-      in: query
-      description: Sets the page size of results.
-      schema:
-        type: integer
-        minimum: 1
-    messageId:
-      name: message-id
-      in: path
-      required: true
-      description: The unique identifier of the message.
-      schema:
-        type: string
-    select:
-      name: $select
-      in: query
-      description: Comma-separated list of properties to include in the response.
-      schema:
-        type: string
   schemas:
-    DateTimeTimeZone:
+    FollowupFlag:
       type: object
-      description: A date-time value with a time zone designation.
+      description: Represents the follow-up flag status on a message.
       properties:
-        dateTime:
+        completedDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        dueDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        startDateTime:
+          $ref: '#/components/schemas/DateTimeTimeZone'
+        flagStatus:
           type: string
-          description: A single point of time in a combined date and time representation (e.g. 2017-08-29T04:00:00.0000000).
-          example: example_value
-        timeZone:
-          type: string
-          description: Represents a time zone, for example, Pacific Standard Time.
-          example: example_value
-    EmailAddress:
+          enum:
+          - notFlagged
+          - complete
+          - flagged
+          description: The follow-up status.
+          example: notFlagged
+    MessageCollectionResponse:
       type: object
-      description: Represents an email address entity.
+      description: Collection of message resources with optional pagination link.
       properties:
-        name:
+        '@odata.context':
           type: string
-          description: The display name of the person or entity.
-          example: Example Title
-        address:
-          type: string
-          format: email
-          description: The email address of the person or entity.
+          description: The OData context URL.
           example: example_value
+        '@odata.count':
+          type: integer
+          description: The total count of matching resources.
+          example: 10
+        '@odata.nextLink':
+          type: string
+          format: uri
+          description: The URL for the next page of results.
+          example: https://www.example.com
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          example: []
     ODataError:
       type: object
       description: OData error response from Microsoft Graph.
@@ -1822,51 +1778,18 @@ components:
                   type: string
                   format: date-time
           example: example_value
-    InternetMessageHeader:
+    DateTimeTimeZone:
       type: object
-      description: A key-value pair representing an Internet message header as defined by RFC 5322.
+      description: A date-time value with a time zone designation.
       properties:
-        name:
+        dateTime:
           type: string
-          description: The name of the message header.
-          example: Example Title
-        value:
-          type: string
-          description: The value of the message header.
+          description: A single point of time in a combined date and time representation (e.g. 2017-08-29T04:00:00.0000000).
           example: example_value
-    ItemBody:
-      type: object
-      description: Represents the body content of a message.
-      properties:
-        contentType:
+        timeZone:
           type: string
-          enum:
-          - text
-          - html
-          description: The type of the content. Possible values are text and html.
-          example: text
-        content:
-          type: string
-          description: The content of the item body.
+          description: Represents a time zone, for example, Pacific Standard Time.
           example: example_value
-    FollowupFlag:
-      type: object
-      description: Represents the follow-up flag status on a message.
-      properties:
-        completedDateTime:
-          $ref: '#/components/schemas/DateTimeTimeZone'
-        dueDateTime:
-          $ref: '#/components/schemas/DateTimeTimeZone'
-        startDateTime:
-          $ref: '#/components/schemas/DateTimeTimeZone'
-        flagStatus:
-          type: string
-          enum:
-          - notFlagged
-          - complete
-          - flagged
-          description: The follow-up status.
-          example: notFlagged
     Attachment:
       type: object
       description: Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.
@@ -1919,28 +1842,52 @@ components:
           type: string
           description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
           example: example_value
-    MessageCollectionResponse:
+    InternetMessageHeader:
       type: object
-      description: Collection of message resources with optional pagination link.
+      description: A key-value pair representing an Internet message header as defined by RFC 5322.
       properties:
-        '@odata.context':
+        name:
           type: string
-          description: The OData context URL.
-          example: example_value
-        '@odata.count':
-          type: integer
-          description: The total count of matching resources.
-          example: 10
-        '@odata.nextLink':
-          type: string
-          format: uri
-          description: The URL for the next page of results.
-          example: https://www.example.com
+          description: The name of the message header.
+          example: Example Title
         value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          example: []
+          type: string
+          description: The value of the message header.
+          example: example_value
+    Recipient:
+      type: object
+      description: Represents information about a user or contact in a message.
+      properties:
+        emailAddress:
+          $ref: '#/components/schemas/EmailAddress'
+    EmailAddress:
+      type: object
+      description: Represents an email address entity.
+      properties:
+        name:
+          type: string
+          description: The display name of the person or entity.
+          example: Example Title
+        address:
+          type: string
+          format: email
+          description: The email address of the person or entity.
+          example: example_value
+    ItemBody:
+      type: object
+      description: Represents the body content of a message.
+      properties:
+        contentType:
+          type: string
+          enum:
+          - text
+          - html
+          description: The type of the content. Possible values are text and html.
+          example: text
+        content:
+          type: string
+          description: The content of the item body.
+          example: example_value
     Message:
       type: object
       description: A message in a mailFolder.
@@ -2096,15 +2043,9 @@ components:
             $ref: '#/components/schemas/Attachment'
           description: The fileAttachment and itemAttachment attachments for the message.
           example: []
-    Recipient:
-      type: object
-      description: Represents information about a user or contact in a message.
-      properties:
-        emailAddress:
-          $ref: '#/components/schemas/EmailAddress'
   responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
       content:
         application/json:
           schema:
@@ -2117,6 +2058,12 @@ components:
             $ref: '#/components/schemas/ODataError'
     Forbidden:
       description: Forbidden. The caller does not have sufficient permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Not found. The specified resource does not exist.
       content:
         application/json:
           schema:
@@ -2138,12 +2085,65 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ODataError'
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
+  parameters:
+    mailFolderId:
+      name: mailFolder-id
+      in: path
+      required: true
+      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
+      schema:
+        type: string
+    skip:
+      name: $skip
+      in: query
+      description: Number of items to skip for pagination.
+      schema:
+        type: integer
+        minimum: 0
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+    messageId:
+      name: message-id
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+    count:
+      name: $count
+      in: query
+      description: Include count of the matching resources.
+      schema:
+        type: boolean
+    search:
+      name: $search
+      in: query
+      description: Search string to filter results.
+      schema:
+        type: string
+    top:
+      name: $top
+      in: query
+      description: Sets the page size of results.
+      schema:
+        type: integer
+        minimum: 1
+    orderby:
+      name: $orderby
+      in: query
+      description: Comma-separated list of properties to sort results by.
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2

@@ -266,18 +266,56 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
   schemas:
-    AttachmentCollectionResponse:
+    UploadSession:
       type: object
-      description: Collection of attachment resources.
+      description: Represents the upload session for iterative file upload.
       properties:
-        '@odata.context':
+        uploadUrl:
           type: string
-          example: example_value
-        value:
+          format: uri
+          description: The URL endpoint that accepts PUT requests for byte ranges of the file.
+          example: https://www.example.com
+        expirationDateTime:
+          type: string
+          format: date-time
+          description: The date and time in UTC that the upload session will expire.
+          example: '2026-01-15T10:30:00Z'
+        nextExpectedRanges:
           type: array
           items:
-            $ref: '#/components/schemas/Attachment'
+            type: string
+          description: A collection of byte ranges that the server is missing for the file, such as "0-25", "128-500".
           example: []
     Attachment:
       type: object
@@ -331,26 +369,6 @@ components:
           type: string
           description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
           example: example_value
-    UploadSession:
-      type: object
-      description: Represents the upload session for iterative file upload.
-      properties:
-        uploadUrl:
-          type: string
-          format: uri
-          description: The URL endpoint that accepts PUT requests for byte ranges of the file.
-          example: https://www.example.com
-        expirationDateTime:
-          type: string
-          format: date-time
-          description: The date and time in UTC that the upload session will expire.
-          example: '2026-01-15T10:30:00Z'
-        nextExpectedRanges:
-          type: array
-          items:
-            type: string
-          description: A collection of byte ranges that the server is missing for the file, such as "0-25", "128-500".
-          example: []
     ODataError:
       type: object
       description: OData error response from Microsoft Graph.
@@ -373,24 +391,23 @@ components:
                   type: string
                   format: date-time
           example: example_value
+    AttachmentCollectionResponse:
+      type: object
+      description: Collection of attachment resources.
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          example: []
   parameters:
-    attachmentId:
-      name: attachment-id
-      in: path
-      required: true
-      description: The unique identifier of the attachment.
-      schema:
-        type: string
     filter:
       name: $filter
       in: query
       description: OData filter expression to filter results.
-      schema:
-        type: string
-    select:
-      name: $select
-      in: query
-      description: Comma-separated list of properties to include in the response.
       schema:
         type: string
     messageId:
@@ -400,36 +417,19 @@ components:
       description: The unique identifier of the message.
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    TooManyRequests:
-      description: Too many requests. The app has been throttled.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-      headers:
-        Retry-After:
-          description: Number of seconds to wait before retrying.
-          schema:
-            type: integer
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized. A valid OAuth 2.0 access token is required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+    attachmentId:
+      name: attachment-id
+      in: path
+      required: true
+      description: The unique identifier of the attachment.
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
