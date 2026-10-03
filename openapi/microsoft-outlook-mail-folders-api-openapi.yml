@@ -658,7 +658,104 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    orderby:
+      name: $orderby
+      in: query
+      description: Comma-separated list of properties to sort results by.
+      schema:
+        type: string
+    mailFolderId:
+      name: mailFolder-id
+      in: path
+      required: true
+      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
+      schema:
+        type: string
+    top:
+      name: $top
+      in: query
+      description: Sets the page size of results.
+      schema:
+        type: integer
+        minimum: 1
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+    skip:
+      name: $skip
+      in: query
+      description: Number of items to skip for pagination.
+      schema:
+        type: integer
+        minimum: 0
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
   schemas:
+    InternetMessageHeader:
+      type: object
+      description: A key-value pair representing an Internet message header as defined by RFC 5322.
+      properties:
+        name:
+          type: string
+          description: The name of the message header.
+          example: Example Title
+        value:
+          type: string
+          description: The value of the message header.
+          example: example_value
+    ItemBody:
+      type: object
+      description: Represents the body content of a message.
+      properties:
+        contentType:
+          type: string
+          enum:
+          - text
+          - html
+          description: The type of the content. Possible values are text and html.
+          example: text
+        content:
+          type: string
+          description: The content of the item body.
+          example: example_value
     FollowupFlag:
       type: object
       description: Represents the follow-up flag status on a message.
@@ -699,28 +796,6 @@ components:
           items:
             $ref: '#/components/schemas/Message'
           example: []
-    ODataError:
-      type: object
-      description: OData error response from Microsoft Graph.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: The error code.
-            message:
-              type: string
-              description: The error message.
-            innerError:
-              type: object
-              properties:
-                request-id:
-                  type: string
-                date:
-                  type: string
-                  format: date-time
-          example: example_value
     DateTimeTimeZone:
       type: object
       description: A date-time value with a time zone designation.
@@ -785,17 +860,24 @@ components:
           type: string
           description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
           example: example_value
-    InternetMessageHeader:
+    Recipient:
       type: object
-      description: A key-value pair representing an Internet message header as defined by RFC 5322.
+      description: Represents information about a user or contact in a message.
+      properties:
+        emailAddress:
+          $ref: '#/components/schemas/EmailAddress'
+    EmailAddress:
+      type: object
+      description: Represents an email address entity.
       properties:
         name:
           type: string
-          description: The name of the message header.
+          description: The display name of the person or entity.
           example: Example Title
-        value:
+        address:
           type: string
-          description: The value of the message header.
+          format: email
+          description: The email address of the person or entity.
           example: example_value
     MailFolder:
       type: object
@@ -833,25 +915,6 @@ components:
           type: boolean
           description: Indicates whether the mail folder is hidden. Can only be set when creating the folder.
           example: true
-    Recipient:
-      type: object
-      description: Represents information about a user or contact in a message.
-      properties:
-        emailAddress:
-          $ref: '#/components/schemas/EmailAddress'
-    EmailAddress:
-      type: object
-      description: Represents an email address entity.
-      properties:
-        name:
-          type: string
-          description: The display name of the person or entity.
-          example: Example Title
-        address:
-          type: string
-          format: email
-          description: The email address of the person or entity.
-          example: example_value
     MailFolderCollectionResponse:
       type: object
       description: Collection of mail folder resources with optional pagination link.
@@ -868,20 +931,27 @@ components:
           items:
             $ref: '#/components/schemas/MailFolder'
           example: []
-    ItemBody:
+    ODataError:
       type: object
-      description: Represents the body content of a message.
+      description: OData error response from Microsoft Graph.
       properties:
-        contentType:
-          type: string
-          enum:
-          - text
-          - html
-          description: The type of the content. Possible values are text and html.
-          example: text
-        content:
-          type: string
-          description: The content of the item body.
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The error code.
+            message:
+              type: string
+              description: The error message.
+            innerError:
+              type: object
+              properties:
+                request-id:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
           example: example_value
     Message:
       type: object
@@ -1038,76 +1108,6 @@ components:
             $ref: '#/components/schemas/Attachment'
           description: The fileAttachment and itemAttachment attachments for the message.
           example: []
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized. A valid OAuth 2.0 access token is required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    TooManyRequests:
-      description: Too many requests. The app has been throttled.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-      headers:
-        Retry-After:
-          description: Number of seconds to wait before retrying.
-          schema:
-            type: integer
-  parameters:
-    mailFolderId:
-      name: mailFolder-id
-      in: path
-      required: true
-      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
-      schema:
-        type: string
-    skip:
-      name: $skip
-      in: query
-      description: Number of items to skip for pagination.
-      schema:
-        type: integer
-        minimum: 0
-    filter:
-      name: $filter
-      in: query
-      description: OData filter expression to filter results.
-      schema:
-        type: string
-    select:
-      name: $select
-      in: query
-      description: Comma-separated list of properties to include in the response.
-      schema:
-        type: string
-    top:
-      name: $top
-      in: query
-      description: Sets the page size of results.
-      schema:
-        type: integer
-        minimum: 1
-    orderby:
-      name: $orderby
-      in: query
-      description: Comma-separated list of properties to sort results by.
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2

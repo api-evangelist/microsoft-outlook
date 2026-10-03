@@ -266,36 +266,6 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    TooManyRequests:
-      description: Too many requests. The app has been throttled.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-      headers:
-        Retry-After:
-          description: Number of seconds to wait before retrying.
-          schema:
-            type: integer
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized. A valid OAuth 2.0 access token is required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
   schemas:
     UploadSession:
       type: object
@@ -317,6 +287,40 @@ components:
             type: string
           description: A collection of byte ranges that the server is missing for the file, such as "0-25", "128-500".
           example: []
+    AttachmentCollectionResponse:
+      type: object
+      description: Collection of attachment resources.
+      properties:
+        '@odata.context':
+          type: string
+          example: example_value
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+          example: []
+    ODataError:
+      type: object
+      description: OData error response from Microsoft Graph.
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The error code.
+            message:
+              type: string
+              description: The error message.
+            innerError:
+              type: object
+              properties:
+                request-id:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+          example: example_value
     Attachment:
       type: object
       description: Base resource for file, item, and reference attachments. Use the @odata.type property to specify the derived type.
@@ -369,40 +373,36 @@ components:
           type: string
           description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
           example: example_value
-    ODataError:
-      type: object
-      description: OData error response from Microsoft Graph.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: The error code.
-            message:
-              type: string
-              description: The error message.
-            innerError:
-              type: object
-              properties:
-                request-id:
-                  type: string
-                date:
-                  type: string
-                  format: date-time
-          example: example_value
-    AttachmentCollectionResponse:
-      type: object
-      description: Collection of attachment resources.
-      properties:
-        '@odata.context':
-          type: string
-          example: example_value
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
-          example: []
+  responses:
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
   parameters:
     filter:
       name: $filter

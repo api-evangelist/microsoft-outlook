@@ -1715,7 +1715,135 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    search:
+      name: $search
+      in: query
+      description: Search string to filter results.
+      schema:
+        type: string
+    orderby:
+      name: $orderby
+      in: query
+      description: Comma-separated list of properties to sort results by.
+      schema:
+        type: string
+    count:
+      name: $count
+      in: query
+      description: Include count of the matching resources.
+      schema:
+        type: boolean
+    mailFolderId:
+      name: mailFolder-id
+      in: path
+      required: true
+      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
+      schema:
+        type: string
+    top:
+      name: $top
+      in: query
+      description: Sets the page size of results.
+      schema:
+        type: integer
+        minimum: 1
+    select:
+      name: $select
+      in: query
+      description: Comma-separated list of properties to include in the response.
+      schema:
+        type: string
+    skip:
+      name: $skip
+      in: query
+      description: Number of items to skip for pagination.
+      schema:
+        type: integer
+        minimum: 0
+    filter:
+      name: $filter
+      in: query
+      description: OData filter expression to filter results.
+      schema:
+        type: string
+    messageId:
+      name: message-id
+      in: path
+      required: true
+      description: The unique identifier of the message.
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Forbidden. The caller does not have sufficient permissions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    BadRequest:
+      description: Bad request. The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    NotFound:
+      description: Not found. The specified resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    Unauthorized:
+      description: Unauthorized. A valid OAuth 2.0 access token is required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+    TooManyRequests:
+      description: Too many requests. The app has been throttled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ODataError'
+      headers:
+        Retry-After:
+          description: Number of seconds to wait before retrying.
+          schema:
+            type: integer
   schemas:
+    InternetMessageHeader:
+      type: object
+      description: A key-value pair representing an Internet message header as defined by RFC 5322.
+      properties:
+        name:
+          type: string
+          description: The name of the message header.
+          example: Example Title
+        value:
+          type: string
+          description: The value of the message header.
+          example: example_value
+    ItemBody:
+      type: object
+      description: Represents the body content of a message.
+      properties:
+        contentType:
+          type: string
+          enum:
+          - text
+          - html
+          description: The type of the content. Possible values are text and html.
+          example: text
+        content:
+          type: string
+          description: The content of the item body.
+          example: example_value
     FollowupFlag:
       type: object
       description: Represents the follow-up flag status on a message.
@@ -1756,28 +1884,6 @@ components:
           items:
             $ref: '#/components/schemas/Message'
           example: []
-    ODataError:
-      type: object
-      description: OData error response from Microsoft Graph.
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              description: The error code.
-            message:
-              type: string
-              description: The error message.
-            innerError:
-              type: object
-              properties:
-                request-id:
-                  type: string
-                date:
-                  type: string
-                  format: date-time
-          example: example_value
     DateTimeTimeZone:
       type: object
       description: A date-time value with a time zone designation.
@@ -1842,18 +1948,6 @@ components:
           type: string
           description: The Uniform Resource Identifier (URI) corresponding to the location of the content of the attachment.
           example: example_value
-    InternetMessageHeader:
-      type: object
-      description: A key-value pair representing an Internet message header as defined by RFC 5322.
-      properties:
-        name:
-          type: string
-          description: The name of the message header.
-          example: Example Title
-        value:
-          type: string
-          description: The value of the message header.
-          example: example_value
     Recipient:
       type: object
       description: Represents information about a user or contact in a message.
@@ -1873,20 +1967,27 @@ components:
           format: email
           description: The email address of the person or entity.
           example: example_value
-    ItemBody:
+    ODataError:
       type: object
-      description: Represents the body content of a message.
+      description: OData error response from Microsoft Graph.
       properties:
-        contentType:
-          type: string
-          enum:
-          - text
-          - html
-          description: The type of the content. Possible values are text and html.
-          example: text
-        content:
-          type: string
-          description: The content of the item body.
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: The error code.
+            message:
+              type: string
+              description: The error message.
+            innerError:
+              type: object
+              properties:
+                request-id:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
           example: example_value
     Message:
       type: object
@@ -2043,107 +2144,6 @@ components:
             $ref: '#/components/schemas/Attachment'
           description: The fileAttachment and itemAttachment attachments for the message.
           example: []
-  responses:
-    BadRequest:
-      description: Bad request. The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Unauthorized:
-      description: Unauthorized. A valid OAuth 2.0 access token is required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    Forbidden:
-      description: Forbidden. The caller does not have sufficient permissions.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    NotFound:
-      description: Not found. The specified resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-    TooManyRequests:
-      description: Too many requests. The app has been throttled.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-      headers:
-        Retry-After:
-          description: Number of seconds to wait before retrying.
-          schema:
-            type: integer
-    InternalServerError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ODataError'
-  parameters:
-    mailFolderId:
-      name: mailFolder-id
-      in: path
-      required: true
-      description: The unique identifier of the mail folder, or a well-known folder name such as inbox, drafts, sentitems, deleteditems, archive, junkemail, or outbox.
-      schema:
-        type: string
-    skip:
-      name: $skip
-      in: query
-      description: Number of items to skip for pagination.
-      schema:
-        type: integer
-        minimum: 0
-    filter:
-      name: $filter
-      in: query
-      description: OData filter expression to filter results.
-      schema:
-        type: string
-    select:
-      name: $select
-      in: query
-      description: Comma-separated list of properties to include in the response.
-      schema:
-        type: string
-    messageId:
-      name: message-id
-      in: path
-      required: true
-      description: The unique identifier of the message.
-      schema:
-        type: string
-    count:
-      name: $count
-      in: query
-      description: Include count of the matching resources.
-      schema:
-        type: boolean
-    search:
-      name: $search
-      in: query
-      description: Search string to filter results.
-      schema:
-        type: string
-    top:
-      name: $top
-      in: query
-      description: Sets the page size of results.
-      schema:
-        type: integer
-        minimum: 1
-    orderby:
-      name: $orderby
-      in: query
-      description: Comma-separated list of properties to sort results by.
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2
