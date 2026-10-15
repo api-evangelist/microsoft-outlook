@@ -28,7 +28,7 @@
     builder: n8n (built-in node)
     other_nodes:
     - Microsoft/Outlook/v1
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: microsoft-outlook-pipedream
   label: Pipedream
@@ -54,5 +54,5 @@
     actions: true
     sources: true
     builder: Pipedream repo (component)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
