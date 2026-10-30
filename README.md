@@ -1,4 +1,4 @@
-# Microsoft Outlook (microsoft-outlook)
+# Microsoft Outlook
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,300 +66,262 @@
 
 Microsoft Outlook is a personal information manager and email client that is part of the Microsoft Office suite. It provides email, calendar, contact management, task management, and other productivity features.
 
-**APIs.json:** [https://outlook.office.com](https://outlook.office.com)
+**Areas:** Calendar · Contacts · Email · Enterprise · Microsoft · Office 365 · Productivity
 
-## Tags
+## Microsoft Outlook on APIs.io
 
-- Calendar
-- Contacts
-- Email
-- Enterprise
-- Microsoft
-- Office 365
-- Productivity
+Everything profiled for Microsoft Outlook is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/microsoft-outlook/](https://apis.io/providers/microsoft-outlook/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2024
-- **Modified:** 2026-05-19
+- [Outlook Add-ins API](https://apis.io/apis/microsoft-outlook/outlook-add-ins-api/) — JavaScript API for building Outlook add-ins that extend Outlook functionality with custom features, using the Office.js library and the Mailbox requirement set.
+- [Microsoft Outlook Attachments API](https://apis.io/apis/microsoft-outlook/microsoft-outlook-attachments-api/) — Operations on message attachments
+- [Microsoft Outlook Mail Folders API](https://apis.io/apis/microsoft-outlook/microsoft-outlook-mail-folders-api/) — Operations on mail folders in a user mailbox
+- [Microsoft Outlook Messages API](https://apis.io/apis/microsoft-outlook/microsoft-outlook-messages-api/) — Operations on email messages in a user mailbox
 
-## APIs
+### Published properties
 
-### Microsoft Graph Mail API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-API for accessing Outlook email messages, folders, and mail settings through Microsoft Graph.
+#### Arazzo workflows (12)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+Multi-step workflows that chain operations into a business task.
 
-#### Tags
+- [Microsoft Outlook Archive Copy of a Message](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-archive-copy-message-workflow/)
+- [Microsoft Outlook Build Folder Tree and Seed Draft](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-build-folder-tree-and-seed-draft-workflow/)
+- [Microsoft Outlook Compose, Attach, and Send](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-compose-attach-send-workflow/)
+- [Microsoft Outlook Draft, Refine, and Send](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-draft-refine-send-workflow/)
+- [Microsoft Outlook File Message into New Folder](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-file-message-into-new-folder-workflow/)
+- [Microsoft Outlook Find and Forward](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-find-and-forward-workflow/)
+- [Microsoft Outlook Inspect and Remove Attachment](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-inspect-and-remove-attachment-workflow/)
+- [Microsoft Outlook Large Attachment Upload Session](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-large-attachment-upload-session-workflow/)
+- [Microsoft Outlook Reorganize Folder](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-reorganize-folder-workflow/)
+- [Microsoft Outlook Reply Draft with Attachment](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-reply-draft-with-attachment-workflow/)
+- [Microsoft Outlook Review Folder and Mark Read](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-review-folder-and-mark-read-workflow/)
+- [Microsoft Outlook Triage and Reply](https://apis.io/arazzos/microsoft-outlook/microsoft-outlook-triage-and-reply-workflow/)
 
-- Email
-- Folders
-- Mail
-- Messages
+#### AsyncAPI (1)
 
-#### Properties
+Event-driven and webhook contracts.
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0)
-- [OpenAPI](openapi/microsoft-graph-mail-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](json-schema/microsoft-outlook-message-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/microsoft-outlook-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/outlook-mail-concept-overview)
-- [API Reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
+- [Microsoft Outlook Change Notifications](https://apis.io/asyncapis/microsoft-outlook/microsoft-outlook-change-notifications-asyncapi/)
 
-### Microsoft Graph Calendar API
+#### Event channels (4)
 
-API for accessing Outlook calendar events, calendars, and meeting scheduling through Microsoft Graph.
+Individual events and webhooks the provider emits.
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+- [/lifecycleNotifications](https://apis.io/channels/microsoft-outlook/lifecyclenotifications/)
+- [/me/mailFolders](https://apis.io/channels/microsoft-outlook/me-mailfolders/)
+- [/me/messages](https://apis.io/channels/microsoft-outlook/me-messages/)
+- [/users/{userId}/messages](https://apis.io/channels/microsoft-outlook/users-userid-messages/)
 
-#### Tags
+#### MCP servers (1)
 
-- Calendar
-- Events
-- Meetings
-- Scheduling
+Model Context Protocol servers that expose the API to agents.
 
-#### Properties
+- [Microsoft MCP Server for Enterprise](https://apis.io/servers/microsoft-outlook/microsoft-mcp-server-for-enterprise/)
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [Code Examples](https://learn.microsoft.com/en-us/graph/api/resources/calendar?view=graph-rest-1.0#code-samples)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/outlook-calendar-concept-overview)
-- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/calendar-overview?view=graph-rest-1.0)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Agentic access (1)
 
-### Microsoft Graph Contacts API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-API for accessing Outlook contacts and contact folders through Microsoft Graph.
+- [Microsoft Outlook Agentic Access](https://apis.io/agentic-access/microsoft-outlook/microsoft-outlook-agentic-access/)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/contact?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/contact?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+#### JSON Schema (15)
 
-#### Tags
+The data models the API reads and writes.
 
-- Address Book
-- Contacts
-- People
+- [Attachment](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-attachment/)
+- [AttachmentCollectionResponse](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-attachment-collection-response/)
+- [DateTimeTimeZone](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-date-time-time-zone/)
+- [EmailAddress](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-email-address/)
+- [FollowupFlag](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-followup-flag/)
+- [InternetMessageHeader](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-internet-message-header/)
+- [ItemBody](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-item-body/)
+- [MailFolder](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-mail-folder/)
+- [MailFolderCollectionResponse](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-mail-folder-collection-response/)
+- [Message](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-message/)
+- [MessageCollectionResponse](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-message-collection-response/)
+- [ODataError](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-o-data-error/)
+- [Recipient](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-recipient/)
+- [UploadSession](https://apis.io/schemas/microsoft-outlook/microsoft-graph-mail-upload-session/)
+- [Microsoft Outlook Message](https://apis.io/schemas/microsoft-outlook/microsoft-outlook-message/)
 
-#### Properties
+#### JSON Structure (14)
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/contact?view=graph-rest-1.0)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/outlook-contacts-concept-overview)
-- [API Reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### Microsoft Graph Tasks API
+- [Microsoft Graph Mail Attachment Collection Response Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-attachment-collection-response-structure/)
+- [Microsoft Graph Mail Attachment Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-attachment-structure/)
+- [Microsoft Graph Mail Date Time Time Zone Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-date-time-time-zone-structure/)
+- [Microsoft Graph Mail Email Address Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-email-address-structure/)
+- [Microsoft Graph Mail Followup Flag Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-followup-flag-structure/)
+- [Microsoft Graph Mail Internet Message Header Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-internet-message-header-structure/)
+- [Microsoft Graph Mail Item Body Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-item-body-structure/)
+- [Microsoft Graph Mail Mail Folder Collection Response Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-mail-folder-collection-response-structure/)
+- [Microsoft Graph Mail Mail Folder Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-mail-folder-structure/)
+- [Microsoft Graph Mail Message Collection Response Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-message-collection-response-structure/)
+- [Microsoft Graph Mail Message Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-message-structure/)
+- [Microsoft Graph Mail O Data Error Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-o-data-error-structure/)
+- [Microsoft Graph Mail Recipient Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-recipient-structure/)
+- [Microsoft Graph Mail Upload Session Structure](https://apis.io/json-structure/microsoft-outlook/microsoft-graph-mail-upload-session-structure/)
 
-API for accessing Outlook tasks and to-do items through Microsoft Graph.
+#### JSON-LD (2)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/todo-overview?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/todo-overview?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Microsoft Graph Mail Context](https://apis.io/jsonld/microsoft-outlook/microsoft-graph-mail-context/)
+- [Microsoft Outlook Context](https://apis.io/jsonld/microsoft-outlook/microsoft-outlook-context/)
 
-- Task Management
-- Tasks
-- To-Do
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/todo-overview?view=graph-rest-1.0)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/todo-concept-overview)
-- [API Reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [microsoft-outlook API Vocabulary](https://apis.io/vocabularies/microsoft-outlook/microsoft-outlook-vocabulary/)
 
-### Outlook Add-ins API
+#### Examples (14)
 
-JavaScript API for building Outlook add-ins that extend Outlook functionality with custom features, using the Office.js library and the Mailbox requirement set.
+Example requests and responses.
 
-- **Human URL:** [https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/)
-- **Base URL:** `https://appsforoffice.microsoft.com/lib/1/hosted/office.js`
+- [Microsoft Graph Mail Attachment Collection Response Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-attachment-collection-response-example/)
+- [Microsoft Graph Mail Attachment Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-attachment-example/)
+- [Microsoft Graph Mail Date Time Time Zone Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-date-time-time-zone-example/)
+- [Microsoft Graph Mail Email Address Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-email-address-example/)
+- [Microsoft Graph Mail Followup Flag Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-followup-flag-example/)
+- [Microsoft Graph Mail Internet Message Header Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-internet-message-header-example/)
+- [Microsoft Graph Mail Item Body Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-item-body-example/)
+- [Microsoft Graph Mail Mail Folder Collection Response Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-mail-folder-collection-response-example/)
+- [Microsoft Graph Mail Mail Folder Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-mail-folder-example/)
+- [Microsoft Graph Mail Message Collection Response Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-message-collection-response-example/)
+- [Microsoft Graph Mail Message Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-message-example/)
+- [Microsoft Graph Mail O Data Error Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-o-data-error-example/)
+- [Microsoft Graph Mail Recipient Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-recipient-example/)
+- [Microsoft Graph Mail Upload Session Example](https://apis.io/examples/microsoft-outlook/microsoft-graph-mail-upload-session-example/)
 
-#### Tags
+#### Collections (5)
 
-- Add-Ins
-- Extensions
-- Office.js
-- Plugins
+Postman and Open Collection request collections.
 
-#### Properties
+- [Microsoft Outlook Microsoft Graph Mail API](https://apis.io/collections/microsoft-outlook/open-microsoft-graph-mail-api/)
+- [Microsoft Outlook Microsoft Graph Mail Attachments API](https://apis.io/collections/microsoft-outlook/open-microsoft-outlook-attachments-api/)
+- [Microsoft Outlook Microsoft Graph Mail Attachments Mail Folders API](https://apis.io/collections/microsoft-outlook/open-microsoft-outlook-mail-folders-api/)
+- [Microsoft Outlook Microsoft Graph Mail Attachments Messages API](https://apis.io/collections/microsoft-outlook/open-microsoft-outlook-messages-api/)
+- [Microsoft Outlook Microsoft Graph Mail API](https://apis.io/collections/microsoft-outlook/postman-microsoft-graph-mail-api/)
 
-- [Documentation](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/)
-- [Getting Started](https://learn.microsoft.com/en-us/office/dev/add-ins/quickstarts/outlook-quickstart-yo)
-- [API Reference](https://learn.microsoft.com/en-us/office/dev/add-ins/reference/javascript-api-for-office)
-- [Authentication](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/microsoft-graph)
-- [GitHub Organization](https://github.com/OfficeDev/office-js)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Overlays (1)
 
-### Microsoft Graph People API
+OpenAPI overlays, including conversational phrasing for each operation.
 
-API for accessing people data relevant to the user, aggregating information from contacts, social networks, organization directory, and recent communications.
+- [Microsoft Outlook Microsoft Graph Mail Api Overlay](https://apis.io/overlays/microsoft-outlook/microsoft-outlook-microsoft-graph-mail-api-overlay/)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/people-insights-overview](https://learn.microsoft.com/en-us/graph/people-insights-overview)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+#### Governance rules (3)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Contacts
-- Directory
-- People
-- Social
+- [Microsoft Outlook — asyncapi rules](https://apis.io/rules/microsoft-outlook/microsoft-outlook-asyncapi-spectral-rules/)
+- [Microsoft Outlook — jsonschema rules](https://apis.io/rules/microsoft-outlook/microsoft-outlook-jsonschema-spectral-rules/)
+- [Microsoft Outlook API Rules](https://apis.io/rules/microsoft-outlook/microsoft-outlook-spectral-rules/)
 
-#### Properties
+#### Security (4)
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/people-insights-overview)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Microsoft Graph Change Notifications API
+- [Microsoft Outlook Authentication](https://apis.io/security/microsoft-outlook/microsoft-outlook-authentication/)
+- [Microsoft Outlook Domain Security](https://apis.io/security/microsoft-outlook/microsoft-outlook-domain-security/)
+- [Microsoft Outlook Trust Center](https://apis.io/security/microsoft-outlook/microsoft-outlook-trust-center/)
+- [Microsoft Outlook Vulnerability Disclosure](https://apis.io/security/microsoft-outlook/microsoft-outlook-vulnerability-disclosure/)
 
-API for subscribing to changes in Outlook resources including mail, calendar events, and contacts via webhooks, enabling real-time notifications.
+#### OAuth scopes (1)
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/outlook-change-notifications-overview](https://learn.microsoft.com/en-us/graph/outlook-change-notifications-overview)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+The permissions the API asks for.
 
-#### Tags
+- [Microsoft Outlook Scopes](https://apis.io/scopes/microsoft-outlook/microsoft-outlook-scopes/)
 
-- Events
-- Notifications
-- Subscriptions
-- Webhooks
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/outlook-change-notifications-overview)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/change-notifications-delivery-webhooks)
-- [API Reference](https://learn.microsoft.com/en-us/graph/api/resources/change-notifications-api-overview?view=graph-rest-1.0)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Microsoft Outlook Plans Pricing](https://apis.io/plans/microsoft-outlook/microsoft-outlook-plans-pricing/)
 
-### Microsoft Graph Focused Inbox API
+#### Rate limits (1)
 
-API for managing Focused Inbox overrides and message classification, allowing applications to control how incoming messages are categorized between Focused and Other tabs.
+Published request limits.
 
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/manage-focused-inbox?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/manage-focused-inbox?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
+- [Microsoft Outlook Rate Limits](https://apis.io/rate-limits/microsoft-outlook/microsoft-outlook-rate-limits/)
 
-#### Tags
+#### FinOps (1)
 
-- Classification
-- Email Organization
-- Focused Inbox
+What the API costs to run, by operation.
 
-#### Properties
+- [Microsoft Outlook Finops](https://apis.io/finops/microsoft-outlook/microsoft-outlook-finops/)
 
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/manage-focused-inbox?view=graph-rest-1.0)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+## Where to find this API
 
-### Microsoft Graph Mail Rules API
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-API for managing Outlook inbox rules that automatically process incoming messages based on conditions, enabling actions like moving messages to folders, assigning categories, and forwarding.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/messagerule?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/messagerule?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
-
-#### Tags
-
-- Email Automation
-- Filters
-- Inbox Rules
-- Rules
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/messagerule?view=graph-rest-1.0)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/outlook-organize-messages)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Microsoft Graph Categories API
-
-API for managing Outlook categories, allowing applications to create, read, update, and delete categories in a user's master category list for organizing messages, events, and contacts.
-
-- **Human URL:** [https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0](https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0)
-- **Base URL:** `https://graph.microsoft.com/v1.0`
-
-#### Tags
-
-- Categories
-- Labels
-- Organization
-
-#### Properties
-
-- [Documentation](https://learn.microsoft.com/en-us/graph/api/resources/outlookcategory?view=graph-rest-1.0)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [OpenAPI](https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Postman Collection](collections/microsoft-graph-mail-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/microsoft-graph-mail-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [Portal](https://developer.microsoft.com/en-us/graph)
-- [Getting Started](https://learn.microsoft.com/en-us/graph/overview)
+- [Website](https://www.microsoft.com/)
 - [Documentation](https://learn.microsoft.com/en-us/outlook/)
-- [Authentication](https://learn.microsoft.com/en-us/graph/auth/)
-- [SDK](https://learn.microsoft.com/en-us/graph/sdks/sdks-overview)
-- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
-- [API Reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0)
-- [Blog](https://devblogs.microsoft.com/microsoft365dev/tag/outlook/)
-- [GitHub Organization](https://github.com/microsoftgraph)
-- [Sign Up](https://developer.microsoft.com/en-us/microsoft-365/dev-program)
-- [Login](https://portal.azure.com)
-- [Terms of Service](https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use)
-- [Privacy Policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [Getting started](https://learn.microsoft.com/en-us/graph/overview)
+- [API reference](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0)
 - [Support](https://developer.microsoft.com/en-us/graph/support)
-- [Status Page](https://status.cloud.microsoft/)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/microsoft-graph)
-- [Quickstart](https://developer.microsoft.com/en-us/graph/quick-start)
-- [Training](https://learn.microsoft.com/en-us/training/paths/m365-msgraph-fundamentals/)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
+- [Changelog](https://developer.microsoft.com/en-us/graph/changelog)
+- [Blog](https://devblogs.microsoft.com/microsoft365dev/tag/outlook/)
+- [Terms of service](https://learn.microsoft.com/en-us/legal/microsoft-apis/terms-of-use)
+- [Privacy policy](https://privacy.microsoft.com/en-us/privacystatement)
+- [GitHub](https://github.com/microsoftgraph)
+- [Status](https://status.cloud.microsoft/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 65.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 81.7 |
+| Contract quality | 79.8 |
+| Contract governance | 18.2 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 79.8 |
+| Access clarity | 50.0 |
+
+**Agent readiness 48.6** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/microsoft-outlook/](https://apis.io/providers/microsoft-outlook/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Microsoft Outlook: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/microsoft-outlook/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
